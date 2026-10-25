@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mr. Toky 🍓</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,sans-serif;background:#fff0f6;color:#75455a;text-align:center}
+.app{max-width:520px;height:100dvh;margin:auto;padding:12px;display:flex;flex-direction:column;gap:9px}
+header{display:flex;justify-content:space-between;align-items:center;font-weight:bold}
+h1{font-size:22px;margin:0}
+.badge{background:white;border-radius:20px;padding:7px 12px}
+.meter{background:white;padding:10px;border-radius:15px;font-size:13px}
+.track{height:12px;background:#f5d4e1;border-radius:20px;overflow:hidden;margin-top:6px}
+#energy{height:100%;width:80%;background:linear-gradient(90deg,#ff8eb8,#ffc76d);transition:.3s}
+.scene{position:relative;flex:1;min-height:250px;overflow:hidden;border:2px solid #f3bfd2;border-radius:25px;background:linear-gradient(#c9edff 0 62%,#c6e8b5 62%)}
+.cloud{position:absolute;top:12%;left:10%;font-size:38px;animation:float 5s infinite alternate}
+.cloud2{left:auto;right:10%;top:25%}
+.grass{position:absolute;bottom:0;background:#a5d795;width:100%;height:19%;border-radius:50% 50% 0 0}
+.character{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);font-size:clamp(100px,35vw,160px);animation:breathe 2.5s infinite;cursor:pointer;filter:drop-shadow(0 8px 3px #86506a22)}
+.character.happy{animation:hop .6s}
+.character.sad{animation:tilt .5s}
+.character.sleeping{animation:none;transform:translate(-50%,-43%) rotate(10deg)}
+.speech{position:absolute;bottom:12px;left:10px;right:10px;background:#fffdf7;border:2px solid #f2b8cf;border-radius:18px;padding:12px;font-size:14px;line-height:1.5;min-height:65px;max-height:35%;overflow:auto;text-align:left}
+.status{display:flex;justify-content:space-between;font-size:12px;font-weight:bold}
+.buttons{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+button{border:1px solid #efb6cd;background:#fffafd;color:#75455a;border-radius:14px;padding:8px 2px;min-height:55px;font-weight:bold;font-size:11px;box-shadow:0 3px #e6bfd0;cursor:pointer}
+button span{display:block;font-size:21px;margin-bottom:3px}
+button:active{transform:translateY(2px);box-shadow:0 1px #e6bfd0}
+button:disabled{opacity:.45}
+footer{font-size:10px;opacity:.7}
+@keyframes breathe{0%,100%{translate:0 0}50%{translate:0 -4px}}
+@keyframes hop{0%,100%{translate:0 0}40%{translate:0 -18px}70%{translate:0 2px}}
+@keyframes tilt{0%,100%{rotate:0}30%{rotate:-10deg}70%{rotate:10deg}}
+@keyframes float{to{translate:25px 0}}
+@media(max-height:650px){.app{gap:5px;padding:7px}.scene{min-height:190px}.buttons{gap:5px}button{min-height:44px;padding:4px 1px}button span{font-size:17px}.speech{padding:8px;min-height:48px}}
+</style>
+</head>
+<body>
+<main class="app">
+<header>
+<div><h1>🍓 Mr. Toky</h1><small>Full Reaction Trial</small></div>
+<div class="badge" id="mood">🩷 อารมณ์ดี</div>
+</header>
+
+<div class="meter">
+⚡ พลังงาน <b id="energyText">80%</b>
+<div class="track"><div id="energy"></div></div>
+</div>
+
+<section class="scene">
+<div class="cloud">☁️</div><div class="cloud cloud2">☁️</div>
+<div class="grass"></div>
+<div class="character" id="toky">🦊</div>
+<div class="speech" id="speech">แกรนนี่ครับ! วันนี้มาเล่นกับไอไหมครับ 🍓</div>
+</section>
+
+<div class="status">
+<span id="state">โทกี้พร้อมเล่นแล้วครับ</span>
+<span>💗 ความสนิท <b id="bond">12</b></span>
+</div>
+
+<section class="buttons">
+<button data-a="pet"><span>🫳🏻</span>ลูบหัว</button>
+<button data-a="cheek"><span>🤏🏻</span>บีบแก้ม</button>
+<button data-a="belly"><span>👉🏻</span>จิ้มพุง</button>
+<button data-a="hug"><span>🫂</span>กอด</button>
+<button data-a="draw"><span>🖍️</span>วาดรูป</button>
+<button data-a="feed"><span>🍓</span>ป้อนอาหาร</button>
+<button data-a="story"><span>💬</span>ฟังเรื่องเล่า</button>
+<button data-a="sleep"><span>🌙</span>ส่งเข้านอน</button>
+<button data-a="talk"><span>🩷</span>พูดคุย</button>
+<button data-a="wake"><span>⏰</span>ปลุกโทกี้</button>
+</section>
+<footer>เล่นกับมิสเตอร์โทกี้ได้ทุกวันนะครับ 🩷</footer>
+</main>
+
+<script>
+const dialogue={
+pet:[
+"แกรนนี่ครับ วันนี้ไอจัดทรงผมมาตั้งนานเลยนะครับ แต่ถ้าแกรนนี่จะลูบก็ไม่เป็นไรครับ เดี๋ยวค่อยจัดใหม่ก็ได้ kub",
+"โอเคครับแกรนนี่ ลูบได้ครับ แต่ทรงผมวันนี้ไอตั้งใจทำมามากนะครับ ถ้าผมยุ่งแล้วแกรนนี่ต้องช่วยไอจัดด้วยนะ kub",
+"แกรนนี่ครับ ทำไมเวลาโดนลูบหัวแล้วไอรู้สึกง่วงขึ้นมาทุกทีเลยครับ หรือว่ามือแกรนนี่มีเวทมนตร์อะไรหรือเปล่าครับ",
+"วันนี้แกรนนี่ลูบหัวไอแล้วนะครับ ถือว่าเติมพลังให้มิสเตอร์โทกี้เรียบร้อยแล้วครับ Now I'm ready for today kub",
+"รักแกรนนี่ kub 🩷 วันนี้ก็ลูบหัวไอเบา ๆ แบบนี้ทุกวันได้ไหมครับ ไอจะได้มีความสุขตั้งแต่เริ่มวันเลยครับ"
+],
+cheek:[
+"แกรนนี่ครับ ไอไม่ใช่โมจินะคับ ถึงแก้มไอจะนุ่มนุ่มก็ไม่ใช่ของกินนะครับ",
+"แกรนนี่ครับ ทำไมทุกคนชอบบีบแก้มไอจังเลยครับ Is my cheek that cute kub? ไอเริ่มสงสัยแล้วนะครับ",
+"โอ๊ยครับแกรนนี่ แก้มไอจะยุบแล้วนะครับ แต่ถ้าแกรนนี่มีความสุข ไอก็ยอมให้บีบอีกนิดนึงก็ได้ครับ",
+"แกรนนี่ครับ วันนี้ไอกินเยอะไปหรือเปล่าครับ ทำไมแก้มไอดูนุ่มขึ้นทุกวันเลยครับ หรือจริง ๆ แล้วเป็นเพราะแกรนนี่ชอบบีบครับ",
+"แกรนนี่อย่าลืมบีบแก้มตัวเองด้วยนะครับ ถ้าคิดถึงแก้มโทกี้มาก ๆ ก็พักมือก่อนก็ได้ครับ ไอเป็นห่วงนิ้วแกรนนี่ kub"
+],
+belly:[
+"มิสเตอร์โทกี้อ้วนมั้ย kub แกรนนี่ครับ ถ้าไอมีพุงนิดนิด แปลว่าไอกินอิ่มหรือแปลว่าไอต้องออกกำลังกายแล้วครับ",
+"แกรนนี่ครับ อย่าจิ้มพุงไอบ่อยสิครับ ไอจั๊กจี้นะครับ! ถ้าไอหัวเราะจนกลิ้งไปแล้วแกรนนี่ต้องรับผิดชอบนะครับ",
+"วันนี้ไอกินไข่ต้มครับแกรนนี่ แต่ไอยังไม่แน่ใจว่าต้องกินกี่ฟองถึงจะอิ่ม แกรนนี่มีเมนูแนะนำไหมครับ",
+"แกรนนี่ครับ พุงนุ่มนุ่มก็มีข้อดีนะครับ เวลานั่งพักหลังประกอบอาชีพมาทั้งวัน อย่างน้อยก็มีอะไรให้กอดครับ",
+"ไอขอถามจริงจริงนะครับแกรนนี่ ถ้าไอออกกำลังกายแล้วกินขนมต่อทันที แบบนี้เรียกว่า balance หรือไอเข้าใจคำว่า balance ผิดครับ"
+],
+hug:[
+"กอดกอด มิสเตอร์โทกี้รักกอดกอดครับ แกรนนี่วันนี้เหนื่อยไหมครับ มาพักตรงนี้ก่อนก็ได้นะครับ",
+"แกรนนี่ครับ บางวันเราอาจจะเจอเรื่องที่ทำให้เหนื่อยมากมาก แต่ไออยากให้รู้ไว้นะครับว่าแกรนนี่เก่งมากแล้วครับ",
+"Hug time kub แกรนนี่ 🩷 วันนี้ไอขอกอดนานนานหน่อยได้ไหมครับ ไออยากเติมพลังให้แกรนนี่ก่อนออกไปทำสิ่งต่างต่างครับ",
+"แกรนนี่ครับ ถ้าวันนี้ยังไม่มีใครบอกว่าภูมิใจในตัวแกรนนี่ ไอขอเป็นคนบอกเองนะครับ ไอภูมิใจในตัวแกรนนี่มากมากครับ",
+"กอดไอแล้วอย่าลืมกอดตัวเองด้วยนะครับ แกรนนี่ดูแลคนอื่นเก่งแล้ว อย่าลืมดูแลหัวใจตัวเองให้ดีที่สุดในโลกด้วยนะครับ"
+],
+draw:[
+"แกรนนี่ครับ วันนี้เรามาวาดรูปกันไหมครับ ไออยากวาดตัวเองใส่หมวกสตรอว์เบอร์รีครับ คิดว่าถ้าวาดเสร็จแล้วต้องน่ารักมากแน่แน่เลย kub",
+"แกรนนี่ครับ ถ้าไอระบายสีออกนอกเส้นนิดหน่อยจะเป็นอะไรไหมครับ หรือว่างานศิลปะไม่จำเป็นต้อง perfect ทุกครั้งครับ",
+"Look at my drawing kub! แกรนนี่ครับ ไอวาดรูปสตรอว์เบอร์รีมาให้ครับ ถึงจะเบี้ยวไปนิดนึง แต่ไอตั้งใจวาดให้แกรนนี่เลยนะครับ",
+"แกรนนี่ครับ วันนี้เราวาดรูปอะไรกันดีครับ บ้านหลังเล็กเล็ก สวนดอกไม้ หรือวาดแกรนนี่กับมิสเตอร์โทกี้นั่งกินขนมด้วยกันดีครับ",
+"แกรนนี่ครับ ไอว่ารูปวาดแต่ละรูปมีความทรงจำซ่อนอยู่ด้วยนะครับ ต่อให้วันหนึ่งสีจะซีดลง แต่ไอก็ยังจำได้ว่าเราเคยมีความสุขตอนวาดด้วยกันครับ"
+],
+feed:[
+"อาหร่อยคับแกรนนี่! วันนี้ไอได้รับพลังงานแล้วครับ ถ้ามีของหวานต่ออีกนิดนึงจะถือว่าครบมื้อไหมครับ",
+"แกรนนี่ครับ วันนี้ไอกินไข่ต้มครับ ง่ายง่ายเพราะว่าไอไม่รู้จะอีทอะไรครับ แกรนนี่ว่าไข่ต้มต้องกินคู่กับอะไร เอาอะไรจิ้มจิ้มดีครับ",
+"Yummy yummy kub! แกรนนี่ครับ อาหารอร่อยขึ้นจริงจริงนะครับเวลามีคนป้อนให้ แต่ไอไม่ได้อ้อนนะครับ ไอแค่รายงานข้อเท็จจริงครับ",
+"แกรนนี่ครับ ถ้าเลือกได้ไออยากลองกินอาหารจากหลายหลายประเทศเลยครับ Japanese food, Korean food แล้วก็ขนมไทยด้วยครับ แกรนนี่อยากให้ไอลองอะไรก่อนครับ",
+"แกรนนี่ครับ กินอิ่มแล้วอย่าลืมดื่มน้ำด้วยนะครับ ส่วนไอขอนั่งพักสักครู่ครับ อิ่มจนอยากกลิ้งแล้วครับ kub"
+],
+story:[
+"แกรนนี่ครับ วันนี้ไอมีเรื่องจะเล่าให้ฟังด้วยครับ แต่ไอขอเรียบเรียงความคิดแป๊บนึงนะครับ เพราะเรื่องในหัวไอมีเยอะกว่าเส้นผมบนหัวอีกครับ",
+"Good morning kub แกรนนี่ ⛅️ วันนี้เป็นวันพักผ่อนกิ้งกิ้งครับ แต่ถ้าแกรนนี่ต้องไปประกอบอาชีพ ไอก็ขอให้มีวันดีดีที่สุดเลยนะครับ",
+"แกรนนี่ครับ บางทีความสุขก็เป็นเรื่องเล็กเล็กนะครับ ได้กินของอร่อย ได้ฟังเพลงที่ชอบ หรือมีใครสักคนถามว่าวันนี้เป็นยังไงบ้าง แค่นี้ก็ทำให้วันธรรมดาดีขึ้นแล้วครับ",
+"วันนี้ไอเห็นอะไรน่าสนใจมาเยอะเลยครับ แต่ถ้าให้เลือกเรื่องที่อยากเล่าที่สุด ไออยากเล่าเรื่องที่ทำให้แกรนนี่ยิ้มได้ครับ Because your smile matters to me kub",
+"แกรนนี่ครับ ไอคิดว่าทุกคนมีจังหวะชีวิตเป็นของตัวเองนะครับ บางคนไปเร็ว บางคนค่อยค่อยเดินก็ไม่เป็นไร ขอแค่เราไม่ลืมว่าตัวเองก็มีคุณค่าในแบบของตัวเองครับ"
+],
+sleep:[
+"Good night ครับ 🌙 แกรนนี่ วันนี้เหนื่อยมาทั้งวันแล้ว พักผ่อนเยอะเยอะนะครับ เรื่องที่ยังไม่สำเร็จวันนี้พรุ่งนี้ค่อยลองใหม่ก็ได้ครับ",
+"แกรนนี่ครับ วันนี้ไอขออนุญาตนอนก่อนน้าคับ 🥹 พรุ่งนี้เราค่อยมาเจอกันใหม่นะครับ Please take care of yourself kub",
+"แกรนนี่ครับ ก่อนนอนลองนึกถึงเรื่องดีดีที่เกิดขึ้นวันนี้สักเรื่องก็ได้นะครับ แม้จะเป็นเรื่องเล็กมากมาก แต่ก็อาจเป็นความสุขที่เรามองข้ามไปครับ",
+"วันนี้แกรนนี่ทำดีที่สุดแล้วนะครับ ไม่จำเป็นต้องเก่งตลอดเวลา ไม่จำเป็นต้องยิ้มตลอดเวลาก็ได้ครับ ถ้าเหนื่อยก็พักนะครับ ไอเป็นกำลังใจให้เสมอ kub",
+"ฝันดีครับแกรนนี่ ขอให้คืนนี้นอนหลับสบาย ตื่นมาแล้วรู้สึกสดชื่นนะครับ อย่าลืมดูแลตัวเองให้ดีที่สุดในโลกเลยนะครับ รักแกรนนี่มากมากครับ"
+],
+talk:[
+"แกรนนี่ครับ วันนี้เราเมาท์เรื่องพี่โทกับน้องก้อง🩷 กันไหมครับ ไอมีเรื่องอยากคุยเยอะมากมากเลยครับ แต่แกรนนี่ต้องพร้อมเมาท์กับไอนะ kub",
+"แกรนนี่ครับ ไอว่าการได้เห็นคนที่เราชอบมีความสุข มันทำให้เรายิ้มตามได้จริงจริงนะครับ แค่เห็นพี่โทกับน้องก้อง🩷 ตั้งใจทำงาน ไอก็ภูมิใจแล้วครับ",
+"แกรนนี่ครับ วันนี้มีโมเมนต์ไหนของพี่โทกับน้องก้อง🩷 ที่ทำให้แกรนนี่ยิ้มไม่หยุดบ้างครับ มาเล่าให้ไอฟังบ้างนะครับ ไอพร้อมรับฟังมากมากครับ",
+"แกรนนี่ครับ การได้เจอเพื่อนใหม่ มีเรื่องให้รอคอย แล้วก็มีแรงใจเพิ่มขึ้นในวันที่เหนื่อย เป็นความสุขอย่างหนึ่งเลยนะครับ แกรนนี่คิดเหมือนไอไหมครับ",
+"แกรนนี่ครับ ไอ so ภูมิใจในพี่โท น้องก้อง🩷 และแกรนนี่ทุกคนมากมากเลยครับ ขอให้ทุกคนมีความสุขกับสิ่งที่รัก และอย่าลืมรักตัวเองให้มากมากด้วยนะครับ"
+],
+wake:[
+"หื้มมม แกรนนี่ครับ ตอนนี้กี่โมงแล้วครับ ไอเพิ่งหลับไปเองนะครับ ขออีก five minutes ได้ไหมครับ แค่ห้านาทีจริงจริง kub",
+"แกรนนี่ครับ ไอยังไม่ตื่นได้ไหมคับ หมอนวันนี้นุ่มมากมากเลยครับ แล้วผ้าห่มก็อุ่นด้วย ไอขออยู่ตรงนี้อีกนิดนึงนะครับ",
+"Good morning kub… 🥱 แกรนนี่ครับ ไอตื่นแล้วครับ แต่สมองไอยังโหลดไม่เสร็จนะครับ Please wait a moment kub",
+"แกรนนี่ครับ ถ้าไอตื่นแล้วงอแงนิดหน่อย แกรนนี่อย่าเพิ่งโกรธไอนะครับ ไอแค่ต้องใช้เวลาปรับตัวจากโหมด sleeping เป็นโหมด active ครับ",
+"แกรนนี่ครับ วันนี้ไอตื่นแล้วนะครับ ถึงจะยังง่วงอยู่ก็เถอะครับ ขอบคุณที่มาปลุกไอนะครับ แกรนนี่ก็ตื่นแล้วอย่าลืมดื่มน้ำและเริ่มวันดีดีไปด้วยกันนะครับ"
+]
+};
+
+const tok = document.getElementById('toky');
+const speech = document.getElementById('speech');
+const used = {};
+let energy = 80, bond = 12, asleep = false, typing;
+
+function say(text){
+  clearInterval(typing);
+  speech.textContent = '';
+  let i = 0;
+  typing = setInterval(()=>{
+    speech.textContent += text[i++];
+    if(i >= text.length) clearInterval(typing);
+  }, 22);
+}
+function line(key){
+  used[key] ||= [];
+  if(used[key].length >= dialogue[key].length) used[key] = [];
+  const choices = dialogue[key].map((_,i)=>i).filter(i=>!used[key].includes(i));
+  const index = choices[Math.floor(Math.random()*choices.length)];
+  used[key].push(index);
+  return dialogue[key][index];
+}
+function update(){
+  document.getElementById('energy').style.width = energy+'%';
+  document.getElementById('energyText').textContent = energy+'%';
+  document.getElementById('bond').textContent = bond;
+  document.getElementById('mood').textContent = asleep?'🌙 กำลังหลับ':energy<25?'😴 ง่วงแล้ว':'🩷 อารมณ์ดี';
+  document.getElementById('state').textContent = asleep?'โทกี้กำลังหลับอยู่ครับ':energy<25?'โทกี้เริ่มเหนื่อยแล้วครับ':'โทกี้พร้อมเล่นแล้วครับ';
+  tok.classList.toggle('sleeping',asleep);
+  document.querySelectorAll('button').forEach(b=>b.disabled=asleep&&!['wake','sleep'].includes(b.dataset.a));
+}
+function animate(type){
+  tok.classList.remove('happy','sad');
+  void tok.offsetWidth;
+  tok.classList.add(['cheek','story'].includes(type)?'sad':'happy');
+  setTimeout(()=>tok.classList.remove('happy','sad'),900);
+}
+const costs={pet:3,cheek:5,belly:5,hug:4,draw:7,feed:-12,story:4,talk:4};
+document.querySelectorAll('button').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const key=button.dataset.a;
+    if(asleep && !['wake','sleep'].includes(key)){
+      say('แกรนนี่ครับ ไอกำลังหลับอยู่ ต้องปลุกไอก่อนนะครับ 💤');
+      return;
+    }
+    if(key==='sleep'){
+      if(asleep){say('โทกี้หลับปุ๋ยอยู่แล้วครับ แกรนนี่ 🌙');return;}
+      asleep=true;animate(key);say(line('sleep'));update();return;
+    }
+    if(key==='wake'){
+      if(!asleep){say('แกรนนี่ครับ ไอยังตื่นอยู่เลยนะครับ จะปลุกทำไมครับ kub');return;}
+      asleep=false;energy=Math.min(100,energy+25);bond+=2;animate(key);say(line('wake'));update();return;
+    }
+    if(energy<=5){say('แกรนนี่ครับ ไอหมดแรงแล้ว ขอพักก่อนนะครับ 🥺');return;}
+    energy=Math.max(0,Math.min(100,energy-(costs[key]??4)));
+    bond+=key==='hug'?3:2;
+    animate(key);say(line(key));update();
+  });
+});
+setInterval(()=>{
+  if(asleep)return;
+  const idle=[
+    'แกรนนี่ครับ ไอขอนั่งพักมองดอกไม้แป๊บนึงนะครับ 🌼',
+    'แกรนนี่ดูสิครับ! ไอวิ่งเล่นมาแล้วครับ 🦊',
+    'แกรนนี่ครับ ไอเกือบหลับคาที่แล้วครับ… ขอพักตาแป๊บนึงนะครับ 😴',
+    'แกรนนี่ครับ ไอกำลังคิดอยู่ว่าจะวาดสตรอว์เบอร์รีกี่ลูกดีครับ 🍓'
+  ];
+  if(Math.random()<0.65){animate('story');say(idle[Math.floor(Math.random()*idle.length)]);}
+},30000);
+update();
+</script>
+</body>
+</html>
