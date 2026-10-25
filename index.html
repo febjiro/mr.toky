@@ -1,726 +1,189 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Mr. Toky — My Little Fox 🍓</title>
-<style>
-:root{
-  --pink:#ff9eb9;--deep:#e86e94;--cream:#fff8ee;
-  --brown:#704b4a;--green:#b7d8b1;--gold:#ffd76e;
+/* ===== Mr. Toky: Fixed one-screen game layout ===== */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;background:#fff0f5;color:var(--brown);
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  overscroll-behavior:none;
-}
-button,input{font:inherit}
-button{
-  border:0;border-radius:15px;padding:10px 13px;
-  background:white;color:var(--brown);font-weight:750;
-  box-shadow:0 3px 0 #e8cbd2;cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
-button:active{transform:translateY(2px);box-shadow:0 1px 0 #e8cbd2}
-button:disabled{opacity:.45}
-.hidden{display:none!important}
-#start{
-  min-height:100dvh;display:flex;align-items:center;justify-content:center;
-  padding:24px;background:linear-gradient(145deg,#ffe0ec,#fff6dc);
-}
-.start-card{
-  width:min(420px,100%);background:#ffffffdc;padding:26px;
-  text-align:center;border-radius:30px;box-shadow:0 12px 35px #c67b9740;
-}
-.start-card h1{margin:8px 0;color:#dc6e93}
-.start-card p{line-height:1.65}
-#playerName{
-  width:100%;padding:14px;border:2px solid #ffc0d1;border-radius:14px;
-  outline:none;margin:10px 0 14px;background:#fffafd;
-}
-#startBtn{width:100%;background:#ff8fb1;color:white;font-size:17px}
-.mini-fox{font-size:80px;line-height:1.4;display:block}
-#game{max-width:680px;margin:auto;min-height:100dvh;background:var(--cream);overflow:hidden}
-.topbar{
-  padding:10px 12px;background:#fffaf5;display:flex;
-  justify-content:space-between;align-items:center;gap:8px;
-  border-bottom:2px solid #f5d9df;
-}
-.brand{font-weight:900;color:#df6d91}
-.coins{background:#fff0bd;padding:7px 10px;border-radius:14px;font-weight:850}
-.stats{
-  padding:9px 12px;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;
-  background:#fff7f1;
-}
-.stat{font-size:12px;font-weight:750}
-.meter{height:8px;border-radius:99px;background:#f0dfe2;overflow:hidden;margin-top:4px}
-.fill{height:100%;width:80%;border-radius:99px;transition:width .3s}
-#energyFill{background:#ffb44e}#hungerFill{background:#ff7f9e}
-#cleanFill{background:#83cdb6}#toiletFill{background:#bc9ce7}
-.meter.toilet{background:#f0dfe2}
-.room-header{display:flex;justify-content:space-between;align-items:center;padding:9px 13px}
-.room-header strong{font-size:17px}
-.room-header small{opacity:.7}
-#scene{
-  position:relative;height:340px;overflow:hidden;
-  touch-action:pan-y;user-select:none;
-  background:#fce8e5;transition:background .25s;
-}
-#scene.sleeping{filter:saturate(.75)}
-.room{
-  position:absolute;inset:0;overflow:hidden;
-}
-.wall{position:absolute;inset:0 0 31% 0;background:#ffe9ed}
-.floor{
-  position:absolute;bottom:0;left:0;right:0;height:32%;
-  background:repeating-linear-gradient(90deg,#eac5a9 0 55px,#e3b99a 56px 58px);
-  border-top:5px solid #d7ad90;
-}
-.window{
-  position:absolute;top:22px;left:20px;width:83px;height:91px;
-  border:7px solid white;border-radius:9px;
-  background:linear-gradient(#b8e5ff 0 55%,#d9f3d0 56%);
-  box-shadow:0 3px 0 #e6c6cf;
-}
-.window:before,.window:after{content:"";position:absolute;background:white}
-.window:before{width:5px;height:100%;left:50%;top:0}
-.window:after{height:5px;width:100%;top:48%;left:0}
-.rug{
-  position:absolute;bottom:9px;left:23%;width:54%;height:53px;
-  border-radius:50%;background:#ffc4d4;border:4px solid #f5a7bf;
-}
-.lamp{position:absolute;right:28px;bottom:91px;width:44px;height:95px}
-.lamp .shade{
-  position:absolute;top:0;left:0;width:44px;height:31px;
-  background:#ffcf7d;clip-path:polygon(20% 0,80% 0,100% 100%,0 100%);
-}
-.lamp .stem{position:absolute;top:28px;left:20px;height:58px;width:5px;background:#a87c69}
-.lamp .base{position:absolute;bottom:0;left:7px;width:31px;height:7px;background:#a87c69;border-radius:5px}
-.lamp.off .shade{background:#9d9eac;filter:brightness(.7)}
-.furniture{position:absolute;z-index:1;font-size:52px;line-height:1;filter:drop-shadow(0 3px 1px #79554b22)}
-.bed{left:18px;bottom:42px;font-size:76px}
-.shelf{right:18px;top:28px;font-size:52px}
-.toybox{left:14px;bottom:10px;font-size:36px}
-.table{left:50%;bottom:35px;transform:translateX(-50%);font-size:76px}
-.fridge{left:16px;bottom:30px;font-size:80px}
-.stove{left:125px;bottom:35px;font-size:65px}
-.bathtub{left:50%;bottom:35px;transform:translateX(-50%);font-size:90px}
-.toilet{right:22px;bottom:35px;font-size:58px}
-.sofa{left:20px;bottom:36px;font-size:85px}
-.plant{right:22px;bottom:40px;font-size:43px}
-.toy{position:absolute;font-size:28px;animation:bob 2s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(-5px) rotate(5deg)}}
-#toky{
-  position:absolute;z-index:4;left:50%;bottom:42px;
-  transform:translateX(-50%);width:158px;height:192px;
-  cursor:pointer;transition:filter .2s;
-}
-#toky.bounce{animation:bounce .45s}
-@keyframes bounce{0%,100%{translate:0 0}45%{translate:0 -16px}}
-#toky.sleeping{filter:brightness(.82)}
-.ear{
-  position:absolute;top:0;width:56px;height:82px;
-  background:#f48bb0;border:4px solid #b94e78;
-  clip-path:polygon(50% 0,100% 100%,0 100%);
-}
-.ear:after{
-  content:"";position:absolute;inset:16px 12px 7px;
-  background:#ffc4d8;clip-path:polygon(50% 0,100% 100%,0 100%);
-}
-.ear.left{left:12px;transform:rotate(-15deg)}
-.ear.right{right:12px;transform:rotate(15deg)}
-.fox-head{
-  position:absolute;top:38px;left:9px;width:140px;height:106px;
-  border:4px solid #b94e78;border-radius:48% 48% 44% 44%;
-  background:#ff9fc0;z-index:2;
-}
-.hat{
-  position:absolute;top:-10px;left:27px;width:88px;height:33px;
-  background:#6c9ef0;border:3px solid #4772bb;border-radius:45% 45% 12px 12px;
-  z-index:5;transform:rotate(-5deg);
-}
-.hat:after{
-  content:"";position:absolute;bottom:-7px;left:-9px;width:100px;height:11px;
-  background:#5b88d7;border:2px solid #4772bb;border-radius:50%;
-}
-.berry{position:absolute;top:-22px;left:44px;font-size:25px;z-index:6;transform:rotate(15deg)}
-.eyes{position:absolute;top:34px;left:24px;display:flex;gap:29px}
-.eye{
-  position:relative;width:23px;height:30px;background:#fff;
-  border:2px solid #7d4d62;border-radius:50%;overflow:hidden;
-}
-.eye:after{
-  content:"";position:absolute;top:8px;left:6px;width:12px;height:17px;
-  background:#4a92e5;border-radius:50%;
-}
-.eye:before{
-  content:"";position:absolute;z-index:1;top:8px;left:10px;
-  width:4px;height:5px;background:white;border-radius:50%;
-}
-.muzzle{
-  position:absolute;bottom:7px;left:38px;width:60px;height:33px;
-  background:#fff7ed;border-radius:48%;
-}
-.nose{position:absolute;top:67px;left:64px;width:12px;height:8px;background:#c94766;border-radius:50% 50% 65% 65%;z-index:4}
-.mouth{position:absolute;top:78px;left:65px;font-size:14px;color:#b94e78;z-index:5}
-.cheek{position:absolute;top:66px;width:20px;height:9px;background:#ff779e;border-radius:50%;opacity:.65}
-.cheek.l{left:10px}.cheek.r{right:10px}
-.body{
-  position:absolute;left:31px;bottom:0;width:96px;height:86px;
-  border:4px solid #b94e78;border-radius:48% 48% 34% 34%;
-  background:#ff9fc0;z-index:1;
-}
-.belly{position:absolute;left:17px;bottom:6px;width:55px;height:55px;border-radius:50%;background:#fff7ed}
-.strap{
-  position:absolute;z-index:4;left:96px;top:105px;width:15px;height:64px;
-  border:4px solid #4b9c65;border-radius:9px;transform:rotate(-23deg);
-}
-.bag{
-  position:absolute;z-index:5;right:2px;bottom:8px;width:42px;height:42px;
-  background:#ed4c6b;border:3px solid #bd3658;border-radius:45% 45% 48% 48%;
-}
-.bag:before{
-  content:"";position:absolute;top:-7px;left:8px;width:18px;height:13px;
-  border:3px solid #4b9c65;border-bottom:0;border-radius:14px 14px 0 0;
-}
-.bag:after{content:"🍓";position:absolute;inset:4px 0 0;text-align:center;font-size:23px}
-.paw{position:absolute;bottom:-4px;width:33px;height:24px;background:#ed7fa5;border:3px solid #b94e78;border-radius:50%;z-index:3}
-.paw.l{left:27px}.paw.r{right:27px}
-#toky.sleeping .eyes{display:none}
-#toky.sleeping .fox-head:after{
-  content:"z z";position:absolute;right:12px;top:25px;color:#816d9b;font-weight:900;
-}
-#hand{
-  position:absolute;z-index:10;left:50%;top:38%;font-size:52px;
-  display:none;pointer-events:none;transform:rotate(-28deg);
-  filter:drop-shadow(0 4px 3px #6b455444);
-}
-#hand.active{display:block;animation:pet 1s ease-in-out infinite}
-@keyframes pet{0%,100%{transform:translate(-20px,-10px) rotate(-28deg)}50%{transform:translate(10px,5px) rotate(-8deg)}}
-#speech{
-  position:absolute;z-index:9;top:12px;left:50%;transform:translateX(-50%);
-  width:max-content;max-width:88%;background:white;border:2px solid #f6b7cb;
-  border-radius:18px;padding:10px 14px;box-shadow:0 4px 0 #eac9d2;
-  font-size:13px;line-height:1.5;text-align:center;min-height:38px;
-}
-#speech:after{
-  content:"";position:absolute;bottom:-9px;left:50%;width:14px;height:14px;
-  background:white;border-right:2px solid #f6b7cb;border-bottom:2px solid #f6b7cb;
-  transform:translateX(-50%) rotate(45deg);
-}
-.room-nav{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#fff6ef}
-.room-nav button{background:#ffe0e9}
-#roomName{text-align:center;font-size:13px;font-weight:850}
-#mission{
-  margin:10px 12px;padding:12px;border-radius:18px;background:#fff0c9;
-  border:2px solid #ffe1a0;
-}
-.mission-title{display:flex;justify-content:space-between;gap:10px;font-weight:900}
-#missionText{font-size:13px;margin-top:5px;line-height:1.5}
-#mission button{background:#ffdc80;margin-top:8px;padding:7px 10px}
-.actions{
-  padding:9px 12px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
-}
-.actions button{min-height:66px;font-size:12px;line-height:1.4;background:#fff;border:1px solid #f4d7df;box-shadow:0 3px 0 #e8cbd2}
-.actions button span{display:block;font-size:23px}
-.actions .primary{background:#ffe2eb}
-.actions .gold{background:#fff0bd}
-.actions .green{background:#e3f4e4}
-#extraPanel{margin:0 12px 12px;padding:12px;background:white;border-radius:18px;border:2px solid #f4d7df}
-#extraPanel h3{margin:0 0 8px}
-#canvas{
-  display:block;width:100%;height:220px;border:2px dashed #f2a6be;border-radius:12px;
-  background:#fffdf9;touch-action:none;cursor:crosshair;
-}
-.draw-buttons{display:flex;gap:8px;margin-top:8px}
-.draw-buttons button{flex:1}
-.shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.shop-item{padding:10px;background:#fff4f7;border-radius:12px;font-size:13px}
-.shop-item button{margin-top:6px;background:#ffdfeb;width:100%;padding:7px}
-.toast{
-  position:fixed;z-index:50;bottom:20px;left:50%;transform:translateX(-50%);
-  width:max-content;max-width:90%;padding:12px 17px;border-radius:18px;
-  color:#754050;background:#fff;box-shadow:0 5px 25px #9d5d7540;
-  font-weight:750;text-align:center;
-}
-.overlay{
-  position:fixed;inset:0;z-index:40;background:#482b3e80;
-  display:flex;align-items:center;justify-content:center;padding:20px;
-}
-.modal{
-  width:min(360px,100%);padding:23px;border-radius:24px;background:#fff9f1;
-  text-align:center;box-shadow:0 12px 40px #3d1f2c40;
-}
-.modal h2{margin-top:0}
-.modal p{line-height:1.65}
-.modal button{background:#ffabc5;margin:5px}
-#sleepOverlay .modal{background:#f6f0ff}
-#sleepOverlay button{background:#d9c9ff}
-#lampToggle{background:#f8edc8}
-@media(max-width:390px){
-  #scene{height:315px}
-  #toky{transform:translateX(-50%) scale(.9);transform-origin:bottom center}
-  .actions{gap:6px;padding-left:8px;padding-right:8px}
-  .actions button{padding:7px 3px;font-size:11px}
-}
-</style>
-</head>
-<body>
 
-<section id="start">
-  <div class="start-card">
-    <span class="mini-fox">🦊🍓</span>
-    <h1>Mr. Toky</h1>
-    <p>มาเริ่มใช้ชีวิตกับโทกี้กันนะครับ<br>Granny จะชื่ออะไรเอ่ย?</p>
-    <form id="nameForm">
-      <input id="playerName" maxlength="18" placeholder="พิมพ์ชื่อของ Granny..." autocomplete="nickname" required>
-      <button id="startBtn" type="submit">เริ่มดูแลโทกี้ ♡</button>
-    </form>
-    <p style="font-size:12px;color:#a77b87">ดูแลโทกี้ ทำภารกิจ เก็บเหรียญ และแต่งห้องกันครับ</p>
-  </div>
-</section>
+#game {
+  width: 100%;
+  max-width: 680px;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0 auto;
+  overflow: hidden;
 
-<main id="game" class="hidden">
-  <header class="topbar">
-    <div class="brand">🍓 Mr. Toky</div>
-    <div class="coins">🪙 <span id="coins">0</span></div>
-    <button id="shopOpen">🛍️ ร้านค้า</button>
-  </header>
+  display: grid;
+  grid-template-rows:
+    auto   /* แถบบนและเหรียญ */
+    auto   /* ค่าสถานะ */
+    auto   /* คำทักทาย */
+    minmax(150px, 1fr) /* ฉากห้องและโทกี้ */
+    auto   /* เปลี่ยนห้อง */
+    auto   /* ภารกิจ */
+    auto;  /* ปุ่มดูแล */
 
-  <section class="stats">
-    <div class="stat">⚡ พลังงาน <span id="energyNum">75</span><div class="meter"><div class="fill" id="energyFill"></div></div></div>
-    <div class="stat">🍓 ความอิ่ม <span id="hungerNum">65</span><div class="meter"><div class="fill" id="hungerFill"></div></div></div>
-    <div class="stat">🫧 ความสะอาด <span id="cleanNum">75</span><div class="meter"><div class="fill" id="cleanFill"></div></div></div>
-  </section>
-
-  <div class="room-header">
-    <strong id="greeting">สวัสดีครับ แกรนนี่</strong>
-    <button id="lampToggle">💡 ปิดไฟ</button>
-  </div>
-
-  <section id="scene">
-    <div class="room">
-      <div class="wall"></div><div class="floor"></div>
-      <div class="window"></div>
-      <div class="rug"></div>
-      <div id="furniture"></div>
-      <div class="lamp" id="lamp"><div class="shade"></div><div class="stem"></div><div class="base"></div></div>
-      <div id="toys"></div>
-      <div id="toky" aria-label="Mr. Toky" role="button" tabindex="0">
-        <div class="ear left"></div><div class="ear right"></div>
-        <div class="body"><div class="belly"></div></div>
-        <div class="paw l"></div><div class="paw r"></div>
-        <div class="strap"></div><div class="bag"></div>
-        <div class="fox-head">
-          <div class="hat"></div><div class="berry">🍓</div>
-          <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
-          <div class="cheek l"></div><div class="cheek r"></div>
-          <div class="muzzle"></div><div class="nose"></div><div class="mouth">ᴗ</div>
-        </div>
-      </div>
-      <div id="hand">🖐🏻</div>
-      <div id="speech">แกรนนี่ครับ มาเล่นกับโทกี้กันนะ kub</div>
-    </div>
-  </section>
-
-  <nav class="room-nav">
-    <button id="prevRoom">◀ ก่อนหน้า</button>
-    <div id="roomName">🛏️ ห้องนอน</div>
-    <button id="nextRoom">ถัดไป ▶</button>
-  </nav>
-
-  <section id="mission">
-    <div class="mission-title"><span>🎯 ภารกิจประจำวัน</span><span id="missionReward">🪙 +10</span></div>
-    <div id="missionText">ทำภารกิจเพื่อรับเหรียญ!</div>
-    <button id="claimMission">รับรางวัล</button>
-  </section>
-
-  <section class="actions">
-    <button class="primary" data-action="pet"><span>🖐🏻</span>ลูบหัว</button>
-    <button class="primary" data-action="cheek"><span>🤏🏻</span>บีบแก้ม</button>
-    <button class="primary" data-action="belly"><span>👉🏻</span>จิ้มพุง</button>
-    <button data-action="hug"><span>🫂</span>กอดโทกี้</button>
-    <button class="green" data-action="feed"><span>🍓</span>ป้อนอาหาร</button>
-    <button class="green" data-action="bath"><span>🛁</span>อาบน้ำ</button>
-    <button data-action="talk"><span>💬</span>พูดคุย</button>
-    <button data-action="draw"><span>🎨</span>วาดรูปด้วยกัน</button>
-    <button data-action="story"><span>📖</span>ฟังเรื่องเล่า</button>
-    <button data-action="sleep"><span>🌙</span>ส่งเข้านอน</button>
-    <button data-action="wake"><span>☀️</span>ปลุกโทกี้</button>
-    <button class="gold" data-action="toilet"><span>🚽</span>เข้าห้องน้ำ</button>
-  </section>
-
-  <section id="extraPanel" class="hidden"></section>
-</main>
-
-<div id="sleepOverlay" class="overlay hidden">
-  <div class="modal">
-    <div style="font-size:52px">🌙🦊💤</div>
-    <h2>โทกี้พลังงานหมดแล้วครับ</h2>
-    <p id="sleepMessage">แกรนนี่ครับ พาโทกี้กลับห้องนอนแล้วห่มผ้าให้หน่อยได้ไหมครับ โทกี้ง่วงมากแล้ว...</p>
-    <button id="goSleep">พาโทกี้เข้านอน 🛏️</button>
-  </div>
-</div>
-
-<div id="toast" class="toast hidden"></div>
-
-<script>
-(() => {
-"use strict";
-
-const $ = id => document.getElementById(id);
-const rooms = [
-  {name:"ห้องนอน",icon:"🛏️",furniture:'<div class="furniture bed">🛏️</div><div class="furniture shelf">🧸</div><div class="furniture toybox">🧺</div>',bg:"#ffe9ed"},
-  {name:"ห้องนั่งเล่น",icon:"🛋️",furniture:'<div class="furniture sofa">🛋️</div><div class="furniture shelf">🪴</div><div class="furniture toybox">🧸</div>',bg:"#e5f4e6"},
-  {name:"ห้องครัว",icon:"🍳",furniture:'<div class="furniture fridge">🧊</div><div class="furniture stove">🍳</div><div class="furniture table">🥣</div>',bg:"#fff0d7"},
-  {name:"ห้องอาหาร",icon:"🍽️",furniture:'<div class="furniture table">🍽️</div><div class="furniture shelf">🌷</div>',bg:"#fce6d9"},
-  {name:"ห้องน้ำ",icon:"🛁",furniture:'<div class="furniture bathtub">🛁</div><div class="furniture toilet">🚽</div>',bg:"#e3f3ff"}
-];
-const toyIcons=["🧸","🪀","🪁","⚽","🪇","🧩","🧸","🪅"];
-const defaultState={
-  name:"",room:0,coins:20,energy:75,hunger:65,clean:75,toilet:10,
-  sleeping:false,light:true,missionIndex:0,missionProgress:0,
-  claimed:[],decor:[],drawings:0
-};
-let state={...defaultState};
-let toastTimer=null,speechTimer=null,typingTimer=null,lastLines={};
-const missions=[
- {text:"ลูบหัวโทกี้ 3 ครั้ง",goal:3,key:"pet",reward:10},
- {text:"ป้อนอาหารโทกี้ 2 ครั้ง",goal:2,key:"feed",reward:12},
- {text:"เล่นกับโทกี้ 3 ครั้ง",goal:3,key:"play",reward:12},
- {text:"พาโทกี้เข้าห้องน้ำ 1 ครั้ง",goal:1,key:"toilet",reward:10},
- {text:"วาดรูปให้โทกี้ดู 1 รูป",goal:1,key:"draw",reward:15},
- {text:"พาโทกี้เข้านอน 1 ครั้ง",goal:1,key:"sleep",reward:12},
- {text:"ดูแลโทกี้ให้สะอาด 1 ครั้ง",goal:1,key:"bath",reward:10}
-];
-const lines={
- pet:["แกรนนี่{name} ลูบหัวแบบนี้ โทกี้ใจฟูเลยครับ","ขออีกนิดได้ไหมครับ แกรนนี่{name} มืออุ่นจัง","ผมจัดหมวกมาตั้งนาน...แต่ยอมให้แกรนนี่{name} ลูบก็ได้ kub"],
- cheek:["แกรนนี่{name}! แก้มผมจะกลมกว่านี้แล้วนะครับ","แง้ม...เอ๊ย ไม่ใช่ครับ! โทกี้แค่ตกใจเฉย ๆ","อย่าบีบแรงสิครับ เดี๋ยวสตรอว์เบอร์รีบนหมวกตกนะ"],
- belly:["แกรนนี่{name} จิ้มพุงผมอีกแล้วนะครับ","ตรงนั้นจั๊กจี้ครับ! โทกี้ขอประท้วงนิดหนึ่ง","พุงนี้มีไว้รับขนม ไม่ได้มีไว้จิ้มนะครับ"],
- hug:["ขอกอดอีกแป๊บได้ไหมครับ แกรนนี่{name}","โทกี้ชอบเวลาที่แกรนนี่{name} อยู่ใกล้ ๆ kub","วันนี้เหนื่อยไหมครับ มานั่งพักกับโทกี้ก่อน"],
- feed:["ขอบคุณครับ แกรนนี่{name}! อร่อยมากเลย","อิ่มแล้วก็อยากเล่นต่อ...แต่เดี๋ยวต้องเข้าห้องน้ำสินะครับ","ขอคำเล็ก ๆ อีกคำได้ไหมครับ"],
- bath:["ฟองเยอะไปไหมครับ แกรนนี่{name}","สะอาดแล้ว! ตอนนี้โทกี้หอมเหมือนสตรอว์เบอร์รีเลย","อย่าลืมเช็ดหูให้แห้งนะครับ"],
- talk:["วันนี้แกรนนี่{name} เป็นยังไงบ้างครับ เล่าให้โทกี้ฟังได้นะ","โทกี้มีเรื่องจะเมาท์...วันนี้ผมเห็นของเล่นชิ้นใหม่!","แกรนนี่{name} รู้ไหมครับ ผมเก่งเรื่องทำหน้าอ้อนมาก"],
- story:["กาลครั้งหนึ่งมีจิ้งจอกสีชมพูที่ชอบสตรอว์เบอร์รีมากครับ...","แล้วแกรนนี่{name} ก็เป็นคนที่ใจดีที่สุดในเรื่องนี้ครับ","ตอนจบเหรอครับ? โทกี้ขอเก็บไว้เล่าพรุ่งนี้นะ kub"],
- draw:["ว้าว! แกรนนี่{name} วาดให้โทกี้จริง ๆ ด้วย","รูปนี้สวยมากครับ โทกี้จะเก็บไว้ในหัวใจเลย","นี่เป็นงานศิลปะระดับแกลเลอรีเลยนะครับ!"],
- sleep:["ราตรีสวัสดิ์ครับ แกรนนี่{name} ช่วยปิดไฟให้ผมด้วยนะ","โทกี้จะนอนแล้วครับ อย่าแอบเปลี่ยนห้องนะ...","ขอบคุณที่ดูแลวันนี้นะครับ แกรนนี่{name}"],
- wake:["อรุณสวัสดิ์ครับ แกรนนี่{name}! โทกี้พร้อมแล้ว","ขออีกห้าวินาที...โอเคครับ ตื่นแล้ว!","วันนี้เราจะทำภารกิจอะไรกันดีครับ แกรนนี่{name}"],
- toilet:["เรียบร้อยครับ แกรนนี่{name} โล่งตัวแล้ว!","ขอบคุณที่พามานะครับ คราวหน้าจะรีบบอก","โอเคครับ ล้างมือด้วยกันด้วยนะ kub"]
-};
-
-function greeting(){return "แกรนนี่"+state.name}
-function say(line){
-  clearInterval(typingTimer);
-  const bubble=$("speech");
-  bubble.textContent="";
-  let i=0;
-  const full=line.replaceAll("{name}",state.name);
-  typingTimer=setInterval(()=>{
-    bubble.textContent=full.slice(0,++i);
-    if(i>=full.length)clearInterval(typingTimer);
-  },22);
+  align-content: stretch;
 }
-function randomLine(key){
-  const arr=lines[key]||["แกรนนี่{name} มาเล่นกับโทกี้กันนะครับ"];
-  let choices=arr.filter(x=>x!==lastLines[key]);
-  if(!choices.length)choices=arr;
-  const chosen=choices[Math.floor(Math.random()*choices.length)];
-  lastLines[key]=chosen;say(chosen);
+
+.topbar {
+  padding: 5px 9px;
+  min-height: 38px;
 }
-function toast(msg){
-  $("toast").textContent=msg;$("toast").classList.remove("hidden");
-  clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("toast").classList.add("hidden"),2500);
+
+.stats {
+  padding: 4px 9px;
+  gap: 6px;
 }
-function save(){
-  try{localStorage.setItem("mrTokyPet_v3",JSON.stringify(state))}catch(e){}
+
+.stat {
+  font-size: 10px;
 }
-function load(){
-  try{
-    const old=JSON.parse(localStorage.getItem("mrTokyPet_v3")||"null");
-    if(old&&typeof old==="object")state={...defaultState,...old};
-  }catch(e){}
+
+.meter {
+  height: 6px;
 }
-function renderStats(){
-  ["energy","hunger","clean"].forEach(k=>{
-    $(k+"Num").textContent=Math.round(state[k]);
-    $(k+"Fill").style.width=state[k]+"%";
-  });
-  $("coins").textContent=state.coins;
-  $("greeting").textContent="สวัสดีครับ "+greeting();
-  $("toiletFill").style.width=state.toilet+"%";
+
+.room-header {
+  padding: 4px 9px;
+  min-height: 32px;
 }
-function renderRoom(){
-  const room=rooms[state.room];
-  $("roomName").textContent=room.icon+" "+room.name;
-  $("furniture").innerHTML=room.furniture;
-  $("scene").style.background=room.bg;
-  $("scene").classList.toggle("sleeping",state.sleeping);
-  $("toky").classList.toggle("sleeping",state.sleeping);
-  $("toky").classList.toggle("bounce",false);
-  $("lamp").classList.toggle("off",!state.light);
-  $("lampToggle").textContent=state.light?"💡 ปิดไฟ":"🌙 เปิดไฟ";
-  $("prevRoom").disabled=state.sleeping||state.room===0;
-  $("nextRoom").disabled=state.sleeping||state.room===rooms.length-1;
-  $("roomName").textContent=room.icon+" "+room.name+(state.sleeping?" · กำลังหลับ":"");
-  const toys=$("toys");
-  toys.innerHTML="";
-  if(state.room===1){
-    toyIcons.forEach((icon,i)=>{
-      const el=document.createElement("div");el.className="toy";
-      el.textContent=icon;el.style.left=(8+(i%4)*23)+"%";
-      el.style.top=(32+Math.floor(i/4)*31)+"%";
-      el.style.animationDelay=(i*.13)+"s";toys.appendChild(el);
-    });
+
+.room-header strong {
+  font-size: 13px;
+}
+
+#scene {
+  height: 100%;
+  min-height: 150px;
+  max-height: none;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.room-nav {
+  padding: 4px 8px;
+  min-height: 36px;
+}
+
+.room-nav button {
+  padding: 6px 9px;
+  font-size: 12px;
+}
+
+#mission {
+  margin: 4px 8px;
+  padding: 6px 9px;
+  border-radius: 12px;
+}
+
+.mission-title {
+  font-size: 12px;
+}
+
+#missionText {
+  font-size: 11px;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+#mission button {
+  margin-top: 4px;
+  padding: 5px 9px;
+  font-size: 11px;
+}
+
+.actions {
+  padding: 4px 8px max(5px, env(safe-area-inset-bottom));
+  gap: 5px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.actions button {
+  min-width: 0;
+  min-height: 0;
+  height: clamp(43px, 8.2dvh, 62px);
+  padding: 3px 2px;
+  font-size: 10px;
+  line-height: 1.15;
+  border-radius: 11px;
+}
+
+.actions button span {
+  display: block;
+  font-size: clamp(16px, 3.5dvh, 23px);
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+
+#extraPanel {
+  position: fixed;
+  z-index: 25;
+  left: 50%;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(94vw, 500px);
+  max-height: 72dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px;
+  box-shadow: 0 8px 35px #704b4a35;
+}
+
+#canvas {
+  height: min(30dvh, 220px);
+}
+
+/* หน้าจอเตี้ย เช่น iPhone แนวนอน */
+@media (max-height: 700px) {
+  #scene {
+    min-height: 130px;
   }
-  state.decor.forEach(id=>{
-    const item=shopItems.find(x=>x.id===id);
-    if(item&&item.room===state.room){
-      const el=document.createElement("div");el.className="toy";
-      el.style.right=(12+Math.random()*18)+"%";el.style.bottom="40%";
-      el.textContent=item.icon;toys.appendChild(el);
-    }
-  });
-  $("hand").classList.remove("active");
-}
-function renderMission(){
-  const m=missions[state.missionIndex%missions.length];
-  $("missionText").textContent=m.text+" ("+Math.min(state.missionProgress,m.goal)+"/"+m.goal+")";
-  $("missionReward").textContent="🪙 +"+m.reward;
-  $("claimMission").disabled=state.missionProgress<m.goal||state.claimed.includes(state.missionIndex);
-  $("claimMission").textContent=state.claimed.includes(state.missionIndex)?"รับแล้ว ✓":"รับรางวัล";
-}
-function render(){
-  renderStats();renderRoom();renderMission();
-}
-function progress(key){
-  const m=missions[state.missionIndex%missions.length];
-  if(m.key===key)state.missionProgress=Math.min(m.goal,state.missionProgress+1);
-  renderMission();save();
-}
-function bounce(){
-  $("toky").classList.remove("bounce");void $("toky").offsetWidth;$("toky").classList.add("bounce");
-  setTimeout(()=>$("toky").classList.remove("bounce"),500);
-}
-function canInteract(){
-  if(state.sleeping){toast("โทกี้กำลังหลับอยู่ครับ ให้พักก่อนนะ 🌙");return false}
-  return true;
-}
-function energyWarning(){
-  if(state.energy<=0&&!state.sleeping){
-    state.energy=0;
-    $("sleepMessage").textContent=greeting()+" ครับ พาโทกี้กลับห้องนอนแล้วห่มผ้าให้หน่อยได้ไหมครับ โทกี้ง่วงมากแล้ว...";
-    $("sleepOverlay").classList.remove("hidden");
-    save();renderStats();
+
+  .bed {
+    font-size: 55px;
+  }
+
+  #toky {
+    transform: translateX(-50%) scale(.76);
+    transform-origin: bottom center;
+  }
+
+  .actions button {
+    height: 43px;
+    font-size: 9px;
+  }
+
+  .actions button span {
+    font-size: 16px;
+  }
+
+  #mission {
+    padding: 4px 8px;
   }
 }
-function moveRoom(delta){
-  if(state.sleeping){toast("โทกี้หลับอยู่ เปลี่ยนห้องไม่ได้ครับ 🌙");return}
-  state.room=Math.max(0,Math.min(rooms.length-1,state.room+delta));
-  renderRoom();save();
-}
-$("prevRoom").addEventListener("click",()=>moveRoom(-1));
-$("nextRoom").addEventListener("click",()=>moveRoom(1));
-$("scene").addEventListener("touchstart",e=>{
-  $("scene").dataset.startX=e.changedTouches[0].clientX;
-},{passive:true});
-$("scene").addEventListener("touchend",e=>{
-  if(state.sleeping)return;
-  const start=Number($("scene").dataset.startX||0);
-  const dx=e.changedTouches[0].clientX-start;
-  if(Math.abs(dx)>55)moveRoom(dx<0?1:-1);
-},{passive:true});
-$("scene").addEventListener("pointerdown",e=>{
-  if(e.pointerType==="mouse")$("scene").dataset.startX=e.clientX;
-});
-$("scene").addEventListener("pointerup",e=>{
-  if(state.sleeping||e.pointerType!=="mouse")return;
-  const start=Number($("scene").dataset.startX||0),dx=e.clientX-start;
-  if(Math.abs(dx)>80)moveRoom(dx<0?1:-1);
-});
 
-function action(key){
-  if(!canInteract())return;
-  const room=state.room;
-  if(key==="feed"&&![2,3].includes(room)){
-    toast("ไปห้องครัวหรือห้องอาหารก่อนนะครับ 🍓");return;
+/* จอแคบ */
+@media (max-width: 390px) {
+  .topbar {
+    gap: 5px;
   }
-  if(key==="bath"&&room!==4){toast("พาโทกี้ไปห้องน้ำก่อนนะครับ 🛁");return}
-  if(key==="toilet"&&room!==4){toast("พาโทกี้ไปห้องน้ำก่อนนะครับ 🚽");return}
-  if(key==="sleep"&&room!==0){toast("พาโทกี้กลับห้องนอนก่อนนะครับ 🛏️");return}
-  if(key==="wake"&&!state.sleeping){toast("โทกี้ยังไม่ได้นอนเลยครับ");return}
-  if(key==="wake"&&state.sleeping){
-    state.sleeping=false;state.energy=75;state.room=0;state.light=true;
-    $("sleepOverlay").classList.add("hidden");
-    randomLine("wake");render();save();progress("sleep");return;
-  }
-  if(key==="sleep"){
-    state.sleeping=true;state.room=0;state.light=false;state.energy=Math.max(state.energy,0);
-    $("sleepOverlay").classList.add("hidden");
-    randomLine("sleep");render();save();progress("sleep");return;
-  }
-  if(key==="pet"){
-    state.energy=Math.max(0,state.energy-2);
-    $("hand").classList.add("active");
-    setTimeout(()=>$("hand").classList.remove("active"),2200);
-    progress("pet");
-  }else if(key==="feed"){
-    state.hunger=Math.min(100,state.hunger+27);
-    state.toilet=Math.min(100,state.toilet+35);
-    state.energy=Math.max(0,state.energy-3);
-    progress("feed");progress("play");
-  }else if(key==="bath"){
-    state.clean=100;state.energy=Math.max(0,state.energy-4);
-    progress("bath");
-  }else if(key==="toilet"){
-    if(state.toilet<25){toast("ตอนนี้โทกี้ยังไม่ปวดครับ");return}
-    state.toilet=0;state.clean=Math.max(0,state.clean-4);
-    progress("toilet");
-  }else if(key==="draw"){
-    openDrawing();return;
-  }else if(key==="talk"||key==="story"){
-    state.energy=Math.max(0,state.energy-1);progress("play");
-  }else{
-    state.energy=Math.max(0,state.energy-2);progress("play");
-  }
-  randomLine(key);bounce();renderStats();renderMission();save();energyWarning();
-}
-document.querySelectorAll("[data-action]").forEach(btn=>{
-  btn.addEventListener("click",()=>action(btn.dataset.action));
-});
-$("toky").addEventListener("click",()=>{
-  if(!canInteract())return;
-  if(state.room===0&&state.sleeping)return;
-  action("pet");
-});
-$("toky").addEventListener("keydown",e=>{
-  if(e.key==="Enter"||e.key===" "){e.preventDefault();action("pet")}
-});
-$("lampToggle").addEventListener("click",()=>{
-  if(state.sleeping){toast("ปล่อยให้โทกี้หลับก่อนนะครับ 🌙");return}
-  state.light=!state.light;
-  $("lamp").classList.toggle("off",!state.light);
-  $("lampToggle").textContent=state.light?"💡 ปิดไฟ":"🌙 เปิดไฟ";
-  toast(state.light?"เปิดไฟแล้วครับ":"ปิดไฟแล้ว ฝันดีนะครับ");
-  save();
-});
-$("claimMission").addEventListener("click",()=>{
-  const idx=state.missionIndex,m=missions[idx%missions.length];
-  if(state.missionProgress<m.goal||state.claimed.includes(idx))return;
-  state.coins+=m.reward;state.claimed.push(idx);
-  state.missionIndex++;state.missionProgress=0;
-  renderMission();renderStats();save();
-  say("เก่งมากครับ "+greeting()+"! รับ "+m.reward+" เหรียญแล้ว เอาไปซื้อของแต่งห้องให้โทกี้กันนะครับ");
-  toast("ภารกิจสำเร็จ! ได้ "+m.reward+" เหรียญ 🪙");
-});
-$("goSleep").addEventListener("click",()=>{
-  state.room=0;state.sleeping=true;state.light=false;
-  $("sleepOverlay").classList.add("hidden");
-  say(greeting()+" พาโทกี้มาถึงเตียงแล้ว...ขอบคุณนะครับ zzz");
-  render();save();
-});
-const shopItems=[
- {id:"bear",name:"ตุ๊กตาหมี",icon:"🧸",price:12,room:1},
- {id:"ball",name:"ลูกบอล",icon:"⚽",price:8,room:1},
- {id:"plant",name:"ต้นไม้กระถาง",icon:"🪴",price:15,room:1},
- {id:"flower",name:"แจกันดอกไม้",icon:"💐",price:10,room:3},
- {id:"cookie",name:"โหลคุกกี้",icon:"🍪",price:12,room:2},
- {id:"star",name:"ไฟดาว",icon:"🌟",price:20,room:0},
- {id:"bathduck",name:"เป็ดยาง",icon:"🦆",price:8,room:4},
- {id:"picture",name:"ภาพติดผนัง",icon:"🖼️",price:18,room:0}
-];
-function openShop(){
-  const p=$("extraPanel");
-  p.classList.remove("hidden");
-  p.innerHTML='<h3>🛍️ ร้านตกแต่งบ้าน</h3><p style="font-size:12px">ซื้อของด้วยเหรียญที่ได้จากภารกิจ ของที่ซื้อจะอยู่ในห้องที่กำหนด</p><div class="shop-grid" id="shopGrid"></div><button id="closePanel" style="margin-top:10px">ปิด</button>';
-  const grid=$("shopGrid");
-  shopItems.forEach(item=>{
-    const owned=state.decor.includes(item.id);
-    const div=document.createElement("div");div.className="shop-item";
-    div.innerHTML='<div style="font-size:26px">'+item.icon+'</div><strong>'+item.name+'</strong><div>🪙 '+item.price+'</div>';
-    const b=document.createElement("button");b.textContent=owned?"ซื้อแล้ว ✓":"ซื้อ";
-    b.disabled=owned||state.coins<item.price;
-    b.addEventListener("click",()=>{
-      if(state.coins<item.price||state.decor.includes(item.id))return;
-      state.coins-=item.price;state.decor.push(item.id);
-      renderStats();renderRoom();save();openShop();
-      toast("ซื้อ"+item.name+"แล้ว! ไปดูในห้องได้เลย 🏠");
-    });
-    div.appendChild(b);grid.appendChild(div);
-  });
-  $("closePanel").addEventListener("click",()=>p.classList.add("hidden"));
-}
-$("shopOpen").addEventListener("click",openShop);
 
-function openDrawing(){
-  const p=$("extraPanel");p.classList.remove("hidden");
-  p.innerHTML=`
-    <h3>🎨 วาดรูปกับโทกี้</h3>
-    <p style="font-size:13px">วาดรูปอะไรก็ได้เลยครับ แกรนนี่${escapeHTML(state.name)}! เสร็จแล้วกดส่งให้โทกี้ดูนะ</p>
-    <canvas id="canvas" width="600" height="320" aria-label="พื้นที่วาดรูป"></canvas>
-    <div class="draw-buttons"><button id="clearCanvas">ลบรูป</button><button id="sendDrawing" style="background:#ffe0eb">ส่งให้โทกี้ 💌</button></div>
-    <button id="closeDrawing" style="margin-top:8px;width:100%">กลับไปเล่น</button>`;
-  const canvas=$("canvas"),ctx=canvas.getContext("2d");
-  let drawing=false,hasInk=false;
-  ctx.lineWidth=7;ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle="#ed719a";
-  function coords(e){
-    const r=canvas.getBoundingClientRect();
-    return {x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height};
+  .brand {
+    font-size: 12px;
   }
-  canvas.addEventListener("pointerdown",e=>{
-    e.preventDefault();drawing=true;hasInk=true;canvas.setPointerCapture(e.pointerId);
-    const p=coords(e);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+0.1,p.y+0.1);ctx.stroke();
-  });
-  canvas.addEventListener("pointermove",e=>{
-    if(!drawing)return;e.preventDefault();const p=coords(e);ctx.lineTo(p.x,p.y);ctx.stroke();
-  });
-  function stop(){drawing=false}
-  canvas.addEventListener("pointerup",stop);canvas.addEventListener("pointercancel",stop);
-  $("clearCanvas").addEventListener("click",()=>{
-    ctx.clearRect(0,0,canvas.width,canvas.height);hasInk=false;
-  });
-  $("sendDrawing").addEventListener("click",()=>{
-    if(!hasInk){toast("ลองวาดอะไรสักนิดก่อนส่งนะครับ 🎨");return}
-    state.drawings++;state.coins+=3;state.energy=Math.max(0,state.energy-1);
-    progress("draw");
-    say("แกรนนี่"+state.name ว้าว! รูปนี้น่ารักมากครับ โทกี้ชอบมาก ๆ เลย ขอเก็บไว้เป็นผลงานชิ้นโปรดนะ kub");
-    renderStats();renderMission();save();
-    toast("โทกี้ชอบรูปของ Granny มาก! โบนัส 3 เหรียญ 🪙");
-    p.classList.add("hidden");energyWarning();
-  });
-  $("closeDrawing").addEventListener("click",()=>p.classList.add("hidden"));
-}
-function escapeHTML(s){
-  return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
 
-$("nameForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const name=$("playerName").value.trim();
-  if(!name){$("playerName").focus();return}
-  state.name=name;
-  $("start").classList.add("hidden");
-  $("game").classList.remove("hidden");
-  $("speech").textContent="สวัสดีครับ แกรนนี่"+state.name+"! ยินดีต้อนรับสู่บ้านของโทกี้นะครับ 🍓";
-  render();save();
-});
-load();
-if(state.name){
-  $("playerName").value=state.name;
-}
-setInterval(()=>{
-  if($("game").classList.contains("hidden"))return;
-  if(!state.sleeping){
-    state.energy=Math.max(0,state.energy-0.35);
-    state.hunger=Math.max(0,state.hunger-0.25);
-    state.clean=Math.max(0,state.clean-0.12);
-    renderStats();energyWarning();save();
-  }else{
-    state.energy=Math.min(100,state.energy+1.2);
-    renderStats();save();
+  .coins {
+    padding: 5px 7px;
+    font-size: 12px;
   }
-},5000);
-})();
-</script>
-</body>
-</html>
+
+  #toky {
+    transform: translateX(-50%) scale(.8);
+    transform-origin: bottom center;
+  }
+}
