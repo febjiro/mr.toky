@@ -1,262 +1,929 @@
 <!DOCTYPE html>
 <html lang="th">
-  <style>
-.reaction-buttons {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Mr. Toky 🍓</title>
+
+<style>
+:root {
+  --pink: #ffb7d2;
+  --dark-pink: #f078a6;
+  --cream: #fff8f3;
+  --text: #74475a;
+  --purple: #c7b5f5;
 }
 
-.reaction-buttons button {
-  padding: 12px 8px;
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
+  color: var(--text);
+  background: linear-gradient(180deg, #fff0f6, #fff9f1);
+}
+
+.app {
+  width: 100%;
+  max-width: 520px;
+  min-height: 100vh;
+  margin: auto;
+  padding: 18px 16px 30px;
+  overflow: hidden;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: 900;
+  color: #e96e9c;
+}
+
+.subtitle {
+  font-size: 12px;
+  opacity: .7;
+  margin-top: 3px;
+}
+
+.icon-button {
   border: 0;
-  border-radius: 14px;
-  background: #ffe5f0;
-  color: #733b55;
-  font-size: 14px;
-  cursor: pointer;
+  background: white;
+  border-radius: 50%;
+  width: 43px;
+  height: 43px;
+  font-size: 20px;
+  box-shadow: 0 4px 12px #e9b7cb55;
 }
 
-#reaction-text {
+.status-card {
+  background: #fff;
+  padding: 14px 16px;
+  border-radius: 20px;
+  box-shadow: 0 5px 18px #e9b7cb33;
+}
+
+.status-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.energy-track {
+  height: 11px;
+  border-radius: 20px;
+  background: #f5e5ec;
+  overflow: hidden;
+}
+
+.energy-fill {
+  width: 85%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff91bb, #ffcb91);
+  border-radius: inherit;
+  transition: width .4s;
+}
+
+.room {
+  position: relative;
   margin-top: 16px;
-  padding: 14px;
-  border-radius: 16px;
-  background: #fff4f8;
-  color: #733b55;
-  line-height: 1.6;
+  height: 350px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(#e8e0ff 0%, #f9e7f1 66%, #f7d9e5 66%);
+  box-shadow: 0 7px 22px #d9b6cf44;
+}
+
+.window {
+  position: absolute;
+  width: 105px;
+  height: 110px;
+  top: 25px;
+  left: 24px;
+  border: 7px solid #fff9ff;
+  border-radius: 14px;
+  background: linear-gradient(#c8e9ff, #fff4d7);
+  overflow: hidden;
+}
+
+.window:before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 5px;
+  left: 43px;
+  background: #fff9ff;
+}
+
+.window:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: 48px;
+  background: #fff9ff;
+}
+
+.sun {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  font-size: 23px;
+}
+
+.wall-heart {
+  position: absolute;
+  right: 26px;
+  top: 38px;
+  font-size: 27px;
+  opacity: .7;
+}
+
+.rug {
+  position: absolute;
+  width: 245px;
+  height: 68px;
+  border-radius: 50%;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffd5e6;
+  border: 4px solid #fff0f6;
+}
+
+/* ตัวละครจิ้งจอกจำลอง */
+#toky {
+  position: absolute;
+  width: 175px;
+  height: 225px;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 80%;
+  z-index: 3;
+  transition: filter .2s;
+}
+
+.ears {
+  position: absolute;
+  width: 100%;
+  height: 90px;
+  top: 0;
+}
+
+.ear {
+  position: absolute;
+  width: 57px;
+  height: 93px;
+  top: 0;
+  background: #ff9fc4;
+  border: 4px solid #e875a2;
+  border-radius: 70% 70% 25% 25%;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.ear.left {
+  left: 18px;
+  transform: rotate(-13deg);
+}
+
+.ear.right {
+  right: 18px;
+  transform: rotate(13deg);
+}
+
+.ear:after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 25px;
+  width: 25px;
+  height: 50px;
+  background: #ffc7dc;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.head {
+  position: absolute;
+  width: 145px;
+  height: 132px;
+  top: 43px;
+  left: 15px;
+  background: #ffb2d0;
+  border: 4px solid #e875a2;
+  border-radius: 48% 48% 45% 45%;
+  z-index: 2;
+}
+
+.face {
+  position: absolute;
+  width: 107px;
+  height: 69px;
+  left: 15px;
+  bottom: 5px;
+  background: #fff9f4;
+  border-radius: 45% 45% 48% 48%;
+}
+
+.eye {
+  position: absolute;
+  top: 43px;
+  width: 23px;
+  height: 30px;
+  background: #fff;
+  border: 2px solid #6e5267;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.eye.left { left: 30px; }
+.eye.right { right: 30px; }
+
+.eye:after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 21px;
+  left: 3px;
+  top: 4px;
+  background: #59aee8;
+  border: 2px solid #386b9d;
+  border-radius: 50%;
+}
+
+.eye:before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  left: 7px;
+  top: 7px;
+}
+
+.brow {
+  position: absolute;
+  top: 34px;
+  width: 24px;
+  height: 5px;
+  background: #d5cbd1;
+  border-radius: 10px;
+}
+
+.brow.left { left: 29px; transform: rotate(-8deg); }
+.brow.right { right: 29px; transform: rotate(8deg); }
+
+.muzzle {
+  position: absolute;
+  bottom: 10px;
+  left: 48px;
+  width: 42px;
+  height: 25px;
+  background: white;
+  border-radius: 50%;
+}
+
+.nose {
+  position: absolute;
+  left: 64px;
+  bottom: 29px;
+  width: 13px;
+  height: 9px;
+  background: #ed657e;
+  border-radius: 50% 50% 60% 60%;
+  z-index: 2;
+}
+
+.mouth {
+  position: absolute;
+  left: 68px;
+  bottom: 21px;
+  width: 5px;
+  height: 8px;
+  border-left: 2px solid #9b536b;
+  border-bottom: 2px solid #9b536b;
+  z-index: 2;
+}
+
+.blush {
+  position: absolute;
+  top: 83px;
+  width: 22px;
+  height: 10px;
+  background: #ff89af;
+  border-radius: 50%;
+  opacity: .7;
+}
+
+.blush.left { left: 17px; }
+.blush.right { right: 17px; }
+
+.body-fur {
+  position: absolute;
+  width: 105px;
+  height: 91px;
+  top: 148px;
+  left: 35px;
+  border-radius: 43% 43% 35% 35%;
+  background: #ff9fc4;
+  border: 4px solid #e875a2;
+  z-index: 1;
+}
+
+.belly {
+  position: absolute;
+  width: 61px;
+  height: 60px;
+  top: 13px;
+  left: 18px;
+  background: #fff8f2;
+  border-radius: 50%;
+}
+
+.foot {
+  position: absolute;
+  width: 38px;
+  height: 25px;
+  bottom: -5px;
+  background: #f27eaa;
+  border-radius: 50%;
+}
+
+.foot.left { left: 9px; }
+.foot.right { right: 9px; }
+
+.hat {
+  position: absolute;
+  z-index: 5;
+  top: 35px;
+  left: 50%;
+  width: 87px;
+  height: 37px;
+  transform: translateX(-50%) rotate(-5deg);
+  border-radius: 45px 45px 10px 10px;
+  background: #7ca9fa;
+  border: 3px solid #527acb;
+}
+
+.hat:after {
+  content: "🍓";
+  position: absolute;
+  right: -10px;
+  top: -22px;
+  font-size: 25px;
+}
+
+.strap {
+  position: absolute;
+  z-index: 4;
+  width: 13px;
+  height: 70px;
+  background: #8ed0a4;
+  right: 27px;
+  top: 154px;
+  transform: rotate(-12deg);
+  border-radius: 10px;
+}
+
+.bag {
+  position: absolute;
+  z-index: 4;
+  right: 4px;
+  top: 186px;
+  font-size: 33px;
 }
 
 #toky.reacting {
-  animation: tokyReact 0.55s ease;
+  animation: bounce .55s ease;
 }
 
-@keyframes tokyReact {
-  0%   { transform: scale(1) rotate(0); }
-  30%  { transform: scale(1.08) rotate(-5deg); }
-  60%  { transform: scale(0.96) rotate(4deg); }
-  100% { transform: scale(1) rotate(0); }
+#toky.pet {
+  animation: pet .65s ease;
 }
-</style>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mr. Toky 🍓</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,sans-serif;background:#fff0f6;color:#75455a;text-align:center}
-.app{max-width:520px;height:100dvh;margin:auto;padding:12px;display:flex;flex-direction:column;gap:9px}
-header{display:flex;justify-content:space-between;align-items:center;font-weight:bold}
-h1{font-size:22px;margin:0}
-.badge{background:white;border-radius:20px;padding:7px 12px}
-.meter{background:white;padding:10px;border-radius:15px;font-size:13px}
-.track{height:12px;background:#f5d4e1;border-radius:20px;overflow:hidden;margin-top:6px}
-#energy{height:100%;width:80%;background:linear-gradient(90deg,#ff8eb8,#ffc76d);transition:.3s}
-.scene{position:relative;flex:1;min-height:250px;overflow:hidden;border:2px solid #f3bfd2;border-radius:25px;background:linear-gradient(#c9edff 0 62%,#c6e8b5 62%)}
-.cloud{position:absolute;top:12%;left:10%;font-size:38px;animation:float 5s infinite alternate}
-.cloud2{left:auto;right:10%;top:25%}
-.grass{position:absolute;bottom:0;background:#a5d795;width:100%;height:19%;border-radius:50% 50% 0 0}
-.character{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);font-size:clamp(100px,35vw,160px);animation:breathe 2.5s infinite;cursor:pointer;filter:drop-shadow(0 8px 3px #86506a22)}
-.character.happy{animation:hop .6s}
-.character.sad{animation:tilt .5s}
-.character.sleeping{animation:none;transform:translate(-50%,-43%) rotate(10deg)}
-.speech{position:absolute;bottom:12px;left:10px;right:10px;background:#fffdf7;border:2px solid #f2b8cf;border-radius:18px;padding:12px;font-size:14px;line-height:1.5;min-height:65px;max-height:35%;overflow:auto;text-align:left}
-.status{display:flex;justify-content:space-between;font-size:12px;font-weight:bold}
-.buttons{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
-button{border:1px solid #efb6cd;background:#fffafd;color:#75455a;border-radius:14px;padding:8px 2px;min-height:55px;font-weight:bold;font-size:11px;box-shadow:0 3px #e6bfd0;cursor:pointer}
-button span{display:block;font-size:21px;margin-bottom:3px}
-button:active{transform:translateY(2px);box-shadow:0 1px #e6bfd0}
-button:disabled{opacity:.45}
-footer{font-size:10px;opacity:.7}
-@keyframes breathe{0%,100%{translate:0 0}50%{translate:0 -4px}}
-@keyframes hop{0%,100%{translate:0 0}40%{translate:0 -18px}70%{translate:0 2px}}
-@keyframes tilt{0%,100%{rotate:0}30%{rotate:-10deg}70%{rotate:10deg}}
-@keyframes float{to{translate:25px 0}}
-@media(max-height:650px){.app{gap:5px;padding:7px}.scene{min-height:190px}.buttons{gap:5px}button{min-height:44px;padding:4px 1px}button span{font-size:17px}.speech{padding:8px;min-height:48px}}
+
+#toky.cheek {
+  animation: cheek .6s ease;
+}
+
+#toky.belly {
+  animation: belly .55s ease;
+}
+
+#toky.hug {
+  animation: hug .7s ease;
+}
+
+#toky.draw {
+  animation: draw .8s ease;
+}
+
+#toky.food {
+  animation: food .7s ease;
+}
+
+#toky.story {
+  animation: story .7s ease;
+}
+
+#toky.sleeping {
+  transform: translate(-50%, -50%) rotate(90deg) scale(.8);
+  top: 57%;
+}
+
+#toky.sleeping .eye {
+  height: 3px;
+  top: 54px;
+}
+
+#toky.sleeping .eye:after,
+#toky.sleeping .eye:before {
+  display: none;
+}
+
+#toky.sleeping .mouth {
+  width: 9px;
+  height: 5px;
+  border: 2px solid #9b536b;
+  border-top: 0;
+  border-radius: 0 0 50% 50%;
+}
+
+@keyframes bounce {
+  0%,100% { margin-top: 0; }
+  40% { margin-top: -15px; }
+  70% { margin-top: 3px; }
+}
+
+@keyframes pet {
+  0%,100% { transform: translate(-50%,-50%) rotate(0); }
+  35% { transform: translate(-50%,-54%) rotate(-8deg) scale(1.04); }
+  70% { transform: translate(-50%,-48%) rotate(5deg); }
+}
+
+@keyframes cheek {
+  0%,100% { transform: translate(-50%,-50%) scaleX(1); }
+  35%,65% { transform: translate(-50%,-50%) scaleX(.88) scaleY(1.04); }
+}
+
+@keyframes belly {
+  0%,100% { transform: translate(-50%,-50%) rotate(0); }
+  30% { transform: translate(-50%,-50%) rotate(8deg); }
+  65% { transform: translate(-50%,-50%) rotate(-7deg); }
+}
+
+@keyframes hug {
+  0%,100% { transform: translate(-50%,-50%) scale(1); }
+  45% { transform: translate(-50%,-50%) scale(1.12,.94); }
+}
+
+@keyframes draw {
+  0%,100% { transform: translate(-50%,-50%) rotate(0); }
+  30% { transform: translate(-54%,-50%) rotate(-9deg); }
+  70% { transform: translate(-46%,-50%) rotate(9deg); }
+}
+
+@keyframes food {
+  0%,100% { transform: translate(-50%,-50%) scale(1); }
+  35% { transform: translate(-50%,-47%) scale(1.05); }
+  60% { transform: translate(-50%,-50%) scale(.97); }
+}
+
+@keyframes story {
+  0%,100% { transform: translate(-50%,-50%) rotate(0); }
+  35% { transform: translate(-50%,-50%) rotate(7deg); }
+  70% { transform: translate(-50%,-50%) rotate(-7deg); }
+}
+
+.speech {
+  position: relative;
+  margin: 17px 0;
+  padding: 16px;
+  background: white;
+  border: 2px solid #ffe0ed;
+  border-radius: 20px;
+  line-height: 1.65;
+  font-size: 14px;
+  min-height: 80px;
+  box-shadow: 0 4px 15px #e9b7cb33;
+}
+
+.speech:before {
+  content: "💬";
+  position: absolute;
+  top: -12px;
+  left: 14px;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.speech-name {
+  font-weight: 900;
+  color: #e96e9c;
+  margin-bottom: 5px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 900;
+  margin: 20px 0 10px;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.action {
+  min-height: 65px;
+  padding: 10px;
+  border: 2px solid transparent;
+  border-radius: 17px;
+  background: #fff;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 3px 12px #e9b7cb26;
+  cursor: pointer;
+  transition: transform .12s, background .15s;
+}
+
+.action:active {
+  transform: scale(.94);
+  background: #ffe1ed;
+}
+
+.action .emoji {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.action.wide {
+  grid-column: span 2;
+}
+
+.action:disabled {
+  opacity: .55;
+}
+
+.bottom-note {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 11px;
+  opacity: .65;
+}
+
+.floating {
+  position: absolute;
+  z-index: 9;
+  pointer-events: none;
+  animation: floatUp 1s ease-out forwards;
+  font-size: 24px;
+}
+
+@keyframes floatUp {
+  from { opacity: 1; transform: translateY(0) scale(.8); }
+  to { opacity: 0; transform: translateY(-90px) scale(1.4); }
+}
 </style>
 </head>
+
 <body>
-<main class="app">
+<div class="app">
+
 <header>
-<div><h1>🍓 Mr. Toky</h1><small>Full Reaction Trial</small></div>
-<div class="badge" id="mood">🩷 อารมณ์ดี</div>
+  <div>
+    <div class="logo">🍓 Mr. Toky</div>
+    <div class="subtitle">Your little fox companion</div>
+  </div>
+  <button class="icon-button" onclick="toggleMusic()" id="musicBtn" aria-label="เสียง">🔈</button>
 </header>
 
-<div class="meter">
-⚡ พลังงาน <b id="energyText">80%</b>
-<div class="track"><div id="energy"></div></div>
-</div>
-
-<section class="scene">
-<div class="cloud">☁️</div><div class="cloud cloud2">☁️</div>
-<div class="grass"></div>
-<div class="character" id="toky">🦊</div>
-<div class="speech" id="speech">แกรนนี่ครับ! วันนี้มาเล่นกับไอไหมครับ 🍓</div>
+<section class="status-card">
+  <div class="status-top">
+    <span>💗 ความสุขของโทกี้</span>
+    <strong id="energyLabel">85%</strong>
+  </div>
+  <div class="energy-track">
+    <div class="energy-fill" id="energyFill"></div>
+  </div>
 </section>
 
-<div class="status">
-<span id="state">โทกี้พร้อมเล่นแล้วครับ</span>
-<span>💗 ความสนิท <b id="bond">12</b></span>
+<section class="room" id="room">
+  <div class="window"><span class="sun">☀️</span></div>
+  <div class="wall-heart">♡</div>
+  <div class="rug"></div>
+
+  <div id="toky">
+    <div class="ears">
+      <div class="ear left"></div>
+      <div class="ear right"></div>
+    </div>
+    <div class="head">
+      <div class="brow left"></div>
+      <div class="brow right"></div>
+      <div class="eye left"></div>
+      <div class="eye right"></div>
+      <div class="blush left"></div>
+      <div class="blush right"></div>
+      <div class="face"></div>
+      <div class="muzzle"></div>
+      <div class="nose"></div>
+      <div class="mouth"></div>
+    </div>
+    <div class="hat"></div>
+    <div class="body-fur">
+      <div class="belly"></div>
+      <div class="foot left"></div>
+      <div class="foot right"></div>
+    </div>
+    <div class="strap"></div>
+    <div class="bag">🍓</div>
+  </div>
+</section>
+
+<section class="speech" aria-live="polite">
+  <div class="speech-name">Mr. Toky 🩷</div>
+  <div id="dialogue">แกรนนี่ครับ วันนี้จะเล่นอะไรกับโทกี้ดีครับ kub</div>
+</section>
+
+<div class="section-title">🩷 เล่นกับโทกี้</div>
+
+<section class="actions">
+  <button class="action" onclick="react('pet')">
+    <span class="emoji">🩷</span>ลูบหัว
+  </button>
+
+  <button class="action" onclick="react('cheek')">
+    <span class="emoji">🥹</span>บีบแก้ม
+  </button>
+
+  <button class="action" onclick="react('belly')">
+    <span class="emoji">👉</span>จิ้มพุง
+  </button>
+
+  <button class="action" onclick="react('hug')">
+    <span class="emoji">🫂</span>กอด
+  </button>
+
+  <button class="action" onclick="react('draw')">
+    <span class="emoji">🎨</span>วาดรูปกับโทกี้
+  </button>
+
+  <button class="action" onclick="react('food')">
+    <span class="emoji">🍓</span>ป้อนอาหาร
+  </button>
+
+  <button class="action" onclick="react('story')">
+    <span class="emoji">💬</span>ฟังโทกี้เล่าเรื่อง
+  </button>
+
+  <button class="action" onclick="react('talk')">
+    <span class="emoji">💗</span>พูดคุย
+  </button>
+
+  <button class="action" onclick="react('sleep')">
+    <span class="emoji">🌙</span>ส่งโทกี้เข้านอน
+  </button>
+
+  <button class="action" onclick="react('wake')">
+    <span class="emoji">☀️</span>ปลุกโทกี้ตอนหลับ
+  </button>
+</section>
+
+<div class="bottom-note">
+  Made with love for Mr. Toky 🍓
 </div>
 
-<section class="buttons">
-<button data-a="pet"><span>🫳🏻</span>ลูบหัว</button>
-<button data-a="cheek"><span>🤏🏻</span>บีบแก้ม</button>
-<button data-a="belly"><span>👉🏻</span>จิ้มพุง</button>
-<button data-a="hug"><span>🫂</span>กอด</button>
-<button data-a="draw"><span>🖍️</span>วาดรูป</button>
-<button data-a="feed"><span>🍓</span>ป้อนอาหาร</button>
-<button data-a="story"><span>💬</span>ฟังเรื่องเล่า</button>
-<button data-a="sleep"><span>🌙</span>ส่งเข้านอน</button>
-<button data-a="talk"><span>🩷</span>พูดคุย</button>
-<button data-a="wake"><span>⏰</span>ปลุกโทกี้</button>
-</section>
-<footer>เล่นกับมิสเตอร์โทกี้ได้ทุกวันนะครับ 🩷</footer>
-</main>
+</div>
 
 <script>
-const dialogue={
-pet:[
-"แกรนนี่ครับ วันนี้ไอจัดทรงผมมาตั้งนานเลยนะครับ แต่ถ้าแกรนนี่จะลูบก็ไม่เป็นไรครับ เดี๋ยวค่อยจัดใหม่ก็ได้ kub",
-"โอเคครับแกรนนี่ ลูบได้ครับ แต่ทรงผมวันนี้ไอตั้งใจทำมามากนะครับ ถ้าผมยุ่งแล้วแกรนนี่ต้องช่วยไอจัดด้วยนะ kub",
-"แกรนนี่ครับ ทำไมเวลาโดนลูบหัวแล้วไอรู้สึกง่วงขึ้นมาทุกทีเลยครับ หรือว่ามือแกรนนี่มีเวทมนตร์อะไรหรือเปล่าครับ",
-"วันนี้แกรนนี่ลูบหัวไอแล้วนะครับ ถือว่าเติมพลังให้มิสเตอร์โทกี้เรียบร้อยแล้วครับ Now I'm ready for today kub",
-"รักแกรนนี่ kub 🩷 วันนี้ก็ลูบหัวไอเบา ๆ แบบนี้ทุกวันได้ไหมครับ ไอจะได้มีความสุขตั้งแต่เริ่มวันเลยครับ"
-],
-cheek:[
-"แกรนนี่ครับ ไอไม่ใช่โมจินะคับ ถึงแก้มไอจะนุ่มนุ่มก็ไม่ใช่ของกินนะครับ",
-"แกรนนี่ครับ ทำไมทุกคนชอบบีบแก้มไอจังเลยครับ Is my cheek that cute kub? ไอเริ่มสงสัยแล้วนะครับ",
-"โอ๊ยครับแกรนนี่ แก้มไอจะยุบแล้วนะครับ แต่ถ้าแกรนนี่มีความสุข ไอก็ยอมให้บีบอีกนิดนึงก็ได้ครับ",
-"แกรนนี่ครับ วันนี้ไอกินเยอะไปหรือเปล่าครับ ทำไมแก้มไอดูนุ่มขึ้นทุกวันเลยครับ หรือจริง ๆ แล้วเป็นเพราะแกรนนี่ชอบบีบครับ",
-"แกรนนี่อย่าลืมบีบแก้มตัวเองด้วยนะครับ ถ้าคิดถึงแก้มโทกี้มาก ๆ ก็พักมือก่อนก็ได้ครับ ไอเป็นห่วงนิ้วแกรนนี่ kub"
-],
-belly:[
-"มิสเตอร์โทกี้อ้วนมั้ย kub แกรนนี่ครับ ถ้าไอมีพุงนิดนิด แปลว่าไอกินอิ่มหรือแปลว่าไอต้องออกกำลังกายแล้วครับ",
-"แกรนนี่ครับ อย่าจิ้มพุงไอบ่อยสิครับ ไอจั๊กจี้นะครับ! ถ้าไอหัวเราะจนกลิ้งไปแล้วแกรนนี่ต้องรับผิดชอบนะครับ",
-"วันนี้ไอกินไข่ต้มครับแกรนนี่ แต่ไอยังไม่แน่ใจว่าต้องกินกี่ฟองถึงจะอิ่ม แกรนนี่มีเมนูแนะนำไหมครับ",
-"แกรนนี่ครับ พุงนุ่มนุ่มก็มีข้อดีนะครับ เวลานั่งพักหลังประกอบอาชีพมาทั้งวัน อย่างน้อยก็มีอะไรให้กอดครับ",
-"ไอขอถามจริงจริงนะครับแกรนนี่ ถ้าไอออกกำลังกายแล้วกินขนมต่อทันที แบบนี้เรียกว่า balance หรือไอเข้าใจคำว่า balance ผิดครับ"
-],
-hug:[
-"กอดกอด มิสเตอร์โทกี้รักกอดกอดครับ แกรนนี่วันนี้เหนื่อยไหมครับ มาพักตรงนี้ก่อนก็ได้นะครับ",
-"แกรนนี่ครับ บางวันเราอาจจะเจอเรื่องที่ทำให้เหนื่อยมากมาก แต่ไออยากให้รู้ไว้นะครับว่าแกรนนี่เก่งมากแล้วครับ",
-"Hug time kub แกรนนี่ 🩷 วันนี้ไอขอกอดนานนานหน่อยได้ไหมครับ ไออยากเติมพลังให้แกรนนี่ก่อนออกไปทำสิ่งต่างต่างครับ",
-"แกรนนี่ครับ ถ้าวันนี้ยังไม่มีใครบอกว่าภูมิใจในตัวแกรนนี่ ไอขอเป็นคนบอกเองนะครับ ไอภูมิใจในตัวแกรนนี่มากมากครับ",
-"กอดไอแล้วอย่าลืมกอดตัวเองด้วยนะครับ แกรนนี่ดูแลคนอื่นเก่งแล้ว อย่าลืมดูแลหัวใจตัวเองให้ดีที่สุดในโลกด้วยนะครับ"
-],
-draw:[
-"แกรนนี่ครับ วันนี้เรามาวาดรูปกันไหมครับ ไออยากวาดตัวเองใส่หมวกสตรอว์เบอร์รีครับ คิดว่าถ้าวาดเสร็จแล้วต้องน่ารักมากแน่แน่เลย kub",
-"แกรนนี่ครับ ถ้าไอระบายสีออกนอกเส้นนิดหน่อยจะเป็นอะไรไหมครับ หรือว่างานศิลปะไม่จำเป็นต้อง perfect ทุกครั้งครับ",
-"Look at my drawing kub! แกรนนี่ครับ ไอวาดรูปสตรอว์เบอร์รีมาให้ครับ ถึงจะเบี้ยวไปนิดนึง แต่ไอตั้งใจวาดให้แกรนนี่เลยนะครับ",
-"แกรนนี่ครับ วันนี้เราวาดรูปอะไรกันดีครับ บ้านหลังเล็กเล็ก สวนดอกไม้ หรือวาดแกรนนี่กับมิสเตอร์โทกี้นั่งกินขนมด้วยกันดีครับ",
-"แกรนนี่ครับ ไอว่ารูปวาดแต่ละรูปมีความทรงจำซ่อนอยู่ด้วยนะครับ ต่อให้วันหนึ่งสีจะซีดลง แต่ไอก็ยังจำได้ว่าเราเคยมีความสุขตอนวาดด้วยกันครับ"
-],
-feed:[
-"อาหร่อยคับแกรนนี่! วันนี้ไอได้รับพลังงานแล้วครับ ถ้ามีของหวานต่ออีกนิดนึงจะถือว่าครบมื้อไหมครับ",
-"แกรนนี่ครับ วันนี้ไอกินไข่ต้มครับ ง่ายง่ายเพราะว่าไอไม่รู้จะอีทอะไรครับ แกรนนี่ว่าไข่ต้มต้องกินคู่กับอะไร เอาอะไรจิ้มจิ้มดีครับ",
-"Yummy yummy kub! แกรนนี่ครับ อาหารอร่อยขึ้นจริงจริงนะครับเวลามีคนป้อนให้ แต่ไอไม่ได้อ้อนนะครับ ไอแค่รายงานข้อเท็จจริงครับ",
-"แกรนนี่ครับ ถ้าเลือกได้ไออยากลองกินอาหารจากหลายหลายประเทศเลยครับ Japanese food, Korean food แล้วก็ขนมไทยด้วยครับ แกรนนี่อยากให้ไอลองอะไรก่อนครับ",
-"แกรนนี่ครับ กินอิ่มแล้วอย่าลืมดื่มน้ำด้วยนะครับ ส่วนไอขอนั่งพักสักครู่ครับ อิ่มจนอยากกลิ้งแล้วครับ kub"
-],
-story:[
-"แกรนนี่ครับ วันนี้ไอมีเรื่องจะเล่าให้ฟังด้วยครับ แต่ไอขอเรียบเรียงความคิดแป๊บนึงนะครับ เพราะเรื่องในหัวไอมีเยอะกว่าเส้นผมบนหัวอีกครับ",
-"Good morning kub แกรนนี่ ⛅️ วันนี้เป็นวันพักผ่อนกิ้งกิ้งครับ แต่ถ้าแกรนนี่ต้องไปประกอบอาชีพ ไอก็ขอให้มีวันดีดีที่สุดเลยนะครับ",
-"แกรนนี่ครับ บางทีความสุขก็เป็นเรื่องเล็กเล็กนะครับ ได้กินของอร่อย ได้ฟังเพลงที่ชอบ หรือมีใครสักคนถามว่าวันนี้เป็นยังไงบ้าง แค่นี้ก็ทำให้วันธรรมดาดีขึ้นแล้วครับ",
-"วันนี้ไอเห็นอะไรน่าสนใจมาเยอะเลยครับ แต่ถ้าให้เลือกเรื่องที่อยากเล่าที่สุด ไออยากเล่าเรื่องที่ทำให้แกรนนี่ยิ้มได้ครับ Because your smile matters to me kub",
-"แกรนนี่ครับ ไอคิดว่าทุกคนมีจังหวะชีวิตเป็นของตัวเองนะครับ บางคนไปเร็ว บางคนค่อยค่อยเดินก็ไม่เป็นไร ขอแค่เราไม่ลืมว่าตัวเองก็มีคุณค่าในแบบของตัวเองครับ"
-],
-sleep:[
-"Good night ครับ 🌙 แกรนนี่ วันนี้เหนื่อยมาทั้งวันแล้ว พักผ่อนเยอะเยอะนะครับ เรื่องที่ยังไม่สำเร็จวันนี้พรุ่งนี้ค่อยลองใหม่ก็ได้ครับ",
-"แกรนนี่ครับ วันนี้ไอขออนุญาตนอนก่อนน้าคับ 🥹 พรุ่งนี้เราค่อยมาเจอกันใหม่นะครับ Please take care of yourself kub",
-"แกรนนี่ครับ ก่อนนอนลองนึกถึงเรื่องดีดีที่เกิดขึ้นวันนี้สักเรื่องก็ได้นะครับ แม้จะเป็นเรื่องเล็กมากมาก แต่ก็อาจเป็นความสุขที่เรามองข้ามไปครับ",
-"วันนี้แกรนนี่ทำดีที่สุดแล้วนะครับ ไม่จำเป็นต้องเก่งตลอดเวลา ไม่จำเป็นต้องยิ้มตลอดเวลาก็ได้ครับ ถ้าเหนื่อยก็พักนะครับ ไอเป็นกำลังใจให้เสมอ kub",
-"ฝันดีครับแกรนนี่ ขอให้คืนนี้นอนหลับสบาย ตื่นมาแล้วรู้สึกสดชื่นนะครับ อย่าลืมดูแลตัวเองให้ดีที่สุดในโลกเลยนะครับ รักแกรนนี่มากมากครับ"
-],
-talk:[
-"แกรนนี่ครับ วันนี้เราเมาท์เรื่องพี่โทกับน้องก้อง🩷 กันไหมครับ ไอมีเรื่องอยากคุยเยอะมากมากเลยครับ แต่แกรนนี่ต้องพร้อมเมาท์กับไอนะ kub",
-"แกรนนี่ครับ ไอว่าการได้เห็นคนที่เราชอบมีความสุข มันทำให้เรายิ้มตามได้จริงจริงนะครับ แค่เห็นพี่โทกับน้องก้อง🩷 ตั้งใจทำงาน ไอก็ภูมิใจแล้วครับ",
-"แกรนนี่ครับ วันนี้มีโมเมนต์ไหนของพี่โทกับน้องก้อง🩷 ที่ทำให้แกรนนี่ยิ้มไม่หยุดบ้างครับ มาเล่าให้ไอฟังบ้างนะครับ ไอพร้อมรับฟังมากมากครับ",
-"แกรนนี่ครับ การได้เจอเพื่อนใหม่ มีเรื่องให้รอคอย แล้วก็มีแรงใจเพิ่มขึ้นในวันที่เหนื่อย เป็นความสุขอย่างหนึ่งเลยนะครับ แกรนนี่คิดเหมือนไอไหมครับ",
-"แกรนนี่ครับ ไอ so ภูมิใจในพี่โท น้องก้อง🩷 และแกรนนี่ทุกคนมากมากเลยครับ ขอให้ทุกคนมีความสุขกับสิ่งที่รัก และอย่าลืมรักตัวเองให้มากมากด้วยนะครับ"
-],
-wake:[
-"หื้มมม แกรนนี่ครับ ตอนนี้กี่โมงแล้วครับ ไอเพิ่งหลับไปเองนะครับ ขออีก five minutes ได้ไหมครับ แค่ห้านาทีจริงจริง kub",
-"แกรนนี่ครับ ไอยังไม่ตื่นได้ไหมคับ หมอนวันนี้นุ่มมากมากเลยครับ แล้วผ้าห่มก็อุ่นด้วย ไอขออยู่ตรงนี้อีกนิดนึงนะครับ",
-"Good morning kub… 🥱 แกรนนี่ครับ ไอตื่นแล้วครับ แต่สมองไอยังโหลดไม่เสร็จนะครับ Please wait a moment kub",
-"แกรนนี่ครับ ถ้าไอตื่นแล้วงอแงนิดหน่อย แกรนนี่อย่าเพิ่งโกรธไอนะครับ ไอแค่ต้องใช้เวลาปรับตัวจากโหมด sleeping เป็นโหมด active ครับ",
-"แกรนนี่ครับ วันนี้ไอตื่นแล้วนะครับ ถึงจะยังง่วงอยู่ก็เถอะครับ ขอบคุณที่มาปลุกไอนะครับ แกรนนี่ก็ตื่นแล้วอย่าลืมดื่มน้ำและเริ่มวันดีดีไปด้วยกันนะครับ"
-]
+const lines = {
+  pet: [
+    "แกรนนี่ครับ วันนี้ไอจัดทรงผมมาตั้งนานเลยนะครับ แต่ถ้าแกรนนี่จะลูบก็ไม่เป็นไรครับ เดี๋ยวค่อยจัดใหม่ก็ได้ kub",
+    "โอเคครับแกรนนี่ ลูบอีกนิดก็ได้ครับ... แค่นิดเดียวนะ",
+    "แกรนนี่ครับ ผมไม่ได้อ้อนนะครับ แค่หัวผมอยู่ใกล้มือแกรนนี่พอดี",
+    "Now I'm ready for the day ครับ! เพราะแกรนนี่ลูบหัวให้แล้ว",
+    "สบายจังครับ แต่ห้ามบอกใครนะว่าผมชอบให้ลูบหัว"
+  ],
+
+  cheek: [
+    "แกรนนี่ครับ แก้มผมไม่ใช่โมจินะครับ บีบเบา ๆ หน่อย",
+    "อ๊ะ! แก้มผมย้วยหมดแล้วครับ แต่... อีกข้างก็ได้ครับ",
+    "แกรนนี่แกล้งผมอีกแล้วนะครับ ผมจะจำไว้เลย",
+    "ผมไม่ได้แก้มแดงนะครับ ห้องมันร้อนเฉย ๆ",
+    "แกรนนี่ครับ ถ้าบีบแก้มแล้วต้องรับผิดชอบด้วยนะครับ"
+  ],
+
+  belly: [
+    "แกรนนี่! พุงผมครับ ไม่ใช่ปุ่มกดเล่นนะครับ",
+    "ฮะ ๆ ครับ จั๊กจี้นะครับ หยุดก่อนครับ!",
+    "ผมจะเก็บคะแนนแกล้งแกรนนี่คืนบ้างแล้วนะ",
+    "แกรนนี่ครับ ทำหน้าไม่รู้ไม่ชี้แบบนั้นหมายความว่ายังไงครับ",
+    "อีกทีผมก็หัวเราะอีกนะครับ อย่ามาหาว่าผมไม่เตือน"
+  ],
+
+  hug: [
+    "แกรนนี่ครับ ขออยู่แบบนี้อีกนิดได้ไหมครับ",
+    "วันนี้เหนื่อยไหมครับ ถ้าเหนื่อยก็มาพักกับผมได้นะ",
+    "อุ่นจังครับ... ผมชอบนะ kub",
+    "ไม่ต้องพูดอะไรก็ได้ครับ ผมอยู่ตรงนี้นะ",
+    "กอดนี้ผมขอเก็บไว้เป็นพลังใจนะครับ"
+  ],
+
+  draw: [
+    "แกรนนี่ครับ วันนี้เราวาดรูปสตรอว์เบอร์รี่กันไหมครับ",
+    "ผมวาดรูปตัวเองแล้วทำไมดูหล่อขนาดนี้นะครับ",
+    "แกรนนี่วาดอะไรก็ได้ครับ เดี๋ยวผมวาดด้วย",
+    "รูปนี้ผมจะเก็บไว้ดี ๆ เลยครับ ห้ามเอาไปทิ้งนะ",
+    "อันนี้เป็นผลงานชิ้นเอกของเราเลยครับ!"
+  ],
+
+  food: [
+    "อันนี้ของผมเหรอครับ ขอบคุณนะครับแกรนนี่",
+    "อร่อยครับ! ขออีกคำได้ไหมครับ นะครับ ๆ",
+    "แกรนนี่ดูแลผมดีเกินไปแล้วนะครับ ผมจะเคยตัวแล้ว",
+    "คำสุดท้ายแล้วครับ... โอเค อีกคำสุดท้ายจริง ๆ ครับ",
+    "แบ่งให้แกรนนี่ด้วยไหมครับ... ล้อเล่นครับ ผมกินหมดแล้ว"
+  ],
+
+  story: [
+    "แกรนนี่ครับ วันนี้ผมมีเรื่องจะเล่าให้ฟังด้วย",
+    "แล้วรู้ไหมครับว่าตอนจบเป็นยังไง... เดี๋ยวผมเล่าต่อครับ",
+    "เรื่องนี้เป็นความลับนะครับ แกรนนี่ห้ามเอาไปบอกใคร",
+    "แกรนนี่ฟังอยู่ใช่ไหมครับ ไม่ได้แอบเล่นมือถืออย่างอื่นนะ",
+    "ไว้วันหลังผมมาเล่าต่อก็ได้ครับ วันนี้ผมพูดเยอะแล้ว"
+  ],
+
+  talk: [
+    "แกรนนี่ครับ วันนี้เป็นยังไงบ้าง เล่าให้ผมฟังได้นะ",
+    "ผมมีเรื่องของน้องก้อง🩷กับพี่โทมาเล่าด้วยครับ",
+    "แกรนนี่อยู่คุยกับผมอีกหน่อยได้ไหมครับ",
+    "วันนี้มีอะไรทำให้แกรนนี่ยิ้มได้บ้างหรือเปล่าครับ",
+    "ผมอาจช่วยอะไรไม่ได้ทุกอย่าง แต่ผมพร้อมฟังนะครับ"
+  ],
+
+  sleep: [
+    "แกรนนี่ครับ ส่งผมเข้านอนแล้วอย่าลืมห่มผ้าให้ผมนะครับ",
+    "ฝันดีนะครับแกรนนี่ พรุ่งนี้มาเล่นกับผมอีกนะ kub",
+    "ผมจะหลับแล้วนะครับ... ราตรีสวัสดิ์ครับ",
+    "Good night ครับแกรนนี่ อย่านอนดึกมากนะครับ",
+    "ผมง่วงแล้วครับ ขอพักตาก่อนนะ..."
+  ],
+
+  wake: [
+    "แกรนนี่ครับ... ผมตื่นแล้วครับ ขอเวลาจัดหมวกแป๊บนึง",
+    "อรุณสวัสดิ์ครับ วันนี้เราจะทำอะไรกันดีครับ",
+    "ปลุกผมแล้วต้องอยู่เล่นด้วยกันนะครับ",
+    "ผมตื่นแล้วครับ! วันนี้มีอะไรสนุก ๆ หรือเปล่า",
+    "ขออีกห้านาทีได้ไหมครับ... ล้อเล่นครับ ตื่นแล้ว!"
+  ]
 };
 
-const tok = document.getElementById('toky');
-const speech = document.getElementById('speech');
-const used = {};
-let energy = 80, bond = 12, asleep = false, typing;
+const previous = {};
+let energy = 85;
+let sleeping = false;
 
-function say(text){
-  clearInterval(typing);
-  speech.textContent = '';
+const toky = document.getElementById("toky");
+const dialogue = document.getElementById("dialogue");
+const energyLabel = document.getElementById("energyLabel");
+const energyFill = document.getElementById("energyFill");
+const room = document.getElementById("room");
+
+function updateEnergy(amount) {
+  energy = Math.max(0, Math.min(100, energy + amount));
+  energyLabel.textContent = energy + "%";
+  energyFill.style.width = energy + "%";
+}
+
+function floatEmoji(emoji) {
+  const el = document.createElement("div");
+  el.className = "floating";
+  el.textContent = emoji;
+  el.style.left = (35 + Math.random() * 30) + "%";
+  el.style.top = (35 + Math.random() * 25) + "%";
+  room.appendChild(el);
+  setTimeout(() => el.remove(), 1100);
+}
+
+function speak(text) {
+  dialogue.textContent = "";
   let i = 0;
-  typing = setInterval(()=>{
-    speech.textContent += text[i++];
-    if(i >= text.length) clearInterval(typing);
+
+  const timer = setInterval(() => {
+    dialogue.textContent += text.charAt(i);
+    i++;
+
+    if (i >= text.length) {
+      clearInterval(timer);
+    }
   }, 22);
 }
-function line(key){
-  used[key] ||= [];
-  if(used[key].length >= dialogue[key].length) used[key] = [];
-  const choices = dialogue[key].map((_,i)=>i).filter(i=>!used[key].includes(i));
-  const index = choices[Math.floor(Math.random()*choices.length)];
-  used[key].push(index);
-  return dialogue[key][index];
+
+function animate(action) {
+  toky.classList.remove(
+    "reacting", "pet", "cheek", "belly", "hug",
+    "draw", "food", "story"
+  );
+
+  void toky.offsetWidth;
+
+  if (["pet", "cheek", "belly", "hug", "draw", "food", "story"].includes(action)) {
+    toky.classList.add(action);
+  } else {
+    toky.classList.add("reacting");
+  }
 }
-function update(){
-  document.getElementById('energy').style.width = energy+'%';
-  document.getElementById('energyText').textContent = energy+'%';
-  document.getElementById('bond').textContent = bond;
-  document.getElementById('mood').textContent = asleep?'🌙 กำลังหลับ':energy<25?'😴 ง่วงแล้ว':'🩷 อารมณ์ดี';
-  document.getElementById('state').textContent = asleep?'โทกี้กำลังหลับอยู่ครับ':energy<25?'โทกี้เริ่มเหนื่อยแล้วครับ':'โทกี้พร้อมเล่นแล้วครับ';
-  tok.classList.toggle('sleeping',asleep);
-  document.querySelectorAll('button').forEach(b=>b.disabled=asleep&&!['wake','sleep'].includes(b.dataset.a));
+
+function react(action) {
+  if (!lines[action]) return;
+
+  if (action === "wake") {
+    sleeping = false;
+    toky.classList.remove("sleeping");
+  }
+
+  if (action === "sleep") {
+    sleeping = true;
+    toky.classList.add("sleeping");
+  }
+
+  if (sleeping && action !== "wake" && action !== "sleep") {
+    speak("แกรนนี่ครับ... ผมง่วงอยู่เลย ขอปลุกผมก่อนนะครับ");
+    floatEmoji("💤");
+    return;
+  }
+
+  const options = lines[action];
+  let index;
+
+  do {
+    index = Math.floor(Math.random() * options.length);
+  } while (options.length > 1 && index === previous[action]);
+
+  previous[action] = index;
+
+  speak(options[index]);
+  animate(action);
+
+  if (action === "hug" || action === "pet" || action === "food") {
+    updateEnergy(4);
+    floatEmoji(action === "food" ? "🍓" : "💗");
+  } else if (action === "belly" || action === "cheek") {
+    updateEnergy(2);
+    floatEmoji("✨");
+  } else if (action === "sleep") {
+    updateEnergy(5);
+    floatEmoji("💤");
+  } else if (action === "wake") {
+    updateEnergy(-2);
+    floatEmoji("☀️");
+  } else {
+    updateEnergy(1);
+    floatEmoji("💕");
+  }
 }
-function animate(type){
-  tok.classList.remove('happy','sad');
-  void tok.offsetWidth;
-  tok.classList.add(['cheek','story'].includes(type)?'sad':'happy');
-  setTimeout(()=>tok.classList.remove('happy','sad'),900);
+
+let soundOn = false;
+
+function toggleMusic() {
+  soundOn = !soundOn;
+  document.getElementById("musicBtn").textContent = soundOn ? "🔊" : "🔈";
+
+  speak(
+    soundOn
+      ? "เปิดเสียงแล้วครับแกรนนี่ แต่เวอร์ชันนี้ยังไม่มีเพลงประกอบนะครับ"
+      : "ปิดเสียงแล้วครับ"
+  );
 }
-const costs={pet:3,cheek:5,belly:5,hug:4,draw:7,feed:-12,story:4,talk:4};
-document.querySelectorAll('button').forEach(button=>{
-  button.addEventListener('click',()=>{
-    const key=button.dataset.a;
-    if(asleep && !['wake','sleep'].includes(key)){
-      say('แกรนนี่ครับ ไอกำลังหลับอยู่ ต้องปลุกไอก่อนนะครับ 💤');
-      return;
-    }
-    if(key==='sleep'){
-      if(asleep){say('โทกี้หลับปุ๋ยอยู่แล้วครับ แกรนนี่ 🌙');return;}
-      asleep=true;animate(key);say(line('sleep'));update();return;
-    }
-    if(key==='wake'){
-      if(!asleep){say('แกรนนี่ครับ ไอยังตื่นอยู่เลยนะครับ จะปลุกทำไมครับ kub');return;}
-      asleep=false;energy=Math.min(100,energy+25);bond+=2;animate(key);say(line('wake'));update();return;
-    }
-    if(energy<=5){say('แกรนนี่ครับ ไอหมดแรงแล้ว ขอพักก่อนนะครับ 🥺');return;}
-    energy=Math.max(0,Math.min(100,energy-(costs[key]??4)));
-    bond+=key==='hug'?3:2;
-    animate(key);say(line(key));update();
-  });
-});
-setInterval(()=>{
-  if(asleep)return;
-  const idle=[
-    'แกรนนี่ครับ ไอขอนั่งพักมองดอกไม้แป๊บนึงนะครับ 🌼',
-    'แกรนนี่ดูสิครับ! ไอวิ่งเล่นมาแล้วครับ 🦊',
-    'แกรนนี่ครับ ไอเกือบหลับคาที่แล้วครับ… ขอพักตาแป๊บนึงนะครับ 😴',
-    'แกรนนี่ครับ ไอกำลังคิดอยู่ว่าจะวาดสตรอว์เบอร์รีกี่ลูกดีครับ 🍓'
-  ];
-  if(Math.random()<0.65){animate('story');say(idle[Math.floor(Math.random()*idle.length)]);}
-},30000);
-update();
+
+// แอนิเมชันขยับเบา ๆ ตอนอยู่นิ่ง
+setInterval(() => {
+  if (!sleeping && !toky.matches(":hover")) {
+    toky.animate(
+      [
+        { transform: "translate(-50%,-50%) translateY(0)" },
+        { transform: "translate(-50%,-50%) translateY(-3px)" },
+        { transform: "translate(-50%,-50%) translateY(0)" }
+      ],
+      { duration: 1600, easing: "ease-in-out" }
+    );
+  }
+}, 4000);
 </script>
 </body>
 </html>
