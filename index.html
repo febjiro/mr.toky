@@ -2,17 +2,15 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mr. Toky — My Little Fox 🍓</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Mr. Toky 🍓</title>
 
 <style>
 :root {
-  --pink: #ff8fb5;
-  --light-pink: #fff0f6;
-  --dark-pink: #e85d91;
-  --purple: #b69af8;
-  --text: #70485c;
-  --white: #fffdfd;
+  --pink: #ffb8d1;
+  --deep: #e66f9c;
+  --cream: #fff9f1;
+  --ink: #634b5a;
 }
 
 * {
@@ -20,745 +18,984 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-body {
+html, body {
   margin: 0;
-  min-height: 100vh;
-  background: linear-gradient(180deg, #ffeaf3, #f4eaff);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Noto Sans Thai", sans-serif;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
+  color: var(--ink);
+  background: #fff0f6;
+}
+
+body {
+  height: 100dvh;
+  overscroll-behavior: none;
 }
 
 button {
   font: inherit;
+  color: inherit;
+  border: 0;
   cursor: pointer;
-  border: none;
   touch-action: manipulation;
 }
 
 .app {
-  width: min(100%, 720px);
-  min-height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  max-width: 650px;
   margin: auto;
-  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding:
+    calc(env(safe-area-inset-top) + 8px)
+    12px
+    calc(env(safe-area-inset-bottom) + 8px);
+  background:
+    radial-gradient(ellipse at 15% 15%, #fff 0, transparent 34%),
+    linear-gradient(160deg, #fff0f6, #fce6f1 55%, #e9f7f0);
 }
 
-.header {
+/* HEADER */
+
+.top {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-}
-
-.title {
-  font-size: 25px;
-  font-weight: 900;
-  color: #e65d91;
-}
-
-.subtitle {
-  font-size: 12px;
-  opacity: .75;
-}
-
-.status {
-  background: #ffffffb8;
-  padding: 10px 13px;
-  border-radius: 18px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.energy-card {
-  background: white;
-  border-radius: 18px;
-  padding: 12px 15px;
-  margin-top: 16px;
-  box-shadow: 0 4px 15px #d99ab72b;
-}
-
-.energy-top {
-  display: flex;
   justify-content: space-between;
-  font-size: 13px;
-  margin-bottom: 7px;
+  gap: 10px;
+  flex: 0 0 auto;
 }
 
-.energy-track {
-  height: 12px;
+.brand {
+  font-weight: 900;
+  font-size: clamp(18px, 5vw, 25px);
+}
+
+.brand span {
+  color: #ed78a5;
+}
+
+.mood {
+  background: #ffffffbb;
+  border: 1px solid white;
+  padding: 8px 11px;
+  border-radius: 18px;
+  font-size: 11px;
+}
+
+/* ENERGY */
+
+.energy {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffffbb;
+  border: 1px solid white;
+  border-radius: 18px;
+  padding: 7px 11px;
+  flex: 0 0 auto;
+}
+
+.energy label {
+  font-size: 12px;
+  white-space: nowrap;
+  font-weight: 800;
+}
+
+.bar {
+  height: 10px;
+  flex: 1;
+  background: #f3d8e4;
   border-radius: 20px;
-  background: #f5dce8;
   overflow: hidden;
 }
 
-.energy-fill {
-  width: 85%;
+.fill {
   height: 100%;
-  background: linear-gradient(90deg, #ff8fb5, #ffbad0);
-  border-radius: inherit;
+  width: 78%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #ff9cbe, #ffd17f);
   transition: width .4s;
 }
 
+/* SCENE */
+
 .scene {
+  flex: 1;
+  min-height: 0;
   position: relative;
-  margin-top: 15px;
-  min-height: 350px;
-  border: 3px solid white;
-  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px 0;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 15% 20%, #fff 0 3px, transparent 4px),
-    radial-gradient(circle at 85% 30%, #fff 0 4px, transparent 5px),
-    linear-gradient(180deg, #dff5ff 0%, #fce9f2 72%, #e9d6c7 72%);
-  box-shadow: 0 10px 25px #d59cb72e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.scene::before,
-.scene::after {
-  content: "✦";
+.sun {
   position: absolute;
-  color: white;
-  font-size: 25px;
-  animation: twinkle 2s ease-in-out infinite alternate;
+  top: 8%;
+  right: 9%;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #ffe6a7;
+  box-shadow: 0 0 0 12px #ffe6a733;
 }
 
-.scene::before {
-  top: 35px;
-  left: 45px;
+.cloud {
+  position: absolute;
+  width: 80px;
+  height: 24px;
+  border-radius: 30px;
+  background: #ffffff99;
+  left: 7%;
+  top: 17%;
 }
 
-.scene::after {
-  top: 70px;
-  right: 40px;
-  animation-delay: .7s;
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+  width: 33px;
+  height: 33px;
+  top: -13px;
+  left: 14px;
 }
 
-@keyframes twinkle {
-  from { transform: scale(.8) rotate(-10deg); opacity: .5; }
-  to { transform: scale(1.2) rotate(10deg); opacity: 1; }
+.cloud::after {
+  left: 38px;
+  width: 25px;
+  height: 25px;
+  top: -8px;
 }
 
-.pet-area {
+.plant {
+  position: absolute;
+  bottom: 4%;
+  font-size: clamp(30px, 8vw, 48px);
+  opacity: .8;
+}
+
+.plant.left { left: 2%; }
+.plant.right { right: 2%; }
+
+.pet-wrap {
   position: relative;
-  width: 280px;
-  height: 300px;
+  width: min(78vw, 330px);
+  height: min(52vh, 360px);
+  max-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.fox {
-  position: relative;
-  width: 230px;
-  height: 270px;
-  transform-origin: 50% 90%;
-  animation: idle 3s ease-in-out infinite;
+.shadow {
+  position: absolute;
+  width: 67%;
+  height: 9%;
+  bottom: 5%;
+  border-radius: 50%;
+  background: #b96c9330;
+  filter: blur(4px);
 }
 
-@keyframes idle {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50% { transform: translateY(-5px) rotate(1deg); }
+/* TOKY CHARACTER */
+
+.pet {
+  position: relative;
+  width: 76%;
+  height: 88%;
+  max-height: 320px;
+  animation: bob 3s ease-in-out infinite;
+  transform-origin: 50% 90%;
+  filter: drop-shadow(0 8px 3px #9f54741a);
 }
 
 .ear {
   position: absolute;
-  top: 25px;
-  width: 67px;
-  height: 105px;
-  background: #ff8fb5;
-  border: 4px solid #ef6c9e;
-  border-radius: 60% 60% 25% 25%;
+  top: 0;
+  width: 35%;
+  height: 37%;
+  background: #f49ab9;
+  border: 4px solid #d96f98;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
   z-index: 1;
 }
 
 .ear::after {
   content: "";
   position: absolute;
-  left: 15px;
-  top: 17px;
-  width: 30px;
-  height: 65px;
-  background: #ffc4d8;
-  border-radius: 60% 60% 25% 25%;
+  inset: 22% 22% 5%;
+  background: #ffd0df;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
-.ear.left {
-  left: 27px;
-  transform: rotate(-18deg);
+.ear.l {
+  left: 5%;
+  transform: rotate(-12deg);
 }
 
-.ear.right {
-  right: 27px;
-  transform: rotate(18deg);
+.ear.r {
+  right: 5%;
+  transform: rotate(12deg);
 }
 
 .head {
   position: absolute;
   z-index: 2;
-  top: 70px;
-  left: 22px;
-  width: 186px;
-  height: 150px;
-  border-radius: 46% 46% 43% 43%;
-  background: #ff9fc0;
-  border: 4px solid #ed719f;
-  box-shadow: inset 0 -8px 0 #ff88ae;
+  top: 17%;
+  left: 5%;
+  width: 90%;
+  height: 51%;
+  border: 4px solid #d96f98;
+  border-radius: 44% 44% 42% 42%;
+  background: linear-gradient(145deg, #ffbdd2, #f58fb2);
 }
 
-.eye {
+.face {
   position: absolute;
-  top: 55px;
-  width: 32px;
-  height: 39px;
-  background: #fff;
-  border-radius: 50%;
-  border: 2px solid #714d65;
-  overflow: hidden;
-}
-
-.eye.left { left: 35px; }
-.eye.right { right: 35px; }
-
-.pupil {
-  position: absolute;
-  width: 19px;
-  height: 25px;
-  top: 8px;
-  left: 6px;
-  border-radius: 50%;
-  background: #388fc8;
-  border: 2px solid #205c8d;
-}
-
-.pupil::after {
-  content: "";
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  width: 6px;
-  height: 7px;
-  background: white;
-  border-radius: 50%;
+  inset: 0;
 }
 
 .brow {
   position: absolute;
-  top: 45px;
-  width: 30px;
-  height: 7px;
-  background: #eee8ed;
+  top: 28%;
+  width: 15%;
+  height: 5%;
+  background: #d9c4cb;
   border-radius: 50%;
-  z-index: 2;
 }
 
-.brow.left { left: 34px; transform: rotate(-9deg); }
-.brow.right { right: 34px; transform: rotate(9deg); }
+.brow.l {
+  left: 21%;
+  transform: rotate(-8deg);
+}
+
+.brow.r {
+  right: 21%;
+  transform: rotate(8deg);
+}
+
+.eye {
+  position: absolute;
+  top: 37%;
+  width: 14%;
+  height: 22%;
+  background: white;
+  border: 2px solid #694c63;
+  border-radius: 50%;
+  transition: height .12s, top .12s;
+}
+
+.eye::after {
+  content: "";
+  position: absolute;
+  width: 65%;
+  height: 73%;
+  left: 18%;
+  top: 13%;
+  background: #5a9fe4;
+  border-radius: 50%;
+}
+
+.eye::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 25%;
+  height: 25%;
+  left: 27%;
+  top: 18%;
+  background: white;
+  border-radius: 50%;
+}
+
+.eye.l { left: 22%; }
+.eye.r { right: 22%; }
 
 .muzzle {
   position: absolute;
-  left: 54px;
-  top: 91px;
-  width: 73px;
-  height: 48px;
-  border-radius: 48%;
-  background: #fff7fa;
+  bottom: 9%;
+  left: 24%;
+  width: 52%;
+  height: 31%;
+  background: #fff6f3;
+  border-radius: 48% 48% 45% 45%;
 }
 
 .nose {
   position: absolute;
-  left: 85px;
-  top: 91px;
-  z-index: 3;
-  width: 16px;
-  height: 12px;
-  background: #e94e79;
-  border-radius: 40% 40% 55% 55%;
+  top: 56%;
+  left: 45%;
+  width: 10%;
+  height: 8%;
+  background: #d94d72;
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
 }
 
 .mouth {
   position: absolute;
-  top: 106px;
-  left: 83px;
-  z-index: 3;
-  width: 20px;
-  height: 13px;
-  border-bottom: 3px solid #b94870;
+  top: 68%;
+  left: 43%;
+  width: 14%;
+  height: 8%;
+  border-bottom: 2px solid #a34c69;
   border-radius: 0 0 50% 50%;
 }
 
-.cheek {
+.blush {
   position: absolute;
-  top: 102px;
-  width: 25px;
-  height: 13px;
-  background: #ffb4ce;
+  top: 59%;
+  width: 17%;
+  height: 8%;
   border-radius: 50%;
+  background: #f477a4aa;
+  filter: blur(1px);
 }
 
-.cheek.left { left: 22px; }
-.cheek.right { right: 22px; }
+.blush.l { left: 10%; }
+.blush.r { right: 10%; }
 
 .body {
   position: absolute;
-  left: 53px;
-  top: 190px;
   z-index: 1;
-  width: 124px;
-  height: 76px;
-  background: #ff92b6;
-  border: 4px solid #ed719f;
+  bottom: 5%;
+  left: 15%;
+  width: 70%;
+  height: 38%;
+  background: #f7a2bd;
+  border: 4px solid #d96f98;
   border-radius: 45% 45% 35% 35%;
 }
 
 .belly {
   position: absolute;
-  left: 25px;
-  top: 10px;
-  width: 66px;
-  height: 54px;
-  background: #fff6fa;
+  left: 20%;
+  top: 20%;
+  width: 60%;
+  height: 67%;
+  background: #fff6f3;
+  border-radius: 48%;
+}
+
+.arm {
+  position: absolute;
+  z-index: 3;
+  top: 70%;
+  width: 23%;
+  height: 14%;
+  background: #f49ab9;
+  border: 3px solid #d96f98;
   border-radius: 50%;
+}
+
+.arm.l {
+  left: 4%;
+  transform: rotate(30deg);
+}
+
+.arm.r {
+  right: 4%;
+  transform: rotate(-30deg);
 }
 
 .foot {
   position: absolute;
-  z-index: 3;
-  top: 245px;
-  width: 52px;
-  height: 28px;
-  background: #f66e9c;
+  z-index: 2;
+  bottom: 0;
+  width: 31%;
+  height: 12%;
+  background: #e978a0;
+  border: 3px solid #d96f98;
   border-radius: 50%;
 }
 
-.foot.left { left: 50px; }
-.foot.right { right: 50px; }
+.foot.l { left: 15%; }
+.foot.r { right: 15%; }
 
 .hat {
   position: absolute;
-  z-index: 5;
-  top: 48px;
-  left: 63px;
-  width: 105px;
-  height: 34px;
-  background: #6f9cf3;
-  border: 4px solid #527ad1;
-  border-radius: 50% 50% 15% 15%;
+  z-index: 4;
+  top: 11%;
+  left: 26%;
+  width: 48%;
+  height: 17%;
+  background: #82b9f5;
+  border: 3px solid #568cc7;
+  border-radius: 48% 48% 18% 18%;
   transform: rotate(-5deg);
 }
 
 .hat::after {
   content: "";
   position: absolute;
-  bottom: -10px;
-  left: -10px;
-  width: 115px;
-  height: 13px;
-  background: #83aaff;
-  border: 3px solid #527ad1;
+  bottom: -6px;
+  left: -7%;
+  width: 114%;
+  height: 9px;
+  background: #679edb;
   border-radius: 50%;
 }
 
 .strawberry {
   position: absolute;
-  z-index: 6;
-  top: 27px;
-  left: 116px;
-  font-size: 30px;
-  transform: rotate(15deg);
+  z-index: 5;
+  top: 4%;
+  left: 55%;
+  font-size: clamp(19px, 5vw, 26px);
+  transform: rotate(20deg);
 }
 
 .strap {
   position: absolute;
   z-index: 4;
-  top: 197px;
-  left: 55px;
-  width: 115px;
-  height: 13px;
-  background: #7cc9a4;
-  border: 2px solid #4ca77e;
-  transform: rotate(20deg);
-  border-radius: 8px;
+  right: 11%;
+  top: 66%;
+  width: 9%;
+  height: 22%;
+  background: #8acba5;
+  border-radius: 10px;
+  transform: rotate(-12deg);
 }
 
 .bag {
   position: absolute;
   z-index: 5;
-  top: 211px;
-  right: 29px;
-  width: 43px;
-  height: 48px;
-  border-radius: 10px 10px 15px 15px;
-  background: #ed5b80;
-  border: 3px solid #c94469;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
+  right: 0;
+  top: 76%;
+  font-size: clamp(22px, 6vw, 30px);
+  transform: rotate(10deg);
 }
 
-.hand {
-  display: none;
-  position: absolute;
-  z-index: 10;
-  top: 75px;
-  left: 20px;
-  font-size: 65px;
-  transform: rotate(-30deg);
-  pointer-events: none;
-}
-
-.scene.show-hand .hand {
-  display: block;
-  animation: handTouch .8s ease-in-out;
-}
-
-@keyframes handTouch {
-  0% { transform: translate(0, -30px) rotate(-30deg); }
-  50% { transform: translate(35px, 5px) rotate(10deg); }
-  100% { transform: translate(0, -30px) rotate(-30deg); }
-}
-
-.fox.action-pat { animation: bounce .7s ease; }
-.fox.action-cheek { animation: squish .6s ease; }
-.fox.action-belly { animation: bellyPoke .7s ease; }
-.fox.action-hug { animation: hug .8s ease; }
-.fox.action-draw { animation: bounce .8s ease; }
-.fox.action-food { animation: munch .8s ease; }
-.fox.action-story { animation: tilt .8s ease; }
-.fox.action-sleep { animation: sleep .8s ease forwards; }
-.fox.action-wake { animation: wake .9s ease; }
-.fox.action-talk { animation: tilt .8s ease; }
-
-@keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  40% { transform: translateY(-25px); }
-}
-@keyframes squish {
-  0%,100% { transform: scale(1); }
-  40% { transform: scaleX(1.13) scaleY(.9); }
-}
-@keyframes bellyPoke {
-  0%,100% { transform: rotate(0); }
-  30% { transform: rotate(-8deg) translateX(-5px); }
-  65% { transform: rotate(8deg) translateX(5px); }
-}
-@keyframes hug {
-  0%,100% { transform: scale(1); }
-  40% { transform: scale(.9,1.05); }
-}
-@keyframes munch {
-  0%,100% { transform: translateY(0); }
-  25%,75% { transform: translateY(-4px) rotate(-3deg); }
-  50% { transform: translateY(0) rotate(3deg); }
-}
-@keyframes tilt {
-  0%,100% { transform: rotate(0); }
-  35% { transform: rotate(-8deg); }
-  70% { transform: rotate(7deg); }
-}
-@keyframes sleep {
-  to { transform: translateY(12px) scale(.96); opacity: .8; }
-}
-@keyframes wake {
-  0% { transform: translateY(15px) scale(.9); }
-  50% { transform: translateY(-20px) scale(1.04); }
-  100% { transform: translateY(0) scale(1); }
-}
-
-.sleep-label {
-  display: none;
-  position: absolute;
-  z-index: 10;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #ffffffdc;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-weight: 800;
-}
-
-.scene.is-sleeping .sleep-label {
-  display: block;
-}
+/* DIALOGUE: LETTER BY LETTER */
 
 .dialogue {
-  background: white;
-  border-radius: 20px;
-  padding: 16px;
-  margin-top: 14px;
-  box-shadow: 0 4px 15px #d99ab72b;
-  min-height: 100px;
+  flex: 0 0 auto;
+  min-height: 62px;
+  max-height: 76px;
+  overflow: auto;
+  background: #fffdf9ed;
+  border: 2px solid white;
+  border-radius: 18px;
+  padding: 10px 13px;
+  box-shadow: 0 5px 16px #a85d7c12;
+  font-size: clamp(12px, 3.4vw, 14px);
+  line-height: 1.4;
 }
 
-.speaker {
-  color: #e65d91;
-  font-size: 13px;
-  font-weight: 900;
-  margin-bottom: 7px;
+.dialogue strong {
+  color: #df6e99;
 }
 
-.dialogue-text {
-  line-height: 1.75;
-  font-size: 15px;
-  white-space: pre-wrap;
+.dialogue.speaking {
+  animation: bubbleIn .22s ease-out;
 }
 
-.dialogue-bottom {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
+.dialogue.speaking::after {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -2px;
+  background: #df6e99;
+  animation: caret .7s steps(1) infinite;
 }
 
-.next-btn {
-  background: #ffe3ef;
-  color: #c74d7e;
-  border-radius: 14px;
-  padding: 8px 13px;
-  font-size: 12px;
-  font-weight: 800;
+@keyframes caret {
+  50% { opacity: 0; }
 }
 
-.section-title {
-  font-size: 15px;
-  font-weight: 900;
-  margin: 20px 0 10px;
+@keyframes bubbleIn {
+  from { transform: translateY(3px); opacity: .75; }
+  to { transform: translateY(0); opacity: 1; }
 }
+
+/* ACTION BUTTONS */
 
 .actions {
+  flex: 0 0 auto;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 9px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 8px;
 }
 
-.action-btn {
-  min-height: 55px;
-  padding: 10px;
-  background: #fff;
-  border: 2px solid #fff;
-  border-radius: 17px;
-  color: #80536b;
-  font-weight: 800;
-  text-align: left;
-  box-shadow: 0 3px 10px #d59cb720;
-  transition: transform .15s, background .15s;
-}
-
-.action-btn:active {
-  transform: scale(.96);
-}
-
-.action-btn.active {
-  border-color: #ff8fb5;
-  background: #fff0f6;
-}
-
-.action-btn:disabled {
-  opacity: .45;
-}
-
-.music-card {
-  margin-top: 18px;
-  padding: 15px;
-  border-radius: 22px;
-  background: #fff;
-  box-shadow: 0 4px 15px #d99ab72b;
-}
-
-.music-title {
-  font-weight: 900;
-  color: #e65d91;
-}
-
-.music-note {
-  font-size: 12px;
-  line-height: 1.7;
-  margin: 5px 0 12px;
-}
-
-.music-controls {
+.action {
+  min-width: 0;
+  min-height: 56px;
+  border-radius: 15px;
+  background: #fffdf7;
+  border: 1px solid white;
+  box-shadow: 0 3px 0 #e9c5d5;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
   align-items: center;
-}
-
-.music-btn {
-  background: #ffe3ef;
-  color: #b64d78;
-  padding: 10px 13px;
-  border-radius: 13px;
+  justify-content: center;
+  gap: 2px;
+  padding: 5px 2px;
+  font-size: clamp(9px, 2.6vw, 11px);
   font-weight: 800;
+  line-height: 1.15;
 }
 
-.volume-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  margin-top: 12px;
+.action .ico {
+  font-size: clamp(18px, 5vw, 23px);
+  line-height: 1.1;
 }
 
-.volume-row input {
-  width: 100%;
-  accent-color: #e65d91;
-}
-
-#youtubePlayer {
-  width: 100%;
-  margin-top: 12px;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-#youtubePlayer iframe {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  height: auto;
-  display: block;
+.action:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #e9c5d5;
 }
 
 .footer {
   text-align: center;
-  font-size: 11px;
-  opacity: .65;
-  padding: 20px 0 8px;
+  font-size: 10px;
+  opacity: .62;
+  margin-top: 6px;
+  flex: 0 0 auto;
 }
 
-@media (min-width: 560px) {
-  .actions {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+/* REACTION ANIMATIONS */
+
+.pet.pat { animation: pat .85s ease; }
+.pet.cheekAct { animation: cheek .65s ease; }
+.pet.bellyAct { animation: belly .65s ease; }
+.pet.hug { animation: hug .9s ease; }
+.pet.food { animation: food .7s ease; }
+.pet.story { animation: tilt .85s ease; }
+.pet.sleep { animation: rest 1.1s ease forwards; }
+.pet.wake { animation: wake .8s ease; }
+.pet.talk { animation: tilt .55s ease; }
+.pet.drawAct { animation: drawBounce .7s ease; }
+
+.pet.pat .ear {
+  animation: earWiggle .45s ease;
+}
+
+.pet.hug .arm {
+  animation: armsHug .7s ease;
+}
+
+.pet.food .head {
+  animation: nibble .4s ease 2;
+}
+
+.pet.cheekAct .blush {
+  background: #f05b91dd;
+}
+
+.pet.bellyAct .belly {
+  animation: tummy .45s ease;
+}
+
+.pet.story .ear {
+  animation: earWiggle .6s ease;
+}
+
+.pet.blink .eye,
+.pet.sleep .eye {
+  height: 3%;
+  top: 47%;
+  background: #d96f98;
+  border-radius: 50%;
+}
+
+.pet.blink .eye::before,
+.pet.blink .eye::after,
+.pet.sleep .eye::before,
+.pet.sleep .eye::after {
+  display: none;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pat {
+  0%, 100% { transform: rotate(0); }
+  35% { transform: rotate(-7deg) translateY(-7px); }
+  70% { transform: rotate(5deg); }
+}
+
+@keyframes cheek {
+  0%, 100% { transform: scaleX(1); }
+  35% { transform: scaleX(.84) scaleY(1.04); }
+  70% { transform: scaleX(1.05); }
+}
+
+@keyframes belly {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.05) rotate(2deg); }
+}
+
+@keyframes hug {
+  0%, 100% { transform: scale(1); }
+  35% { transform: scale(.9, 1.04); }
+  65% { transform: scale(1.06, .98); }
+}
+
+@keyframes food {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-12px) rotate(4deg); }
+}
+
+@keyframes tilt {
+  0%, 100% { transform: rotate(0); }
+  35% { transform: rotate(8deg); }
+  70% { transform: rotate(-6deg); }
+}
+
+@keyframes drawBounce {
+  0%, 100% { transform: translateY(0); }
+  35% { transform: translateY(-10px) rotate(-3deg); }
+  70% { transform: translateY(2px) rotate(3deg); }
+}
+
+@keyframes earWiggle {
+  0%, 100% { rotate: 0deg; }
+  40% { rotate: 8deg; }
+  70% { rotate: -6deg; }
+}
+
+@keyframes armsHug {
+  0%, 100% { scale: 1; }
+  40% { scale: 1.25; }
+}
+
+@keyframes nibble {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 4px; }
+}
+
+@keyframes tummy {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(.85, 1.12); }
+}
+
+@keyframes rest {
+  to { transform: translateY(9px) scale(.96); }
+}
+
+@keyframes wake {
+  0% { transform: translateY(9px) scale(.96); }
+  55% { transform: translateY(-12px) scale(1.04); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* DRAWING WINDOW */
+
+.modal {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: #62435477;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.card {
+  width: min(100%, 420px);
+  background: #fff9f3;
+  border: 2px solid white;
+  border-radius: 22px;
+  padding: 15px;
+  box-shadow: 0 12px 35px #48233644;
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 19px;
+}
+
+.card p {
+  font-size: 13px;
+  margin: 0 0 10px;
+}
+
+.tools {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+
+.tools button,
+.close {
+  background: #ffe0ec;
+  padding: 8px 11px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.tools input {
+  width: 38px;
+  height: 34px;
+  border: 0;
+  background: transparent;
+}
+
+.canvas-wrap {
+  background: white;
+  border: 1px solid #efd6e0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 190px;
+  touch-action: none;
+}
+
+.close {
+  margin-top: 9px;
+  background: #dff3e8;
+}
+
+.heart {
+  position: absolute;
+  font-size: 23px;
+  pointer-events: none;
+  animation: heart 1s ease-out forwards;
+  z-index: 8;
+}
+
+@keyframes heart {
+  to {
+    transform: translateY(-55px) scale(1.5);
+    opacity: 0;
   }
+}
+
+/* SMALL SCREENS */
+
+@media (max-height: 700px) {
+  .energy {
+    margin-top: 5px;
+    padding: 5px 9px;
+  }
+
   .scene {
-    min-height: 390px;
+    margin: 0;
   }
-  .pet-area {
-    transform: scale(1.08);
+
+  .pet-wrap {
+    height: min(44vh, 290px);
+  }
+
+  .dialogue {
+    min-height: 52px;
+    max-height: 60px;
+    padding: 7px 10px;
+  }
+
+  .actions {
+    gap: 5px;
+    margin-top: 6px;
+  }
+
+  .action {
+    min-height: 48px;
+    border-radius: 12px;
+  }
+
+  .footer {
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 360px) {
+  .app {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .action {
+    font-size: 9px;
+  }
+
+  .actions {
+    gap: 4px;
+  }
+
+  .pet-wrap {
+    width: 72vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
 </style>
 </head>
 
 <body>
-<div class="app">
+<main class="app">
 
-  <header class="header">
-    <div>
-      <div class="title">Mr. Toky 🍓</div>
-      <div class="subtitle">Your little fox companion</div>
-    </div>
-    <div class="status" id="moodStatus">🩷 พร้อมเล่นกับแกรนนี่</div>
+  <header class="top">
+    <div class="brand">Mr. <span>Toky</span> 🍓</div>
+    <div class="mood">🍓 เพื่อนตัวจิ๋วของแกรนนี่</div>
   </header>
 
-  <section class="energy-card">
-    <div class="energy-top">
-      <span>🍓 พลังงานของโทกี้</span>
-      <span id="energyNumber">85 / 100</span>
-    </div>
-    <div class="energy-track">
-      <div class="energy-fill" id="energyFill"></div>
-    </div>
-  </section>
+  <div class="energy">
+    <label>🍓 พลังงานของโทกี้</label>
+    <div class="bar"><div class="fill" id="energyFill"></div></div>
+    <b id="energyNum">78%</b>
+  </div>
 
-  <main class="scene" id="scene">
-    <div class="sleep-label">💤 โทกี้กำลังหลับ...</div>
+  <section class="scene" id="scene">
+    <div class="sun"></div>
+    <div class="cloud"></div>
+    <div class="plant left">🪴</div>
+    <div class="plant right">🌷</div>
 
-    <div class="pet-area">
-      <div class="hand" id="grannyHand">🖐🏻</div>
+    <div class="pet-wrap">
+      <div class="shadow"></div>
 
-      <div class="fox" id="fox">
-        <div class="ear left"></div>
-        <div class="ear right"></div>
-        <div class="body"><div class="belly"></div></div>
-        <div class="foot left"></div>
-        <div class="foot right"></div>
+      <div class="pet" id="pet" aria-label="Mr. Toky pink fox">
+        <div class="ear l"></div>
+        <div class="ear r"></div>
+
+        <div class="body">
+          <div class="belly"></div>
+        </div>
+
+        <div class="foot l"></div>
+        <div class="foot r"></div>
+        <div class="arm l"></div>
+        <div class="arm r"></div>
+
         <div class="strap"></div>
         <div class="bag">🍓</div>
 
         <div class="head">
-          <div class="brow left"></div>
-          <div class="brow right"></div>
-          <div class="eye left"><div class="pupil"></div></div>
-          <div class="eye right"><div class="pupil"></div></div>
-          <div class="cheek left"></div>
-          <div class="cheek right"></div>
-          <div class="muzzle"></div>
-          <div class="nose"></div>
-          <div class="mouth"></div>
+          <div class="face">
+            <div class="brow l"></div>
+            <div class="brow r"></div>
+            <div class="eye l"></div>
+            <div class="eye r"></div>
+            <div class="blush l"></div>
+            <div class="blush r"></div>
+            <div class="muzzle"></div>
+            <div class="nose"></div>
+            <div class="mouth"></div>
+          </div>
         </div>
 
         <div class="hat"></div>
         <div class="strawberry">🍓</div>
       </div>
     </div>
-  </main>
-
-  <section class="dialogue">
-    <div class="speaker" id="speaker">มิสเตอร์โทกี้ 🦊</div>
-    <div class="dialogue-text" id="dialogueText">
-      แกรนนี่ครับ! วันนี้มาเล่นกับไอแล้วเหรอครับ 🍓
-    </div>
-    <div class="dialogue-bottom">
-      <button class="next-btn" id="nextBtn">อ่านข้อความต่อ ➜</button>
-    </div>
   </section>
 
-  <div class="section-title">🩷 เลือกเล่นกับโทกี้</div>
+  <div class="dialogue" aria-live="off">
+    <strong>โทกี้:</strong>
+    <span id="line">แกรนนี่ครับ! วันนี้มาเล่นกับไอแล้วเหรอครับ kub 🍓</span>
+  </div>
 
   <section class="actions" id="actions">
-    <button class="action-btn" data-action="pat">🖐🏻 ลูบหัว</button>
-    <button class="action-btn" data-action="cheek">😊 บีบแก้ม</button>
-    <button class="action-btn" data-action="belly">👉🏻 จิ้มพุง</button>
-    <button class="action-btn" data-action="hug">🫂 กอด</button>
-    <button class="action-btn" data-action="draw">🎨 วาดรูปกับโทกี้</button>
-    <button class="action-btn" data-action="food">🍓 ป้อนอาหาร</button>
-    <button class="action-btn" data-action="story">💬 ฟังโทกี้เล่าเรื่อง</button>
-    <button class="action-btn" data-action="sleep">🌙 ส่งโทกี้เข้านอน</button>
-    <button class="action-btn" data-action="talk">💗 พูดคุย</button>
-    <button class="action-btn" data-action="wake">☀️ ปลุกโทกี้ตอนหลับ</button>
+    <button class="action" data-act="pat">
+      <span class="ico">🫳</span>ลูบหัว
+    </button>
+
+    <button class="action" data-act="cheek">
+      <span class="ico">😊</span>บีบแก้ม
+    </button>
+
+    <button class="action" data-act="belly">
+      <span class="ico">👉</span>จิ้มพุง
+    </button>
+
+    <button class="action" data-act="hug">
+      <span class="ico">🫂</span>กอด
+    </button>
+
+    <button class="action" data-act="draw">
+      <span class="ico">🎨</span>วาดรูปกับโทกี้
+    </button>
+
+    <button class="action" data-act="food">
+      <span class="ico">🍓</span>ป้อนอาหาร
+    </button>
+
+    <button class="action" data-act="story">
+      <span class="ico">📖</span>ฟังโทกี้เล่าเรื่อง
+    </button>
+
+    <button class="action" data-act="sleep">
+      <span class="ico">🌙</span>ส่งโทกี้เข้านอน
+    </button>
+
+    <button class="action" data-act="talk">
+      <span class="ico">💬</span>พูดคุย
+    </button>
+
+    <button class="action" data-act="wake">
+      <span class="ico">☀️</span>ปลุกโทกี้ตอนหลับ
+    </button>
   </section>
 
-  <section class="music-card">
-    <div class="music-title">🎵 เพลงของโทกี้</div>
-    <div class="music-note">
-      เพลงที่แกรนนี่เลือกไว้ 🩷<br>
-      แตะปุ่มเล่นเพื่อเริ่มเพลง หากเพลงไม่ขึ้นหรือเล่นไม่ได้
-      อาจเป็นเพราะวิดีโอไม่อนุญาตให้ฝังในเว็บไซต์
+  <div class="footer">
+    แตะปุ่มเพื่อเล่นกับโทกี้ · พักผ่อนและเติมพลังกันด้วยนะ 🍓
+  </div>
+
+  <!-- DRAWING MODAL -->
+  <div class="modal" id="drawModal">
+    <div class="card">
+      <h2>🎨 วาดรูปกับโทกี้</h2>
+      <p>มาวาดรูปด้วยกันนะครับแกรนนี่! วาดเสร็จแล้วกดบันทึกรูปได้เลย</p>
+
+      <div class="tools">
+        <label>
+          สี
+          <input id="color" type="color" value="#f078a4">
+        </label>
+
+        <button id="eraser">ยางลบ</button>
+        <button id="clear">ล้างกระดาษ</button>
+        <button id="save">บันทึกรูป</button>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="canvas" width="700" height="380"></canvas>
+      </div>
+
+      <button class="close" id="closeDraw">เสร็จแล้ว</button>
     </div>
+  </div>
 
-    <div class="music-controls">
-      <button class="music-btn" id="playMusic">▶️ เปิดเพลง</button>
-      <button class="music-btn" id="pauseMusic">⏸️ หยุดเพลง</button>
-      <button class="music-btn" id="showVideo">📺 แสดง/ซ่อนวิดีโอ</button>
-    </div>
-
-    <div class="volume-row">
-      <span>🔉 เสียง</span>
-      <input type="range" id="volumeSlider" min="0" max="100" value="55">
-      <span id="volumeNumber">55%</span>
-    </div>
-
-    <div id="youtubePlayer"></div>
-  </section>
-
-  <div class="footer">Made with love for Mr. Toky 🍓</div>
-</div>
+</main>
 
 <script>
-/* -------------------------------
-   บทพูดของโทกี้
-   สุ่มประโยคโดยไม่พูดซ้ำติดกัน
--------------------------------- */
+/* =========================================
+   TOKY DIALOGUES
+========================================= */
 
 const lines = {
   pat: [
     "แกรนนี่ครับ วันนี้ไอจัดทรงผมมาตั้งนานเลยนะครับ แต่ถ้าแกรนนี่จะลูบก็ไม่เป็นไรครับ เดี๋ยวค่อยจัดใหม่ก็ได้ kub",
     "โอเคครับแกรนนี่ ลูบเบา ๆ ก็ได้นะครับ ไอไม่ได้หวงสักหน่อย",
     "แกรนนี่ลูบหัวไอแบบนี้แล้วรู้สึกดีจังเลยครับ ขออีกนิดได้ไหมครับ",
-    "ระวังหมวกสตรอว์เบอร์รีของไอนะครับ แต่อยากลูบก็ได้ครับ",
+    "ระวังหมวกสตรอว์เบอร์รีของไอนะครับ แต่ถ้าแกรนนี่อยากลูบก็ได้ครับ",
     "Now I'm ready for the day แล้วครับ เพราะแกรนนี่ลูบหัวให้ไง kub"
   ],
 
@@ -835,372 +1072,355 @@ const lines = {
   ]
 };
 
-/* -------------------------------
-   สถานะเกม
--------------------------------- */
 
-const fox = document.getElementById("fox");
-const scene = document.getElementById("scene");
-const dialogueText = document.getElementById("dialogueText");
-const speaker = document.getElementById("speaker");
-const moodStatus = document.getElementById("moodStatus");
-const energyFill = document.getElementById("energyFill");
-const energyNumber = document.getElementById("energyNumber");
-const nextBtn = document.getElementById("nextBtn");
+/* =========================================
+   DIALOGUE TYPEWRITER
+   ค่อย ๆ ขึ้นทีละตัวอักษร
+========================================= */
 
-let energy = 85;
-let currentAction = null;
-let currentLines = [];
-let lineIndex = 0;
-let isSleeping = false;
-let previousLine = {};
-let drawCanvas = null;
+const pet = document.getElementById("pet");
+const line = document.getElementById("line");
+const fill = document.getElementById("energyFill");
+const num = document.getElementById("energyNum");
+
+let energy = 78;
+let sleeping = false;
+let previous = {};
+let typingTimer = null;
+let typeToken = 0;
+
+function say(text) {
+  typeToken++;
+  const token = typeToken;
+
+  if (typingTimer) {
+    clearInterval(typingTimer);
+  }
+
+  const box = line.closest(".dialogue");
+  box.classList.remove("speaking");
+
+  line.textContent = "";
+  let i = 0;
+
+  box.classList.add("speaking");
+
+  // ค่อย ๆ แสดงข้อความทีละตัวอักษร
+  typingTimer = setInterval(() => {
+    if (token !== typeToken) {
+      clearInterval(typingTimer);
+      return;
+    }
+
+    line.textContent = text.slice(0, i + 1);
+    i++;
+
+    if (i >= text.length) {
+      clearInterval(typingTimer);
+      typingTimer = null;
+      box.classList.remove("speaking");
+    }
+  }, 32);
+}
+
+
+/* =========================================
+   ENERGY
+========================================= */
 
 function setEnergy(value) {
   energy = Math.max(0, Math.min(100, value));
-  energyFill.style.width = energy + "%";
-  energyNumber.textContent = energy + " / 100";
+  fill.style.width = energy + "%";
+  num.textContent = energy + "%";
 }
 
-function speak(text) {
-  // แสดงข้อความทันที เพื่อป้องกันสระและวรรณยุกต์ไทยเพี้ยน
-  dialogueText.textContent = text;
+
+/* =========================================
+   HEART EFFECT
+========================================= */
+
+function hearts() {
+  const scene = document.getElementById("scene");
+
+  for (let i = 0; i < 3; i++) {
+    const heart = document.createElement("span");
+
+    heart.className = "heart";
+    heart.textContent = ["💗", "✨", "🍓"][i];
+    heart.style.left = (42 + Math.random() * 20) + "%";
+    heart.style.top = (38 + Math.random() * 15) + "%";
+
+    scene.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 1000);
+  }
 }
 
-function randomLine(action) {
-  const choices = lines[action];
-  if (!choices || choices.length === 0) return "";
 
-  let available = choices.filter(
-    text => text !== previousLine[action]
-  );
+/* =========================================
+   CHARACTER ANIMATIONS
+========================================= */
 
-  if (available.length === 0) available = choices;
-
-  const selected = available[
-    Math.floor(Math.random() * available.length)
+function animate(action) {
+  const classes = [
+    "pat", "cheekAct", "bellyAct", "hug",
+    "food", "story", "sleep", "wake",
+    "talk", "drawAct"
   ];
 
-  previousLine[action] = selected;
-  return selected;
+  pet.classList.remove(...classes);
+
+  // บังคับให้เบราว์เซอร์เริ่มแอนิเมชันใหม่
+  void pet.offsetWidth;
+
+  const animationClass = {
+    pat: "pat",
+    cheek: "cheekAct",
+    belly: "bellyAct",
+    hug: "hug",
+    food: "food",
+    story: "story",
+    sleep: "sleep",
+    wake: "wake",
+    talk: "talk",
+    draw: "drawAct"
+  }[action];
+
+  if (animationClass) {
+    pet.classList.add(animationClass);
+
+    setTimeout(() => {
+      pet.classList.remove(animationClass);
+    }, 1200);
+  }
+
+  if (["hug", "pat", "food", "wake"].includes(action)) {
+    hearts();
+  }
 }
 
-function resetAnimations() {
-  fox.className = "fox";
-  scene.classList.remove("show-hand");
-}
 
-function showAction(action) {
-  if (action === "wake" && !isSleeping) {
-    speak("โทกี้ยังไม่ได้หลับเลยครับแกรนนี่ 😳");
-    moodStatus.textContent = "🩷 โทกี้ตื่นอยู่ครับ";
+/* =========================================
+   REACTION BUTTONS
+========================================= */
+
+function react(action) {
+  if (action === "draw") {
+    openDraw();
+
+    const arr = lines.draw;
+    let index = Math.floor(Math.random() * arr.length);
+
+    if (arr.length > 1 && index === previous.draw) {
+      index = (index + 1) % arr.length;
+    }
+
+    previous.draw = index;
+
+    say(arr[index]);
+    animate("draw");
+    setEnergy(energy - 2);
     return;
   }
 
-  if (isSleeping && action !== "wake") {
-    speak("Zzz... โทกี้กำลังหลับอยู่ครับแกรนนี่ 💭");
+  if (action === "sleep" && sleeping) {
+    say("แกรนนี่ครับ ไอหลับอยู่เลยนะครับ ถ้าจะปลุกก็แตะปุ่มปลุกโทกี้ได้เลย");
     return;
   }
 
-  if (action === "sleep" && isSleeping) {
-    speak("โทกี้หลับอยู่แล้วครับแกรนนี่ 💤");
+  if (action === "wake" && !sleeping) {
+    say("ไอตื่นอยู่แล้วครับแกรนนี่ มีอะไรให้ไอช่วยไหม kub");
+    animate("wake");
     return;
   }
 
-  if (action === "wake") {
-    isSleeping = false;
-    scene.classList.remove("is-sleeping");
-    moodStatus.textContent = "☀️ โทกี้ตื่นแล้ว";
+  if (sleeping && action !== "wake") {
+    say("Zzz... แกรนนี่ครับ ไอกำลังหลับอยู่ ปลุกไอก่อนนะครับ 🍓");
+    return;
   }
 
   if (action === "sleep") {
-    isSleeping = true;
-    scene.classList.add("is-sleeping");
-    moodStatus.textContent = "🌙 โทกี้กำลังพักผ่อน";
+    sleeping = true;
   }
 
-  currentAction = action;
-  currentLines = lines[action] || [];
-  lineIndex = 0;
-
-  resetAnimations();
-  fox.classList.add("action-" + action);
-
-  if (["pat", "cheek", "belly", "hug"].includes(action)) {
-    scene.classList.add("show-hand");
+  if (action === "wake") {
+    sleeping = false;
   }
 
-  if (action === "food") {
-    setEnergy(energy + 8);
-  } else if (["pat", "hug", "talk", "story"].includes(action)) {
-    setEnergy(energy + 2);
-  } else if (action === "draw") {
-    setEnergy(energy - 1);
-    openDrawing();
-  } else if (action === "sleep") {
+  const arr = lines[action] || lines.talk;
+  let index = Math.floor(Math.random() * arr.length);
+
+  // ไม่ให้พูดประโยคเดิมซ้ำติดกันในปุ่มเดิม
+  if (arr.length > 1 && index === previous[action]) {
+    index = (index + 1) % arr.length;
+  }
+
+  previous[action] = index;
+
+  say(arr[index]);
+  animate(action);
+
+  if (action === "sleep") {
     setEnergy(energy + 5);
   } else if (action === "wake") {
-    setEnergy(energy - 2);
-  } else {
     setEnergy(energy - 1);
+  } else {
+    setEnergy(energy - 3);
   }
-
-  const labels = {
-    pat: "🩷 กำลังลูบหัวโทกี้",
-    cheek: "😊 โทกี้โดนบีบแก้ม",
-    belly: "👉🏻 โทกี้โดนจิ้มพุง",
-    hug: "🫂 โทกี้กำลังกอด",
-    draw: "🎨 วาดรูปด้วยกัน",
-    food: "🍓 กำลังป้อนอาหาร",
-    story: "💬 โทกี้กำลังเล่าเรื่อง",
-    sleep: "🌙 โทกี้กำลังพักผ่อน",
-    talk: "💗 กำลังพูดคุย",
-    wake: "☀️ โทกี้ตื่นแล้ว"
-  };
-
-  moodStatus.textContent = labels[action] || "🩷 เล่นกับโทกี้";
-  speaker.textContent = "มิสเตอร์โทกี้ 🦊";
-  speak(randomLine(action));
-
-  document.querySelectorAll(".action-btn").forEach(button => {
-    button.classList.toggle(
-      "active",
-      button.dataset.action === action
-    );
-  });
 }
 
-document.querySelectorAll(".action-btn").forEach(button => {
+document.querySelectorAll(".action").forEach(button => {
   button.addEventListener("click", () => {
-    showAction(button.dataset.action);
+    react(button.dataset.act);
   });
 });
 
-nextBtn.addEventListener("click", () => {
-  if (!currentAction || !currentLines.length) {
-    speak("แกรนนี่ครับ เลือกกิจกรรมกับไอก่อนนะครับ 🍓");
-    return;
-  }
 
-  lineIndex++;
-
-  if (lineIndex >= currentLines.length) {
-    lineIndex = 0;
-  }
-
-  speak(currentLines[lineIndex]);
-});
-
-/* -------------------------------
-   กระพริบตาและขยับตัว
--------------------------------- */
-
-function blink() {
-  if (isSleeping) return;
-
-  const eyes = document.querySelectorAll(".eye");
-
-  eyes.forEach(eye => {
-    eye.style.height = "4px";
-    eye.style.top = "72px";
-  });
-
-  setTimeout(() => {
-    eyes.forEach(eye => {
-      eye.style.height = "39px";
-      eye.style.top = "55px";
-    });
-  }, 160);
-}
+/* =========================================
+   IDLE BLINK
+========================================= */
 
 setInterval(() => {
-  if (Math.random() < 0.75) blink();
-}, 2800);
+  if (!sleeping && Math.random() < 0.55) {
+    pet.classList.add("blink");
 
-/* -------------------------------
-   วาดรูปกับโทกี้
--------------------------------- */
-
-function openDrawing() {
-  const old = document.getElementById("drawingPanel");
-  if (old) old.remove();
-
-  const panel = document.createElement("section");
-  panel.id = "drawingPanel";
-  panel.style.cssText = `
-    background:#fff;
-    margin-top:14px;
-    padding:14px;
-    border-radius:20px;
-    box-shadow:0 4px 15px #d99ab72b;
-  `;
-
-  panel.innerHTML = `
-    <div style="font-weight:900;color:#e65d91;margin-bottom:8px">
-      🎨 วาดรูปกับโทกี้
-    </div>
-    <div style="font-size:12px;margin-bottom:10px">
-      ลากนิ้วบนพื้นที่สีขาวเพื่อวาดรูปได้เลยครับ!
-    </div>
-    <canvas id="drawingCanvas"
-      style="width:100%;height:190px;border:2px dashed #ffb4ce;
-      border-radius:14px;touch-action:none;background:#fffafd"></canvas>
-    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-      <button id="clearDrawing"
-        style="padding:9px 13px;background:#ffe3ef;color:#b64d78;
-        border-radius:12px;font-weight:800">🧹 ลบรูป</button>
-      <button id="saveDrawing"
-        style="padding:9px 13px;background:#e9e0ff;color:#7558b8;
-        border-radius:12px;font-weight:800">💾 บันทึกรูป</button>
-    </div>
-  `;
-
-  document.querySelector(".actions").after(panel);
-
-  const canvas = panel.querySelector("#drawingCanvas");
-  const ctx = canvas.getContext("2d");
-  let drawing = false;
-
-  function resizeCanvas() {
-    const rect = canvas.getBoundingClientRect();
-    const oldImage = canvas.toDataURL();
-    canvas.width = Math.max(1, Math.floor(rect.width * devicePixelRatio));
-    canvas.height = Math.max(1, Math.floor(190 * devicePixelRatio));
-    ctx.scale(devicePixelRatio, devicePixelRatio);
-    ctx.lineWidth = 4;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.strokeStyle = "#ec70a0";
-
-    const image = new Image();
-    image.onload = () => {
-      ctx.drawImage(image, 0, 0, rect.width, 190);
-    };
-    image.src = oldImage;
+    setTimeout(() => {
+      pet.classList.remove("blink");
+    }, 170);
   }
+}, 2600);
 
-  resizeCanvas();
 
-  function point(event) {
-    const rect = canvas.getBoundingClientRect();
-    return {
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top
-    };
+/* =========================================
+   ENERGY SLOWLY DECREASES
+========================================= */
+
+setInterval(() => {
+  if (!sleeping) {
+    setEnergy(energy - 1);
   }
+}, 18000);
 
-  canvas.addEventListener("pointerdown", event => {
-    drawing = true;
-    canvas.setPointerCapture(event.pointerId);
-    const p = point(event);
-    ctx.beginPath();
-    ctx.moveTo(p.x, p.y);
-  });
 
-  canvas.addEventListener("pointermove", event => {
-    if (!drawing) return;
-    const p = point(event);
-    ctx.lineTo(p.x, p.y);
-    ctx.stroke();
-  });
+/* =========================================
+   IDLE DIALOGUE
+========================================= */
 
-  canvas.addEventListener("pointerup", () => {
-    drawing = false;
-  });
+setInterval(() => {
+  if (sleeping) return;
 
-  canvas.addEventListener("pointercancel", () => {
-    drawing = false;
-  });
+  const idleLines = [
+    "แกรนนี่ครับ... ไออยู่นี่นะครับ 🍓",
+    "ไอสงสัยว่าถ้าสตรอว์เบอร์รีใส่หมวก จะน่ารักเหมือนไอไหมนะครับ",
+    "แกรนนี่พักสายตาบ้างนะครับ ไอจะนั่งเป็นเพื่อนตรงนี้",
+    "วันนี้บรรยากาศ cozy ดีจังเลยครับ kub"
+  ];
 
-  panel.querySelector("#clearDrawing").addEventListener("click", () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  });
+  if (Math.random() < 0.6) {
+    say(idleLines[Math.floor(Math.random() * idleLines.length)]);
+  }
+}, 32000);
 
-  panel.querySelector("#saveDrawing").addEventListener("click", () => {
-    const link = document.createElement("a");
-    link.download = "my-toky-drawing.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  });
+
+/* =========================================
+   DRAWING CANVAS
+========================================= */
+
+const modal = document.getElementById("drawModal");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let drawing = false;
+let erase = false;
+let last = null;
+
+function resetCanvas() {
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.lineWidth = 8;
+  ctx.strokeStyle = document.getElementById("color").value;
 }
 
-/* -------------------------------
-   เพลง YouTube
--------------------------------- */
+resetCanvas();
 
-let youtubePlayer = null;
-let youtubeReady = false;
-let videoVisible = true;
-
-const videoContainer = document.getElementById("youtubePlayer");
-const volumeSlider = document.getElementById("volumeSlider");
-const volumeNumber = document.getElementById("volumeNumber");
-
-function loadYouTubeAPI() {
-  if (document.getElementById("youtube-api-script")) return;
-
-  const script = document.createElement("script");
-  script.id = "youtube-api-script";
-  script.src = "https://www.youtube.com/iframe_api";
-  document.head.appendChild(script);
+function openDraw() {
+  modal.classList.add("open");
 }
 
-window.onYouTubeIframeAPIReady = function() {
-  youtubePlayer = new YT.Player("youtubePlayer", {
-    width: "100%",
-    height: "203",
-    videoId: "cfhneP5jZaE",
-    playerVars: {
-      playsinline: 1,
-      controls: 1,
-      rel: 0
-    },
-    events: {
-      onReady: function(event) {
-        youtubeReady = true;
-        event.target.setVolume(Number(volumeSlider.value));
-      },
-      onError: function() {
-        document.querySelector(".music-note").textContent =
-          "YouTube ไม่อนุญาตให้เล่นวิดีโอนี้ในเว็บไซต์ " +
-          "ลองเปิดเพลงจากปุ่มเปิดบน YouTube โดยตรงนะครับ";
-      }
-    }
-  });
+document.getElementById("closeDraw").onclick = () => {
+  modal.classList.remove("open");
 };
 
-document.getElementById("playMusic").addEventListener("click", () => {
-  if (youtubeReady && youtubePlayer) {
-    youtubePlayer.playVideo();
-  } else {
-    loadYouTubeAPI();
-    document.querySelector(".music-note").textContent =
-      "กำลังโหลดเครื่องเล่นเพลงครับ หากยังไม่เล่น ให้รอสักครู่แล้วแตะเปิดเพลงอีกครั้ง";
+document.getElementById("clear").onclick = resetCanvas;
+
+document.getElementById("eraser").onclick = () => {
+  erase = !erase;
+
+  document.getElementById("eraser").textContent =
+    erase ? "ใช้ยางลบอยู่" : "ยางลบ";
+};
+
+document.getElementById("color").oninput = () => {
+  if (!erase) {
+    ctx.strokeStyle = document.getElementById("color").value;
   }
+};
+
+document.getElementById("save").onclick = () => {
+  const link = document.createElement("a");
+
+  link.download = "toky-drawing.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+
+  say("แกรนนี่ครับ เราบันทึกรูปของเราไว้แล้วนะครับ ไอจะจำวันนี้ไว้เลย 🍓");
+
+  modal.classList.remove("open");
+};
+
+function getPoint(event) {
+  const rect = canvas.getBoundingClientRect();
+
+  return {
+    x: (event.clientX - rect.left) * canvas.width / rect.width,
+    y: (event.clientY - rect.top) * canvas.height / rect.height
+  };
+}
+
+canvas.addEventListener("pointerdown", event => {
+  drawing = true;
+  last = getPoint(event);
+  canvas.setPointerCapture(event.pointerId);
 });
 
-document.getElementById("pauseMusic").addEventListener("click", () => {
-  if (youtubeReady && youtubePlayer) {
-    youtubePlayer.pauseVideo();
-  }
+canvas.addEventListener("pointermove", event => {
+  if (!drawing) return;
+
+  const point = getPoint(event);
+
+  ctx.beginPath();
+  ctx.moveTo(last.x, last.y);
+  ctx.lineTo(point.x, point.y);
+
+  ctx.strokeStyle = erase
+    ? "#ffffff"
+    : document.getElementById("color").value;
+
+  ctx.lineWidth = erase ? 28 : 8;
+  ctx.stroke();
+
+  last = point;
 });
 
-document.getElementById("showVideo").addEventListener("click", () => {
-  videoVisible = !videoVisible;
-  videoContainer.style.display = videoVisible ? "block" : "none";
+canvas.addEventListener("pointerup", () => {
+  drawing = false;
 });
 
-volumeSlider.addEventListener("input", () => {
-  const volume = Number(volumeSlider.value);
-  volumeNumber.textContent = volume + "%";
-
-  if (youtubeReady && youtubePlayer) {
-    youtubePlayer.setVolume(volume);
-  }
+canvas.addEventListener("pointercancel", () => {
+  drawing = false;
 });
-
-/* โหลดเครื่องเล่นไว้ก่อน แต่ไม่สั่งเล่นเอง */
-loadYouTubeAPI();
 </script>
 </body>
 </html>
