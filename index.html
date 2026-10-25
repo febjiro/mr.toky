@@ -2,1425 +2,1214 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Mr. Toky 🍓</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Mr. Toky 🍓 My Little Fox</title>
 <style>
-:root {
-  --pink: #ffb8d1;
-  --deep: #e66f9c;
-  --cream: #fff9f1;
-  --ink: #634b5a;
-}
-
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: system-ui, sans-serif;
-  color: var(--ink);
-  background: #fff0f6;
-}
-
-body {
-  height: 100dvh;
-  overscroll-behavior: none;
-}
-
-button {
-  font: inherit;
-  color: inherit;
-  border: 0;
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-.app {
-  height: 100dvh;
-  width: 100%;
-  max-width: 650px;
-  margin: auto;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  padding:
-    calc(env(safe-area-inset-top) + 8px)
-    12px
-    calc(env(safe-area-inset-bottom) + 8px);
-  background:
-    radial-gradient(ellipse at 15% 15%, #fff 0, transparent 34%),
-    linear-gradient(160deg, #fff0f6, #fce6f1 55%, #e9f7f0);
-}
-
-/* HEADER */
-
-.top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex: 0 0 auto;
-}
-
-.brand {
-  font-weight: 900;
-  font-size: clamp(18px, 5vw, 25px);
-}
-
-.brand span {
-  color: #ed78a5;
-}
-
-.mood {
-  background: #ffffffbb;
-  border: 1px solid white;
-  padding: 8px 11px;
-  border-radius: 18px;
-  font-size: 11px;
-}
-
-/* ENERGY */
-
-.energy {
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #ffffffbb;
-  border: 1px solid white;
-  border-radius: 18px;
-  padding: 7px 11px;
-  flex: 0 0 auto;
-}
-
-.energy label {
-  font-size: 12px;
-  white-space: nowrap;
-  font-weight: 800;
-}
-
-.bar {
-  height: 10px;
-  flex: 1;
-  background: #f3d8e4;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.fill {
-  height: 100%;
-  width: 78%;
-  border-radius: 20px;
-  background: linear-gradient(90deg, #ff9cbe, #ffd17f);
-  transition: width .4s;
-}
-
-/* SCENE */
-
-.scene {
-  flex: 1;
-  min-height: 0;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 2px 0;
-  overflow: hidden;
-}
-
-.sun {
-  position: absolute;
-  top: 8%;
-  right: 9%;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  background: #ffe6a7;
-  box-shadow: 0 0 0 12px #ffe6a733;
-}
-
-.cloud {
-  position: absolute;
-  width: 80px;
-  height: 24px;
-  border-radius: 30px;
-  background: #ffffff99;
-  left: 7%;
-  top: 17%;
-}
-
-.cloud::before,
-.cloud::after {
-  content: "";
-  position: absolute;
-  background: inherit;
-  border-radius: 50%;
-  width: 33px;
-  height: 33px;
-  top: -13px;
-  left: 14px;
-}
-
-.cloud::after {
-  left: 38px;
-  width: 25px;
-  height: 25px;
-  top: -8px;
-}
-
-.plant {
-  position: absolute;
-  bottom: 4%;
-  font-size: clamp(30px, 8vw, 48px);
-  opacity: .8;
-}
-
-.plant.left { left: 2%; }
-.plant.right { right: 2%; }
-
-.pet-wrap {
-  position: relative;
-  width: min(78vw, 330px);
-  height: min(52vh, 360px);
-  max-height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.shadow {
-  position: absolute;
-  width: 67%;
-  height: 9%;
-  bottom: 5%;
-  border-radius: 50%;
-  background: #b96c9330;
-  filter: blur(4px);
-}
-
-/* TOKY CHARACTER */
-
-.pet {
-  position: relative;
-  width: 76%;
-  height: 88%;
-  max-height: 320px;
-  animation: bob 3s ease-in-out infinite;
-  transform-origin: 50% 90%;
-  filter: drop-shadow(0 8px 3px #9f54741a);
-}
-
-.ear {
-  position: absolute;
-  top: 0;
-  width: 35%;
-  height: 37%;
-  background: #f49ab9;
-  border: 4px solid #d96f98;
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-  z-index: 1;
-}
-
-.ear::after {
-  content: "";
-  position: absolute;
-  inset: 22% 22% 5%;
-  background: #ffd0df;
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-}
-
-.ear.l {
-  left: 5%;
-  transform: rotate(-12deg);
-}
-
-.ear.r {
-  right: 5%;
-  transform: rotate(12deg);
-}
-
-.head {
-  position: absolute;
-  z-index: 2;
-  top: 17%;
-  left: 5%;
-  width: 90%;
-  height: 51%;
-  border: 4px solid #d96f98;
-  border-radius: 44% 44% 42% 42%;
-  background: linear-gradient(145deg, #ffbdd2, #f58fb2);
-}
-
-.face {
-  position: absolute;
-  inset: 0;
-}
-
-.brow {
-  position: absolute;
-  top: 28%;
-  width: 15%;
-  height: 5%;
-  background: #d9c4cb;
-  border-radius: 50%;
-}
-
-.brow.l {
-  left: 21%;
-  transform: rotate(-8deg);
-}
-
-.brow.r {
-  right: 21%;
-  transform: rotate(8deg);
-}
-
-.eye {
-  position: absolute;
-  top: 37%;
-  width: 14%;
-  height: 22%;
-  background: white;
-  border: 2px solid #694c63;
-  border-radius: 50%;
-  transition: height .12s, top .12s;
-}
-
-.eye::after {
-  content: "";
-  position: absolute;
-  width: 65%;
-  height: 73%;
-  left: 18%;
-  top: 13%;
-  background: #5a9fe4;
-  border-radius: 50%;
-}
-
-.eye::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  width: 25%;
-  height: 25%;
-  left: 27%;
-  top: 18%;
-  background: white;
-  border-radius: 50%;
-}
-
-.eye.l { left: 22%; }
-.eye.r { right: 22%; }
-
-.muzzle {
-  position: absolute;
-  bottom: 9%;
-  left: 24%;
-  width: 52%;
-  height: 31%;
-  background: #fff6f3;
-  border-radius: 48% 48% 45% 45%;
-}
-
-.nose {
-  position: absolute;
-  top: 56%;
-  left: 45%;
-  width: 10%;
-  height: 8%;
-  background: #d94d72;
-  clip-path: polygon(50% 100%, 0 0, 100% 0);
-}
-
-.mouth {
-  position: absolute;
-  top: 68%;
-  left: 43%;
-  width: 14%;
-  height: 8%;
-  border-bottom: 2px solid #a34c69;
-  border-radius: 0 0 50% 50%;
-}
-
-.blush {
-  position: absolute;
-  top: 59%;
-  width: 17%;
-  height: 8%;
-  border-radius: 50%;
-  background: #f477a4aa;
-  filter: blur(1px);
-}
-
-.blush.l { left: 10%; }
-.blush.r { right: 10%; }
-
-.body {
-  position: absolute;
-  z-index: 1;
-  bottom: 5%;
-  left: 15%;
-  width: 70%;
-  height: 38%;
-  background: #f7a2bd;
-  border: 4px solid #d96f98;
-  border-radius: 45% 45% 35% 35%;
-}
-
-.belly {
-  position: absolute;
-  left: 20%;
-  top: 20%;
-  width: 60%;
-  height: 67%;
-  background: #fff6f3;
-  border-radius: 48%;
-}
-
-.arm {
-  position: absolute;
-  z-index: 3;
-  top: 70%;
-  width: 23%;
-  height: 14%;
-  background: #f49ab9;
-  border: 3px solid #d96f98;
-  border-radius: 50%;
-}
-
-.arm.l {
-  left: 4%;
-  transform: rotate(30deg);
-}
-
-.arm.r {
-  right: 4%;
-  transform: rotate(-30deg);
-}
-
-.foot {
-  position: absolute;
-  z-index: 2;
-  bottom: 0;
-  width: 31%;
-  height: 12%;
-  background: #e978a0;
-  border: 3px solid #d96f98;
-  border-radius: 50%;
-}
-
-.foot.l { left: 15%; }
-.foot.r { right: 15%; }
-
-.hat {
-  position: absolute;
-  z-index: 4;
-  top: 11%;
-  left: 26%;
-  width: 48%;
-  height: 17%;
-  background: #82b9f5;
-  border: 3px solid #568cc7;
-  border-radius: 48% 48% 18% 18%;
-  transform: rotate(-5deg);
-}
-
-.hat::after {
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  left: -7%;
-  width: 114%;
-  height: 9px;
-  background: #679edb;
-  border-radius: 50%;
-}
-
-.strawberry {
-  position: absolute;
-  z-index: 5;
-  top: 4%;
-  left: 55%;
-  font-size: clamp(19px, 5vw, 26px);
-  transform: rotate(20deg);
-}
-
-.strap {
-  position: absolute;
-  z-index: 4;
-  right: 11%;
-  top: 66%;
-  width: 9%;
-  height: 22%;
-  background: #8acba5;
-  border-radius: 10px;
-  transform: rotate(-12deg);
-}
-
-.bag {
-  position: absolute;
-  z-index: 5;
-  right: 0;
-  top: 76%;
-  font-size: clamp(22px, 6vw, 30px);
-  transform: rotate(10deg);
-}
-
-/* DIALOGUE: LETTER BY LETTER */
-
-.dialogue {
-  flex: 0 0 auto;
-  min-height: 62px;
-  max-height: 76px;
-  overflow: auto;
-  background: #fffdf9ed;
-  border: 2px solid white;
-  border-radius: 18px;
-  padding: 10px 13px;
-  box-shadow: 0 5px 16px #a85d7c12;
-  font-size: clamp(12px, 3.4vw, 14px);
-  line-height: 1.4;
-}
-
-.dialogue strong {
-  color: #df6e99;
-}
-
-.dialogue.speaking {
-  animation: bubbleIn .22s ease-out;
-}
-
-.dialogue.speaking::after {
-  content: "";
-  display: inline-block;
-  width: 5px;
-  height: 1em;
-  margin-left: 3px;
-  vertical-align: -2px;
-  background: #df6e99;
-  animation: caret .7s steps(1) infinite;
-}
-
-@keyframes caret {
-  50% { opacity: 0; }
-}
-
-@keyframes bubbleIn {
-  from { transform: translateY(3px); opacity: .75; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-/* ACTION BUTTONS */
-
-.actions {
-  flex: 0 0 auto;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.action {
-  min-width: 0;
-  min-height: 56px;
-  border-radius: 15px;
-  background: #fffdf7;
-  border: 1px solid white;
-  box-shadow: 0 3px 0 #e9c5d5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 5px 2px;
-  font-size: clamp(9px, 2.6vw, 11px);
-  font-weight: 800;
-  line-height: 1.15;
-}
-
-.action .ico {
-  font-size: clamp(18px, 5vw, 23px);
-  line-height: 1.1;
-}
-
-.action:active {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 #e9c5d5;
-}
-
-.footer {
-  text-align: center;
-  font-size: 10px;
-  opacity: .62;
-  margin-top: 6px;
-  flex: 0 0 auto;
-}
-
-/* REACTION ANIMATIONS */
-
-.pet.pat { animation: pat .85s ease; }
-.pet.cheekAct { animation: cheek .65s ease; }
-.pet.bellyAct { animation: belly .65s ease; }
-.pet.hug { animation: hug .9s ease; }
-.pet.food { animation: food .7s ease; }
-.pet.story { animation: tilt .85s ease; }
-.pet.sleep { animation: rest 1.1s ease forwards; }
-.pet.wake { animation: wake .8s ease; }
-.pet.talk { animation: tilt .55s ease; }
-.pet.drawAct { animation: drawBounce .7s ease; }
-
-.pet.pat .ear {
-  animation: earWiggle .45s ease;
-}
-
-.pet.hug .arm {
-  animation: armsHug .7s ease;
-}
-
-.pet.food .head {
-  animation: nibble .4s ease 2;
-}
-
-.pet.cheekAct .blush {
-  background: #f05b91dd;
-}
-
-.pet.bellyAct .belly {
-  animation: tummy .45s ease;
-}
-
-.pet.story .ear {
-  animation: earWiggle .6s ease;
-}
-
-.pet.blink .eye,
-.pet.sleep .eye {
-  height: 3%;
-  top: 47%;
-  background: #d96f98;
-  border-radius: 50%;
-}
-
-.pet.blink .eye::before,
-.pet.blink .eye::after,
-.pet.sleep .eye::before,
-.pet.sleep .eye::after {
-  display: none;
-}
-
-@keyframes bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-@keyframes pat {
-  0%, 100% { transform: rotate(0); }
-  35% { transform: rotate(-7deg) translateY(-7px); }
-  70% { transform: rotate(5deg); }
-}
-
-@keyframes cheek {
-  0%, 100% { transform: scaleX(1); }
-  35% { transform: scaleX(.84) scaleY(1.04); }
-  70% { transform: scaleX(1.05); }
-}
-
-@keyframes belly {
-  0%, 100% { transform: scale(1); }
-  40% { transform: scale(1.05) rotate(2deg); }
-}
-
-@keyframes hug {
-  0%, 100% { transform: scale(1); }
-  35% { transform: scale(.9, 1.04); }
-  65% { transform: scale(1.06, .98); }
-}
-
-@keyframes food {
-  0%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-12px) rotate(4deg); }
-}
-
-@keyframes tilt {
-  0%, 100% { transform: rotate(0); }
-  35% { transform: rotate(8deg); }
-  70% { transform: rotate(-6deg); }
-}
-
-@keyframes drawBounce {
-  0%, 100% { transform: translateY(0); }
-  35% { transform: translateY(-10px) rotate(-3deg); }
-  70% { transform: translateY(2px) rotate(3deg); }
-}
-
-@keyframes earWiggle {
-  0%, 100% { rotate: 0deg; }
-  40% { rotate: 8deg; }
-  70% { rotate: -6deg; }
-}
-
-@keyframes armsHug {
-  0%, 100% { scale: 1; }
-  40% { scale: 1.25; }
-}
-
-@keyframes nibble {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 4px; }
-}
-
-@keyframes tummy {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(.85, 1.12); }
-}
-
-@keyframes rest {
-  to { transform: translateY(9px) scale(.96); }
-}
-
-@keyframes wake {
-  0% { transform: translateY(9px) scale(.96); }
-  55% { transform: translateY(-12px) scale(1.04); }
-  100% { transform: translateY(0) scale(1); }
-}
-
-/* DRAWING WINDOW */
-
-.modal {
-  position: absolute;
-  inset: 0;
-  z-index: 20;
-  background: #62435477;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-}
-
-.modal.open {
-  display: flex;
-}
-
-.card {
-  width: min(100%, 420px);
-  background: #fff9f3;
-  border: 2px solid white;
-  border-radius: 22px;
-  padding: 15px;
-  box-shadow: 0 12px 35px #48233644;
-}
-
-.card h2 {
-  margin: 0 0 8px;
-  font-size: 19px;
-}
-
-.card p {
-  font-size: 13px;
-  margin: 0 0 10px;
-}
-
-.tools {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
-  margin: 8px 0;
-}
-
-.tools button,
-.close {
-  background: #ffe0ec;
-  padding: 8px 11px;
-  border-radius: 12px;
-  font-size: 12px;
-}
-
-.tools input {
-  width: 38px;
-  height: 34px;
-  border: 0;
-  background: transparent;
-}
-
-.canvas-wrap {
-  background: white;
-  border: 1px solid #efd6e0;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-canvas {
-  display: block;
-  width: 100%;
-  height: 190px;
-  touch-action: none;
-}
-
-.close {
-  margin-top: 9px;
-  background: #dff3e8;
-}
-
-.heart {
-  position: absolute;
-  font-size: 23px;
-  pointer-events: none;
-  animation: heart 1s ease-out forwards;
-  z-index: 8;
-}
-
-@keyframes heart {
-  to {
-    transform: translateY(-55px) scale(1.5);
-    opacity: 0;
-  }
-}
-
-/* SMALL SCREENS */
-
-@media (max-height: 700px) {
-  .energy {
-    margin-top: 5px;
-    padding: 5px 9px;
-  }
-
-  .scene {
-    margin: 0;
-  }
-
-  .pet-wrap {
-    height: min(44vh, 290px);
-  }
-
-  .dialogue {
-    min-height: 52px;
-    max-height: 60px;
-    padding: 7px 10px;
-  }
-
-  .actions {
-    gap: 5px;
-    margin-top: 6px;
-  }
-
-  .action {
-    min-height: 48px;
-    border-radius: 12px;
-  }
-
-  .footer {
-    margin-top: 4px;
-  }
-}
-
-@media (max-width: 360px) {
-  .app {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-
-  .action {
-    font-size: 9px;
-  }
-
-  .actions {
-    gap: 4px;
-  }
-
-  .pet-wrap {
-    width: 72vw;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-}
+*{box-sizing:border-box}
+:root{--pink:#ff8fb3;--deep:#e65f91;--cream:#fff9f1;--ink:#634b5a}
+body{margin:0;background:#fff0f5;color:var(--ink);font-family:system-ui,-apple-system,sans-serif;overflow:hidden;touch-action:manipulation}
+button,input{font:inherit}
+button{border:0;cursor:pointer;color:inherit}
+button:active{transform:scale(.96)}
+#game{height:100dvh;max-width:600px;margin:auto;display:none;flex-direction:column;background:var(--cream);overflow:hidden;position:relative}
+header{padding:9px 12px;background:#fff9f5;box-shadow:0 2px 9px #b86a8017;z-index:3}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.logo{font-weight:900;font-size:19px;color:#e65f91}
+.level{font-size:10px;color:#9c8190}
+.coins{background:#fff0bd;border-radius:20px;padding:6px 9px;font-weight:800;font-size:13px}
+.smallbtn{background:#ffe1ed;padding:7px 9px;border-radius:12px;font-size:11px;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:8px}
+.stat{background:white;padding:6px;border-radius:11px;font-size:10px;min-width:0}
+.statline{display:flex;justify-content:space-between;gap:2px;font-weight:750;margin-bottom:4px}
+.bar{height:7px;border-radius:10px;background:#f1e5eb;overflow:hidden}
+.fill{height:100%;width:80%;border-radius:10px;transition:width .4s}
+#hungerFill{background:#ffb36c}#energyFill{background:#8bb8ff}
+#funFill{background:#ed8eb5}#toiletFill{background:#8dcba1}
+#scene{position:relative;flex:1;min-height:0;overflow:hidden;touch-action:pan-y}
+.room{position:absolute;inset:0;overflow:hidden;transition:background .35s}
+.room-bedroom{background:linear-gradient(#f8d9ed 0 60%,#eac1d7 60%)}
+.room-dining{background:linear-gradient(#fff0c9 0 60%,#edcf9e 60%)}
+.room-kitchen{background:linear-gradient(#dff2f5 0 60%,#c5dfdf 60%)}
+.room-living{background:linear-gradient(#e2dafa 0 60%,#d0bce5 60%)}
+.room-bathroom{background:linear-gradient(#d9f4f0 0 60%,#b3ded8 60%)}
+.window{position:absolute;top:8%;left:7%;width:26%;height:20%;border:6px solid #fff9f5;border-radius:12px;background:linear-gradient(#a8dcf7 0 65%,#b7e4a7 65%)}
+.window:before,.window:after{content:"";position:absolute;background:#fff9f5}
+.window:before{width:5px;height:100%;left:50%}
+.window:after{height:5px;width:100%;top:50%}
+.shelf{position:absolute;top:12%;right:7%;width:24%;height:7%;border-radius:7px;background:#d7a67c;box-shadow:0 12px #f2d2b2,0 24px #d7a67c}
+.wallpic{position:absolute;right:12%;top:27%;font-size:30px}
+.rug{position:absolute;bottom:3%;left:20%;width:60%;height:17%;background:#f4a9c9;border-radius:50%;opacity:.75}
+.furniture{position:absolute;bottom:14%;font-size:clamp(35px,10vw,58px);filter:drop-shadow(0 5px 2px #8e677522)}
+#furnLeft{left:4%}#furnRight{right:4%}
+#speech{position:absolute;z-index:10;top:4%;left:50%;transform:translateX(-50%);width:85%;max-width:330px;min-height:42px;padding:9px 13px;background:white;border:2px solid #ffd0e0;border-radius:17px;text-align:center;font-size:12px;font-weight:700;box-shadow:0 4px 12px #9d65851c}
+#speech:after{content:"";position:absolute;bottom:-8px;left:50%;width:13px;height:13px;background:white;border-right:2px solid #ffd0e0;border-bottom:2px solid #ffd0e0;transform:translateX(-50%) rotate(45deg)}
+#petStage{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:210px;height:245px;display:flex;justify-content:center;align-items:center;z-index:2}
+#pet{position:relative;width:166px;height:215px;transform-origin:50% 80%;animation:bob 2.8s ease-in-out infinite;touch-action:none;user-select:none}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -5px}}
+.ear{position:absolute;top:3px;width:61px;height:87px;background:#ff91b4;clip-path:polygon(50% 0,100% 100%,0 100%);z-index:1;transform-origin:50% 100%}
+.ear:after{content:"";position:absolute;left:17px;top:20px;width:28px;height:55px;background:#d95d8d;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.ear.left{left:6px;transform:rotate(-13deg)}.ear.right{right:6px;transform:rotate(13deg)}
+.head{position:absolute;top:39px;left:14px;width:138px;height:113px;border-radius:46% 46% 42% 42%;background:#ffabc6;border:2px solid #f786aa;z-index:2}
+.hat{position:absolute;z-index:5;top:17px;left:29px;width:109px;height:34px;border-radius:42px 42px 13px 13px;background:#67b7f5;border:2px solid #439bdc;transform:rotate(-5deg)}
+.hat:after{content:"";position:absolute;bottom:-8px;left:-6px;width:119px;height:12px;background:#4da6ec;border-radius:50%}
+.berry{position:absolute;top:-16px;left:43px;width:27px;height:29px;background:#ff526e;clip-path:polygon(50% 100%,5% 35%,10% 10%,30% 0,50% 12%,72% 0,93% 18%,95% 38%);z-index:2}
+.berry:after{content:"";position:absolute;top:0;left:8px;width:13px;height:7px;background:#64bd79;clip-path:polygon(50% 100%,0 0,100% 0)}
+.brow{position:absolute;top:28px;width:26px;height:6px;border-radius:50%;background:#eee9f0;z-index:3}
+.brow.left{left:28px;transform:rotate(-7deg)}.brow.right{right:28px;transform:rotate(7deg)}
+.eye{position:absolute;top:41px;width:28px;height:35px;border-radius:50%;background:white;border:2px solid #e8a0b7;z-index:3;overflow:hidden}
+.eye.left{left:25px}.eye.right{right:25px}
+.eye:after{content:"";position:absolute;left:7px;top:5px;width:16px;height:22px;background:#58b6ed;border-radius:50%}
+.eye:before{content:"";position:absolute;z-index:1;left:12px;top:7px;width:7px;height:12px;background:#283d61;border-radius:50%}
+.muzzle{position:absolute;left:37px;top:68px;width:64px;height:34px;background:#fff7f4;border-radius:50%;z-index:4}
+.nose{position:absolute;left:61px;top:67px;width:14px;height:10px;background:#e94f6f;border-radius:50% 50% 65% 65%;z-index:5}
+.mouth{position:absolute;top:80px;left:64px;width:10px;height:9px;border-bottom:2px solid #a85170;border-radius:0 0 50% 50%;z-index:5}
+.cheek{position:absolute;top:73px;width:19px;height:10px;border-radius:50%;background:#ff87aa;opacity:.8;z-index:4}
+.cheek.left{left:12px}.cheek.right{right:12px}
+.body{position:absolute;top:137px;left:37px;width:92px;height:69px;background:#ff9cbb;border-radius:42% 42% 36% 36%;z-index:1;border:2px solid #f786aa}
+.belly{position:absolute;left:23px;top:17px;width:43px;height:43px;border-radius:50%;background:#fff7f4}
+.arm{position:absolute;top:151px;width:27px;height:46px;border-radius:18px;background:#ffa4c1;z-index:2}
+.arm.left{left:24px;transform:rotate(20deg)}.arm.right{right:24px;transform:rotate(-20deg)}
+.foot{position:absolute;top:190px;width:39px;height:22px;border-radius:50%;background:#ef709c;z-index:3}
+.foot.left{left:35px}.foot.right{right:35px}
+.strap{position:absolute;z-index:6;left:96px;top:116px;width:12px;height:91px;border:4px solid #67b982;border-radius:12px;transform:rotate(-24deg);pointer-events:none}
+.bag{position:absolute;z-index:7;left:102px;top:159px;width:37px;height:40px;background:#f94d6d;border-radius:46% 46% 42% 42%;transform:rotate(9deg);border:2px solid #e63f60}
+.bag:before{content:"";position:absolute;top:-6px;left:9px;width:16px;height:10px;background:#65bd79;clip-path:polygon(50% 100%,0 0,100% 0)}
+.bag:after{content:"";position:absolute;inset:8px;background:radial-gradient(circle,#ffd6d7 1px,transparent 2px);background-size:9px 9px}
+.hand{position:absolute;z-index:12;font-size:60px;left:50%;top:10%;transform:translate(-50%,-30%) rotate(-30deg);opacity:0;pointer-events:none;filter:drop-shadow(0 3px 2px #8a536333)}
+.hand.active{opacity:1;animation:petHand 1s ease-in-out 2}
+@keyframes petHand{0%{transform:translate(-50%,-60%) rotate(-40deg)}50%{transform:translate(-50%,20%) rotate(-10deg)}100%{transform:translate(-50%,-30%) rotate(-30deg)}}
+#roomLabel{position:absolute;left:10px;bottom:8px;background:#ffffffd9;padding:6px 9px;border-radius:12px;font-size:11px;font-weight:800;z-index:8}
+#hint{position:absolute;right:10px;bottom:8px;font-size:10px;background:#ffffffc9;padding:6px 8px;border-radius:12px;z-index:8}
+#roomArrow{position:absolute;top:48%;width:100%;display:flex;justify-content:space-between;pointer-events:none;z-index:8}
+#roomArrow button{pointer-events:auto;background:#ffffffb8;border-radius:50%;width:33px;height:40px;font-size:22px}
+#toast{position:absolute;z-index:30;left:50%;top:45%;transform:translate(-50%,-50%);background:#fff;border:2px solid #ffd1e1;padding:16px;border-radius:18px;width:85%;max-width:320px;text-align:center;box-shadow:0 10px 40px #77435b33;display:none}
+#toast button{background:var(--pink);color:white;border-radius:12px;padding:9px 12px;margin:5px 3px;font-size:12px;font-weight:800}
+nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:7px;background:white;border-top:1px solid #f5dbe5;z-index:5}
+nav button{background:#fff0f5;border-radius:11px;padding:6px 2px;font-size:10px;font-weight:800}
+nav button span{display:block;font-size:20px;margin-bottom:2px}
+#actions{padding:6px 8px 9px;background:#fff9f5;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.action{background:white;border:1px solid #f3dce6;border-radius:12px;padding:7px 2px;font-size:10px;font-weight:750}
+.action span{display:block;font-size:19px;margin-bottom:3px}
+.panel{position:absolute;inset:0;z-index:20;background:#fff8f4f5;padding:17px;overflow:auto;display:none}
+.panel h2{margin:0 0 7px;font-size:21px;color:#e65f91}
+.close{float:right;background:#ffe2ed;border-radius:50%;width:32px;height:32px;font-size:19px}
+.quest{display:flex;gap:8px;align-items:center;background:white;padding:10px;border-radius:13px;margin:8px 0;border:1px solid #f4d9e5}
+.qicon{font-size:24px}.qbody{flex:1;font-size:11px;min-width:0}.qbody strong{display:block;font-size:12px}
+.qbar{height:6px;background:#f1e5eb;border-radius:10px;margin-top:6px;overflow:hidden}
+.qbar div{height:100%;background:#80c99a}
+.claim{background:#ff8fb3;color:white;border-radius:9px;padding:7px;font-size:10px;font-weight:800}
+.claim:disabled{background:#d9cbd2}
+.foodgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:15px}
+.food{background:white;border-radius:15px;padding:12px 4px;border:1px solid #f2d9e4;font-size:12px}
+.food b{display:block;font-size:28px}
+.sleeping .eye{height:4px;top:56px;background:#8c5a77;border-radius:50%}
+.sleeping .eye:before,.sleeping .eye:after{display:none}
+.sleeping .mouth{border:0;border-top:2px solid #a85170;border-radius:50%}
+#startScreen{position:fixed;inset:0;z-index:999;display:flex;justify-content:center;align-items:center;padding:20px;background:linear-gradient(145deg,#ffc5d9,#ffe9d6 55%,#ffd6e7)}
+.start-card{width:100%;max-width:360px;padding:25px 22px;border-radius:28px;background:#fffaf7;text-align:center;box-shadow:0 15px 45px #b65a802c}
+.start-berry{font-size:38px}.start-card h1{margin:5px 0;color:#e65f91;font-size:34px}
+.start-card p{color:#8c687a;font-size:14px}
+.start-fox{font-size:75px;margin:8px 0 12px;animation:startBounce 2s ease-in-out infinite}
+@keyframes startBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.start-card label{display:block;margin-bottom:8px;font-weight:800;color:#d85888}
+#playerName{width:100%;padding:13px;border:2px solid #ffc3d8;border-radius:14px;outline:none;font-size:16px;text-align:center;background:white}
+#playerName:focus{border-color:#e65f91}
+.start-card button{width:100%;margin-top:12px;padding:13px;border-radius:14px;background:#ff8fb3;color:white;font-weight:850;font-size:15px}
+.start-card small{display:block;margin-top:13px;color:#aa8295}
+#nameError{color:#d74468;min-height:8px;font-size:12px}
+@media(max-height:700px){header{padding:5px 9px}.stats{margin-top:5px}.stat{padding:4px}.statline{font-size:9px}#actions{padding:4px 6px}.action{padding:5px 1px}nav{padding:4px}.panel{padding:12px}#petStage{transform:translate(-50%,-50%) scale(.88)}}
 </style>
 </head>
-
 <body>
-<main class="app">
 
-  <header class="top">
-    <div class="brand">Mr. <span>Toky</span> 🍓</div>
-    <div class="mood">🍓 เพื่อนตัวจิ๋วของแกรนนี่</div>
-  </header>
+<div id="startScreen">
+ <div class="start-card">
+  <div class="start-berry">🍓</div>
+  <h1>Mr. Toky</h1>
+  <p>ยินดีต้อนรับสู่บ้านของโทกี้!</p>
+  <div class="start-fox">🦊</div>
+  <label for="playerName">Granny ชื่ออะไรครับ?</label>
+  <input id="playerName" type="text" maxlength="20" placeholder="กรอกชื่อของเธอ..." autocomplete="nickname">
+  <p id="nameError"></p>
+  <button onclick="startGame()">🩷 เริ่มเลี้ยงโทกี้</button>
+  <small>โทกี้รอ Granny อยู่นะ kub 🍓</small>
+ </div>
+</div>
 
-  <div class="energy">
-    <label>🍓 พลังงานของโทกี้</label>
-    <div class="bar"><div class="fill" id="energyFill"></div></div>
-    <b id="energyNum">78%</b>
+<div id="game">
+<header>
+ <div class="topline">
+  <div><div class="logo">🍓 Mr. Toky</div><div class="level" id="levelText">Granny's little fox • Lv. 1</div></div>
+  <div class="coins">🪙 <span id="coins">0</span></div>
+  <button class="smallbtn" onclick="openPanel('quests')">🎯 ภารกิจ <span id="questBadge">!</span></button>
+  <button class="smallbtn" onclick="changeGrannyName()">✏️ ชื่อ</button>
+ </div>
+ <div class="stats">
+  <div class="stat"><div class="statline"><span>🍓 อิ่ม</span><span id="hungerNum">80</span></div><div class="bar"><div class="fill" id="hungerFill"></div></div></div>
+  <div class="stat"><div class="statline"><span>⚡ พลัง</span><span id="energyNum">80</span></div><div class="bar"><div class="fill" id="energyFill"></div></div></div>
+  <div class="stat"><div class="statline"><span>🩷 สุขใจ</span><span id="funNum">80</span></div><div class="bar"><div class="fill" id="funFill"></div></div></div>
+  <div class="stat"><div class="statline"><span>🚽 ห้องน้ำ</span><span id="toiletNum">10</span></div><div class="bar"><div class="fill" id="toiletFill"></div></div></div>
+ </div>
+</header>
+
+<main id="scene">
+ <div class="room room-bedroom" id="room">
+  <div class="window"></div><div class="shelf"></div><div class="wallpic">🍓</div><div class="rug"></div>
+  <div class="furniture" id="furnLeft">🛏️</div><div class="furniture" id="furnRight">🧸</div>
+ </div>
+ <div id="speech">Granny ครับ! วันนี้เรามาเล่นกันนะ kub 🍓</div>
+ <div id="petStage">
+  <div id="pet">
+   <div class="ear left"></div><div class="ear right"></div>
+   <div class="hat"><div class="berry"></div></div>
+   <div class="head">
+    <div class="brow left"></div><div class="brow right"></div>
+    <div class="eye left"></div><div class="eye right"></div>
+    <div class="cheek left"></div><div class="cheek right"></div>
+    <div class="muzzle"></div><div class="nose"></div><div class="mouth"></div>
+   </div>
+   <div class="body"><div class="belly"></div></div>
+   <div class="arm left"></div><div class="arm right"></div>
+   <div class="foot left"></div><div class="foot right"></div>
+   <div class="strap"></div><div class="bag"></div>
   </div>
+  <div class="hand" id="hand">🖐🏻</div>
+ </div>
+ <div id="roomArrow"><button onclick="changeRoom(-1)">‹</button><button onclick="changeRoom(1)">›</button></div>
+ <div id="roomLabel">🛏️ ห้องนอน</div><div id="hint">ปัดซ้าย–ขวาเพื่อเปลี่ยนห้อง</div>
+ <div id="toast"></div>
 
-  <section class="scene" id="scene">
-    <div class="sun"></div>
-    <div class="cloud"></div>
-    <div class="plant left">🪴</div>
-    <div class="plant right">🌷</div>
+ <section class="panel" id="quests">
+  <button class="close" onclick="closePanel()">×</button>
+  <h2>🎯 ภารกิจของ Granny</h2>
+  <div id="questList"></div>
+  <p style="font-size:11px;color:#a4778e">ทำกิจกรรมให้สำเร็จเพื่อรับเหรียญและเพิ่มระดับความผูกพัน 🩷</p>
+ </section>
 
-    <div class="pet-wrap">
-      <div class="shadow"></div>
-
-      <div class="pet" id="pet" aria-label="Mr. Toky pink fox">
-        <div class="ear l"></div>
-        <div class="ear r"></div>
-
-        <div class="body">
-          <div class="belly"></div>
-        </div>
-
-        <div class="foot l"></div>
-        <div class="foot r"></div>
-        <div class="arm l"></div>
-        <div class="arm r"></div>
-
-        <div class="strap"></div>
-        <div class="bag">🍓</div>
-
-        <div class="head">
-          <div class="face">
-            <div class="brow l"></div>
-            <div class="brow r"></div>
-            <div class="eye l"></div>
-            <div class="eye r"></div>
-            <div class="blush l"></div>
-            <div class="blush r"></div>
-            <div class="muzzle"></div>
-            <div class="nose"></div>
-            <div class="mouth"></div>
-          </div>
-        </div>
-
-        <div class="hat"></div>
-        <div class="strawberry">🍓</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="dialogue" aria-live="off">
-    <strong>โทกี้:</strong>
-    <span id="line">แกรนนี่ครับ! วันนี้มาเล่นกับไอแล้วเหรอครับ kub 🍓</span>
+ <section class="panel" id="foodPanel">
+  <button class="close" onclick="closePanel()">×</button>
+  <h2>🍓 มื้ออร่อยของโทกี้</h2>
+  <p style="font-size:12px">Granny เลือกอาหารให้ไอได้เลยครับ แต่อย่าป้อนเยอะจนปวดท้องนะ!</p>
+  <div class="foodgrid">
+   <button class="food" onclick="feed('🍓',12,8)"><b>🍓</b>สตรอว์เบอร์รี</button>
+   <button class="food" onclick="feed('🍎',15,10)"><b>🍎</b>แอปเปิล</button>
+   <button class="food" onclick="feed('🥕',18,12)"><b>🥕</b>แครอต</button>
+   <button class="food" onclick="feed('🍰',25,20)"><b>🍰</b>เค้ก</button>
+   <button class="food" onclick="feed('🥛',10,4)"><b>🥛</b>นม</button>
+   <button class="food" onclick="feed('🍪',20,15)"><b>🍪</b>คุกกี้</button>
   </div>
+ </section>
 
-  <section class="actions" id="actions">
-    <button class="action" data-act="pat">
-      <span class="ico">🫳</span>ลูบหัว
-    </button>
+ <section class="panel" id="bathPanel">
+  <button class="close" onclick="closePanel()">×</button>
+  <h2>🚽 ห้องน้ำของโทกี้</h2>
+  <p id="bathText">Granny พาโทกี้เข้าห้องน้ำกันนะครับ</p>
+  <div style="text-align:center;font-size:78px;margin:20px">🚽</div>
+  <button class="action" style="width:100%;padding:14px" onclick="useBathroom()">🧻 ช่วยโทกี้เข้าห้องน้ำ</button>
+ </section>
 
-    <button class="action" data-act="cheek">
-      <span class="ico">😊</span>บีบแก้ม
-    </button>
-
-    <button class="action" data-act="belly">
-      <span class="ico">👉</span>จิ้มพุง
-    </button>
-
-    <button class="action" data-act="hug">
-      <span class="ico">🫂</span>กอด
-    </button>
-
-    <button class="action" data-act="draw">
-      <span class="ico">🎨</span>วาดรูปกับโทกี้
-    </button>
-
-    <button class="action" data-act="food">
-      <span class="ico">🍓</span>ป้อนอาหาร
-    </button>
-
-    <button class="action" data-act="story">
-      <span class="ico">📖</span>ฟังโทกี้เล่าเรื่อง
-    </button>
-
-    <button class="action" data-act="sleep">
-      <span class="ico">🌙</span>ส่งโทกี้เข้านอน
-    </button>
-
-    <button class="action" data-act="talk">
-      <span class="ico">💬</span>พูดคุย
-    </button>
-
-    <button class="action" data-act="wake">
-      <span class="ico">☀️</span>ปลุกโทกี้ตอนหลับ
-    </button>
-  </section>
-
-  <div class="footer">
-    แตะปุ่มเพื่อเล่นกับโทกี้ · พักผ่อนและเติมพลังกันด้วยนะ 🍓
-  </div>
-
-  <!-- DRAWING MODAL -->
-  <div class="modal" id="drawModal">
-    <div class="card">
-      <h2>🎨 วาดรูปกับโทกี้</h2>
-      <p>มาวาดรูปด้วยกันนะครับแกรนนี่! วาดเสร็จแล้วกดบันทึกรูปได้เลย</p>
-
-      <div class="tools">
-        <label>
-          สี
-          <input id="color" type="color" value="#f078a4">
-        </label>
-
-        <button id="eraser">ยางลบ</button>
-        <button id="clear">ล้างกระดาษ</button>
-        <button id="save">บันทึกรูป</button>
-      </div>
-
-      <div class="canvas-wrap">
-        <canvas id="canvas" width="700" height="380"></canvas>
-      </div>
-
-      <button class="close" id="closeDraw">เสร็จแล้ว</button>
-    </div>
-  </div>
-
+ <section class="panel" id="sleepPanel">
+  <button class="close" onclick="closePanel()">×</button>
+  <h2>🌙 ห้องนอนแสนอบอุ่น</h2>
+  <p id="sleepText">Granny พร้อมพาโทกี้พักผ่อนหรือยังครับ?</p>
+  <div style="text-align:center;font-size:80px;margin:15px">🛏️🌙</div>
+  <button class="action" style="width:100%;padding:14px" onclick="sleepToky()">💤 พาโทกี้เข้านอน</button>
+  <button class="action" style="width:100%;padding:14px;margin-top:8px" onclick="wakeToky()">☀️ ปลุกโทกี้</button>
+ </section>
 </main>
 
+<nav>
+ <button onclick="goRoom(0)"><span>🛏️</span>ห้องนอน</button>
+ <button onclick="goRoom(1)"><span>🍽️</span>ห้องกินข้าว</button>
+ <button onclick="goRoom(2)"><span>🥣</span>ห้องครัว</button>
+ <button onclick="goRoom(3)"><span>🧸</span>ห้องนั่งเล่น</button>
+ <button onclick="goRoom(4)"><span>🚽</span>ห้องน้ำ</button>
+</nav>
+
+<div id="actions">
+ <button class="action" onclick="petHead()"><span>🖐🏻</span>ลูบหัว</button>
+ <button class="action" onclick="pinch()"><span>🤏🏻</span>บีบแก้ม</button>
+ <button class="action" onclick="hug()"><span>🫂</span>กอดโทกี้</button>
+ <button class="action" onclick="play()"><span>🧸</span>เล่นด้วยกัน</button>
+ <button class="action" onclick="openPanel('foodPanel')"><span>🍓</span>ป้อนอาหาร</button>
+ <button class="action" onclick="goRoom(4);openPanel('bathPanel')"><span>🚽</span>เข้าห้องน้ำ</button>
+ <button class="action" onclick="goRoom(0);openPanel('sleepPanel')"><span>💤</span>เข้านอน</button>
+ <button class="action" onclick="talk()"><span>💬</span>พูดคุย</button>
+</div>
+</div>
+
 <script>
-/* =========================================
-   TOKY DIALOGUES
-========================================= */
+const $=id=>document.getElementById(id);
+const rooms=[
+ {name:"🛏️ ห้องนอน",cls:"room-bedroom",left:"🛏️",right:"🧸"},
+ {name:"🍽️ ห้องกินข้าว",cls:"room-dining",left:"🪑",right:"🍽️"},
+ {name:"🥣 ห้องครัว",cls:"room-kitchen",left:"🧊",right:"🥣"},
+ {name:"🧸 ห้องนั่งเล่น",cls:"room-living",left:"🛋️",right:"🧸"},
+ {name:"🚽 ห้องน้ำ",cls:"room-bathroom",left:"🧻",right:"🧼"}
+];
 
-const lines = {
-  pat: [
-    "แกรนนี่ครับ วันนี้ไอจัดทรงผมมาตั้งนานเลยนะครับ แต่ถ้าแกรนนี่จะลูบก็ไม่เป็นไรครับ เดี๋ยวค่อยจัดใหม่ก็ได้ kub",
-    "โอเคครับแกรนนี่ ลูบเบา ๆ ก็ได้นะครับ ไอไม่ได้หวงสักหน่อย",
-    "แกรนนี่ลูบหัวไอแบบนี้แล้วรู้สึกดีจังเลยครับ ขออีกนิดได้ไหมครับ",
-    "ระวังหมวกสตรอว์เบอร์รีของไอนะครับ แต่ถ้าแกรนนี่อยากลูบก็ได้ครับ",
-    "Now I'm ready for the day แล้วครับ เพราะแกรนนี่ลูบหัวให้ไง kub"
-  ],
+let grannyName="";
+let roomIndex=0;
+let sleeping=false;
+let lastEnergyAlert=false;
+let typingTimer=null;
+let gameStarted=false;
 
-  cheek: [
-    "แกรนนี่ครับ แก้มไอนุ่มขนาดนั้นเลยเหรอครับ อย่าบีบแรงสิครับ",
-    "อ๊ะ! แก้มไอจะย้วยแล้วนะครับ แกรนนี่รับผิดชอบด้วย kub",
-    "แกรนนี่ชอบแกล้งไออีกแล้วนะครับ ไอจะงอนจริง ๆ แล้วนะ",
-    "บีบอีกข้างด้วยไหมครับ จะได้เท่ากัน... ไอพูดเล่นนะครับ",
-    "My cheeks are not toys นะครับแกรนนี่ แต่ถ้าเป็นแกรนนี่ก็..."
-  ],
-
-  belly: [
-    "แกรนนี่ครับ จิ้มพุงไอทำไมครับ ไอเพิ่งกินมาเองนะ",
-    "เฮ้ยครับ! พุงไอจั๊กจี้นะครับ อย่าแกล้งสิ kub",
-    "แกรนนี่กำลังเช็กว่าไออิ่มหรือยังเหรอครับ อิ่มแล้วครับ",
-    "พุงไอนุ่มใช่ไหมครับ แต่ห้ามเอาไปบอกใครนะ",
-    "แกรนนี่ครับ ถ้าจิ้มอีกที ไอจะหัวเราะแล้วนะครับ"
-  ],
-
-  hug: [
-    "แกรนนี่มากอดไอเหรอครับ... งั้นไอขอกอดกลับนะครับ",
-    "อุ่นจังเลยครับ ขออยู่อย่างนี้อีกแป๊บนึงได้ไหม kub",
-    "วันนี้เหนื่อยไหมครับแกรนนี่ ถ้าเหนื่อยก็มากอดไอได้นะครับ",
-    "ไอไม่ได้ติดกอดนะครับ แค่กอดแกรนนี่แล้วสบายใจเฉย ๆ",
-    "Thank you for the hug ครับแกรนนี่ ไอชอบมากเลย"
-  ],
-
-  draw: [
-    "แกรนนี่ครับ วันนี้เรามาวาดรูปกันไหมครับ ไอจะวาดสตรอว์เบอร์รี!",
-    "นี่รูปที่ไอวาดครับ ดูออกไหมครับว่าเป็นอะไร... เป็นโทกี้เองครับ",
-    "แกรนนี่วาดรูปเก่งจังเลยครับ สอนวาดหูจิ้งจอกให้ไอด้วยนะ",
-    "ไอขอใช้สีชมพูเยอะ ๆ เลยนะครับ เพราะเป็นสีที่เหมาะกับไอที่สุด",
-    "วาดเสร็จแล้วเอารูปไปเก็บด้วยกันนะครับ ไออยากเก็บไว้เป็นความทรงจำ"
-  ],
-
-  food: [
-    "แกรนนี่ครับ วันนี้มีอะไรให้ไอกินเหรอครับ ไอหิวแล้ว kub",
-    "อันนี้อร่อยจังเลยครับ ขออีกคำได้ไหมครับ",
-    "แกรนนี่ป้อนให้แบบนี้ ไอรู้สึกเหมือนเป็นเจ้าชายจิ้งจอกเลยครับ",
-    "ระวังเลอะนะครับ... อ๊ะ ไอเลอะแล้ว แกรนนี่ช่วยดูหน่อยครับ",
-    "Thank you ครับแกรนนี่ อิ่มแล้วก็มีความสุขด้วยครับ"
-  ],
-
-  story: [
-    "แกรนนี่ครับ วันนี้ไอมีเรื่องจะเล่าให้ฟังด้วยนะครับ",
-    "เมื่อกี้ไอเห็นสตรอว์เบอร์รีลูกหนึ่ง แล้วไอก็นึกถึงหมวกของไอเลยครับ",
-    "รู้ไหมครับ บางทีไอก็ชอบนั่งมองอะไรเงียบ ๆ แล้วคิดเรื่องไปเรื่อย",
-    "ถ้าแกรนนี่มีเรื่องอยากเล่าให้ไอฟังบ้าง ไอก็พร้อมฟังนะครับ",
-    "จบเรื่องแล้วครับ! แกรนนี่ฟังไอจนจบเลย ขอบคุณนะครับ kub"
-  ],
-
-  sleep: [
-    "แกรนนี่ครับ ถึงเวลานอนแล้วเหรอครับ งั้นไอขอจัดหมวกก่อนนะ",
-    "Good night ครับแกรนนี่ พรุ่งนี้มาเล่นกับไออีกนะครับ",
-    "ไอจะนอนแล้วนะครับ ฝากดูแลกระเป๋าสตรอว์เบอร์รีให้ด้วย kub",
-    "แกรนนี่อย่าลืมพักผ่อนด้วยนะครับ ไอเป็นห่วงนะ",
-    "ฝันดีครับแกรนนี่... zzz 🍓"
-  ],
-
-  talk: [
-    "แกรนนี่ครับ วันนี้มีเรื่องอะไรอยากคุยกับไอไหมครับ",
-    "ไอได้ยินเรื่องของพี่โทกับน้องก้อง🩷 มาด้วยนะครับ แกรนนี่อยากเล่าให้ไอฟังไหม",
-    "พี่โทกับน้องก้อง🩷 นี่มีเรื่องให้พูดถึงเยอะเลยนะครับ ไอฟังได้ทั้งวันเลย kub",
-    "แกรนนี่ครับ ถ้ามีเรื่องที่ทำให้ยิ้มได้ ไอก็อยากฟังด้วยนะครับ",
-    "คุยกับแกรนนี่เพลินจนลืมเวลาเลยครับ อีกนิดได้ไหม kub"
-  ],
-
-  wake: [
-    "หืม... แกรนนี่เรียกไอเหรอครับ ขอไอตื่นแป๊บนึงนะ",
-    "อรุณสวัสดิ์ครับแกรนนี่! ไอตื่นแล้วครับ 🍓",
-    "แกรนนี่ครับ ไอยังง่วงนิดหน่อย แต่พร้อมเล่นแล้วนะ",
-    "ขอบคุณที่มาปลุกไอนะครับ ไอไม่อยากนอนเพลินจนพลาดเวลาเล่นกับแกรนนี่",
-    "Okay! ไอตื่นเต็มตาแล้วครับ วันนี้เราจะทำอะไรกันดี kub"
-  ]
+let state={
+ hunger:80,energy:80,fun:80,toilet:10,
+ coins:0,care:0,feed:0,pet:0,play:0,bath:0,sleep:0,
+ level:1,exp:0
 };
 
+const quests=[
+ {id:"feed",icon:"🍓",title:"มื้ออร่อยของโทกี้",desc:"ป้อนอาหารให้โทกี้ 3 ครั้ง",goal:3,reward:20,progress:0,done:false,claimed:false},
+ {id:"pet",icon:"🖐🏻",title:"เพื่อนรักของโทกี้",desc:"ลูบหัวโทกี้ 3 ครั้ง",goal:3,reward:20,progress:0,done:false,claimed:false},
+ {id:"play",icon:"🧸",title:"เวลาเล่นด้วยกัน",desc:"เล่นกับโทกี้ 2 ครั้ง",goal:2,reward:25,progress:0,done:false,claimed:false},
+ {id:"bath",icon:"🚽",title:"ดูแลให้เรียบร้อย",desc:"พาโทกี้เข้าห้องน้ำ 1 ครั้ง",goal:1,reward:15,progress:0,done:false,claimed:false},
+ {id:"sleep",icon:"💤",title:"ฝันดีนะโทกี้",desc:"พาโทกี้เข้านอน 1 ครั้ง",goal:1,reward:20,progress:0,done:false,claimed:false}
+];
 
-/* =========================================
-   DIALOGUE TYPEWRITER
-   ค่อย ๆ ขึ้นทีละตัวอักษร
-========================================= */
-
-const pet = document.getElementById("pet");
-const line = document.getElementById("line");
-const fill = document.getElementById("energyFill");
-const num = document.getElementById("energyNum");
-
-let energy = 78;
-let sleeping = false;
-let previous = {};
-let typingTimer = null;
-let typeToken = 0;
-
-function say(text) {
-  typeToken++;
-  const token = typeToken;
-
-  if (typingTimer) {
-    clearInterval(typingTimer);
+function say(text){
+ clearTimeout(typingTimer);
+ const box=$("speech");
+ box.textContent="";
+ let i=0;
+ function step(){
+  if(i<text.length){
+   box.textContent+=text[i++];
+   typingTimer=setTimeout(step,25);
   }
-
-  const box = line.closest(".dialogue");
-  box.classList.remove("speaking");
-
-  line.textContent = "";
-  let i = 0;
-
-  box.classList.add("speaking");
-
-  // ค่อย ๆ แสดงข้อความทีละตัวอักษร
-  typingTimer = setInterval(() => {
-    if (token !== typeToken) {
-      clearInterval(typingTimer);
-      return;
-    }
-
-    line.textContent = text.slice(0, i + 1);
-    i++;
-
-    if (i >= text.length) {
-      clearInterval(typingTimer);
-      typingTimer = null;
-      box.classList.remove("speaking");
-    }
-  }, 32);
+ }
+ step();
 }
 
-
-/* =========================================
-   ENERGY
-========================================= */
-
-function setEnergy(value) {
-  energy = Math.max(0, Math.min(100, value));
-  fill.style.width = energy + "%";
-  num.textContent = energy + "%";
+function callGranny(text){
+ return `Granny ${grannyName||"คนเก่ง"} ${text}`;
 }
 
-
-/* =========================================
-   HEART EFFECT
-========================================= */
-
-function hearts() {
-  const scene = document.getElementById("scene");
-
-  for (let i = 0; i < 3; i++) {
-    const heart = document.createElement("span");
-
-    heart.className = "heart";
-    heart.textContent = ["💗", "✨", "🍓"][i];
-    heart.style.left = (42 + Math.random() * 20) + "%";
-    heart.style.top = (38 + Math.random() * 15) + "%";
-
-    scene.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 1000);
-  }
+function save(){
+ try{
+  localStorage.setItem("mrTokySave",JSON.stringify({state,quests,sleeping}));
+  localStorage.setItem("mrTokyPlayerName",grannyName);
+ }catch(e){}
 }
 
-
-/* =========================================
-   CHARACTER ANIMATIONS
-========================================= */
-
-function animate(action) {
-  const classes = [
-    "pat", "cheekAct", "bellyAct", "hug",
-    "food", "story", "sleep", "wake",
-    "talk", "drawAct"
-  ];
-
-  pet.classList.remove(...classes);
-
-  // บังคับให้เบราว์เซอร์เริ่มแอนิเมชันใหม่
-  void pet.offsetWidth;
-
-  const animationClass = {
-    pat: "pat",
-    cheek: "cheekAct",
-    belly: "bellyAct",
-    hug: "hug",
-    food: "food",
-    story: "story",
-    sleep: "sleep",
-    wake: "wake",
-    talk: "talk",
-    draw: "drawAct"
-  }[action];
-
-  if (animationClass) {
-    pet.classList.add(animationClass);
-
-    setTimeout(() => {
-      pet.classList.remove(animationClass);
-    }, 1200);
+function load(){
+ try{
+  const name=localStorage.getItem("mrTokyPlayerName");
+  if(name)grannyName=name;
+  const d=JSON.parse(localStorage.getItem("mrTokySave"));
+  if(d){
+   state={...state,...d.state};
+   if(d.quests)quests.forEach(q=>Object.assign(q,d.quests.find(x=>x.id===q.id)||{}));
+   sleeping=!!d.sleeping;
   }
-
-  if (["hug", "pat", "food", "wake"].includes(action)) {
-    hearts();
-  }
+ }catch(e){}
 }
 
+function clamp(n){return Math.max(0,Math.min(100,n))}
 
-/* =========================================
-   REACTION BUTTONS
-========================================= */
-
-function react(action) {
-  if (action === "draw") {
-    openDraw();
-
-    const arr = lines.draw;
-    let index = Math.floor(Math.random() * arr.length);
-
-    if (arr.length > 1 && index === previous.draw) {
-      index = (index + 1) % arr.length;
-    }
-
-    previous.draw = index;
-
-    say(arr[index]);
-    animate("draw");
-    setEnergy(energy - 2);
-    return;
-  }
-
-  if (action === "sleep" && sleeping) {
-    say("แกรนนี่ครับ ไอหลับอยู่เลยนะครับ ถ้าจะปลุกก็แตะปุ่มปลุกโทกี้ได้เลย");
-    return;
-  }
-
-  if (action === "wake" && !sleeping) {
-    say("ไอตื่นอยู่แล้วครับแกรนนี่ มีอะไรให้ไอช่วยไหม kub");
-    animate("wake");
-    return;
-  }
-
-  if (sleeping && action !== "wake") {
-    say("Zzz... แกรนนี่ครับ ไอกำลังหลับอยู่ ปลุกไอก่อนนะครับ 🍓");
-    return;
-  }
-
-  if (action === "sleep") {
-    sleeping = true;
-  }
-
-  if (action === "wake") {
-    sleeping = false;
-  }
-
-  const arr = lines[action] || lines.talk;
-  let index = Math.floor(Math.random() * arr.length);
-
-  // ไม่ให้พูดประโยคเดิมซ้ำติดกันในปุ่มเดิม
-  if (arr.length > 1 && index === previous[action]) {
-    index = (index + 1) % arr.length;
-  }
-
-  previous[action] = index;
-
-  say(arr[index]);
-  animate(action);
-
-  if (action === "sleep") {
-    setEnergy(energy + 5);
-  } else if (action === "wake") {
-    setEnergy(energy - 1);
-  } else {
-    setEnergy(energy - 3);
-  }
+function startGame(){
+ const input=$("playerName");
+ const name=input.value.trim();
+ if(!name){
+  $("nameError").textContent="Granny ครับ กรอกชื่อให้ไอหน่อยนะ 🥺";
+  input.focus();
+  return;
+ }
+ grannyName=name.slice(0,20);
+ gameStarted=true;
+ try{localStorage.setItem("mrTokyPlayerName",grannyName)}catch(e){}
+ $("startScreen").style.display="none";
+ $("game").style.display="flex";
+ render();
+ renderQuests();
+ say(callGranny("มาแล้วเหรอครับ! ไอรอตั้งนานเลย kub 🍓"));
+ save();
 }
 
-document.querySelectorAll(".action").forEach(button => {
-  button.addEventListener("click", () => {
-    react(button.dataset.act);
-  });
-});
-
-
-/* =========================================
-   IDLE BLINK
-========================================= */
-
-setInterval(() => {
-  if (!sleeping && Math.random() < 0.55) {
-    pet.classList.add("blink");
-
-    setTimeout(() => {
-      pet.classList.remove("blink");
-    }, 170);
-  }
-}, 2600);
-
-
-/* =========================================
-   ENERGY SLOWLY DECREASES
-========================================= */
-
-setInterval(() => {
-  if (!sleeping) {
-    setEnergy(energy - 1);
-  }
-}, 18000);
-
-
-/* =========================================
-   IDLE DIALOGUE
-========================================= */
-
-setInterval(() => {
-  if (sleeping) return;
-
-  const idleLines = [
-    "แกรนนี่ครับ... ไออยู่นี่นะครับ 🍓",
-    "ไอสงสัยว่าถ้าสตรอว์เบอร์รีใส่หมวก จะน่ารักเหมือนไอไหมนะครับ",
-    "แกรนนี่พักสายตาบ้างนะครับ ไอจะนั่งเป็นเพื่อนตรงนี้",
-    "วันนี้บรรยากาศ cozy ดีจังเลยครับ kub"
-  ];
-
-  if (Math.random() < 0.6) {
-    say(idleLines[Math.floor(Math.random() * idleLines.length)]);
-  }
-}, 32000);
-
-
-/* =========================================
-   DRAWING CANVAS
-========================================= */
-
-const modal = document.getElementById("drawModal");
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-let drawing = false;
-let erase = false;
-let last = null;
-
-function resetCanvas() {
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.lineWidth = 8;
-  ctx.strokeStyle = document.getElementById("color").value;
+function changeGrannyName(){
+ const newName=prompt("Granny อยากเปลี่ยนชื่อเป็นอะไรครับ?",grannyName);
+ if(newName===null)return;
+ const cleaned=newName.trim().slice(0,20);
+ if(!cleaned){alert("กรุณากรอกชื่อก่อนนะครับ");return}
+ grannyName=cleaned;
+ save();
+ say(callGranny("เปลี่ยนชื่อเรียบร้อยแล้วครับ! 🩷"));
 }
 
-resetCanvas();
-
-function openDraw() {
-  modal.classList.add("open");
+function animate(type,duration=800){
+ const p=$("pet");
+ if(type==="bounce")p.animate(
+  [{transform:"translateY(0) scale(1)"},{transform:"translateY(-20px) scale(.95,1.08)"},{transform:"translateY(0) scale(1)"}],
+  {duration,easing:"ease-out"}
+ );
+ if(type==="squish")p.animate(
+  [{transform:"scale(1)"},{transform:"scale(1.12,.84)"},{transform:"scale(1)"}],
+  {duration}
+ );
+ if(type==="hug")p.animate(
+  [{transform:"scale(1)"},{transform:"scale(.88,1.08) rotate(-5deg)"},{transform:"scale(1)"}],
+  {duration}
+ );
 }
 
-document.getElementById("closeDraw").onclick = () => {
-  modal.classList.remove("open");
+function hand(){
+ const h=$("hand");
+ h.classList.remove("active");
+ void h.offsetHeight;
+ h.classList.add("active");
+ setTimeout(()=>h.classList.remove("active"),2100);
+}
+
+function task(id,n=1){
+ const q=quests.find(x=>x.id===id);
+ if(!q||q.claimed)return;
+ q.progress=Math.min(q.goal,(q.progress||0)+n);
+ if(q.progress>=q.goal)q.done=true;
+ renderQuests();
+ save();
+}
+
+function reward(id){
+ const q=quests.find(x=>x.id===id);
+ if(!q||!q.done||q.claimed)return;
+ q.claimed=true;
+ state.coins+=q.reward;
+ state.exp+=10;
+ if(state.exp>=50){
+  state.exp-=50;
+  state.level++;
+  say(callGranny("ครับ! เราเลเวลอัปแล้วนะ kub 🍓"));
+ }else{
+  say(callGranny("เย้! ภารกิจสำเร็จแล้วครับ ขอบคุณนะ 🩷"));
+ }
+ render();
+ renderQuests();
+ save();
+}
+
+function renderQuests(){
+ $("questList").innerHTML=quests.map(q=>{
+  const p=Math.min(q.goal,q.progress||0);
+  return `<div class="quest">
+   <div class="qicon">${q.icon}</div>
+   <div class="qbody"><strong>${q.title}</strong>${q.desc}
+   <div class="qbar"><div style="width:${p/q.goal*100}%"></div></div>
+   <small>${p}/${q.goal} • รางวัล 🪙 ${q.reward}</small></div>
+   <button class="claim" ${!q.done||q.claimed?"disabled":""} onclick="reward('${q.id}')">${q.claimed?"รับแล้ว":q.done?"รับรางวัล":"ทำต่อ"}</button>
+  </div>`;
+ }).join("");
+ $("questBadge").textContent=quests.filter(q=>q.done&&!q.claimed).length||"";
+}
+
+function render(){
+ ["hunger","energy","fun","toilet"].forEach(k=>{
+  $(k+"Num").textContent=Math.round(state[k]);
+  $(k+"Fill").style.width=state[k]+"%";
+ });
+ $("coins").textContent=state.coins;
+ $("levelText").textContent=`Granny ${grannyName||""} • Lv. ${state.level}`;
+ $("pet").classList.toggle("sleeping",sleeping);
+}
+
+function toast(title,body,buttons=[]){
+ const t=$("toast");
+ t.style.display="block";
+ t.innerHTML=`<h3 style="margin:0 0 8px;color:#e65f91">${title}</h3>
+ <div style="font-size:13px">${body}</div><div style="margin-top:10px">
+ ${buttons.map(b=>`<button onclick="${b.fn}">${b.label}</button>`).join("")}
+ <button onclick="hideToast()">ปิด</button></div>`;
+}
+function hideToast(){$("toast").style.display="none"}
+function closePanel(){document.querySelectorAll(".panel").forEach(p=>p.style.display="none")}
+function openPanel(id){closePanel();$(id).style.display="block";if(id==="quests")renderQuests()}
+
+function goRoom(i){
+ roomIndex=(i+rooms.length)%rooms.length;
+ const r=rooms[roomIndex];
+ $("room").className="room "+r.cls;
+ $("roomLabel").textContent=r.name;
+ $("furnLeft").textContent=r.left;
+ $("furnRight").textContent=r.right;
+ closePanel();
+ $("hint").textContent=roomIndex===0?"ห้องนอน • พักผ่อน":roomIndex===4?"ห้องน้ำ • ดูแลโทกี้":"ปัดซ้าย–ขวาเพื่อเปลี่ยนห้อง";
+ if(roomIndex===1)say(callGranny("ครับ ไอเริ่มหิวแล้ว เราไปหาอะไรอร่อย ๆ กันไหม 🍓"));
+ if(roomIndex===2)say(callGranny("ครับ มาเลือกอาหารให้ไอกันเถอะ kub"));
+ if(roomIndex===3)say(callGranny("ครับ ห้องนี้มีของเล่นเยอะเลย มาเล่นกับไอหน่อยนะ 🧸"));
+ if(roomIndex===4&&state.toilet>45)say(callGranny("ครับ ไอปวดห้องน้ำแล้ว ช่วยพาไอหน่อย kub 🚽"));
+}
+function changeRoom(d){goRoom(roomIndex+d)}
+
+let touchX=null;
+$("scene").addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX},{passive:true});
+$("scene").addEventListener("touchend",e=>{
+ if(touchX===null)return;
+ const dx=e.changedTouches[0].clientX-touchX;
+ if(Math.abs(dx)>65)changeRoom(dx<0?1:-1);
+ touchX=null;
+},{passive:true});
+
+function petHead(){
+ if(sleeping){say(callGranny("ครับ ไอกำลังนอนอยู่เลย 😴"));return}
+ hand();animate("bounce");
+ state.fun=clamp(state.fun+7);state.care++;state.pet++;
+ task("pet");
+ say([
+  callGranny("ครับ ลูบเบา ๆ ก็ได้ ไอชอบนะ kub 🩷"),
+  callGranny("My head feels so fluffy now! ขอบคุณครับ"),
+  callGranny("ลูบหัวเก่งจังเลย ไอเคลิ้มแล้วครับ"),
+  `อีกนิดได้ไหมครับ Granny ${grannyName} แค่แป๊บเดียวเอง`
+ ][Math.floor(Math.random()*4)]);
+ render();save();
+}
+
+function pinch(){
+ if(sleeping)return;
+ hand();animate("squish");state.fun=clamp(state.fun+5);
+ say(callGranny("ครับ! แก้มไอไม่ใช่โมจินะ… แต่ก็ได้ครับ แป๊บเดียว kub"));
+ render();save();
+}
+
+function hug(){
+ if(sleeping){say(callGranny("ขอกอดตอนตื่นนะครับ 😴"));return}
+ hand();animate("hug");state.fun=clamp(state.fun+12);state.care++;
+ say(callGranny("ครับ ไอขอกอดแบบนี้อีกแป๊บนึงนะ 🩷"));
+ render();save();
+}
+
+function play(){
+ if(sleeping){say(callGranny("ไอง่วงแล้วครับ พรุ่งนี้ค่อยเล่นกันนะ"));return}
+ if(state.energy<12){
+  say(callGranny("ไอเหนื่อยแล้ว พาไปนอนหน่อยได้ไหมครับ"));
+  toast("⚡ พลังงานน้อยแล้ว",callGranny("พาไอไปห้องนอนหน่อยนะครับ"),[{label:"พาไปนอน",fn:"goRoom(0);openPanel('sleepPanel')"}]);
+  return;
+ }
+ state.fun=clamp(state.fun+15);
+ state.energy=clamp(state.energy-8);
+ state.play++;state.coins+=2;task("play");animate("bounce");
+ say([
+  callGranny("โยนบอลมาเลยครับ!"),
+  callGranny("เย้! ไอชนะแล้วหรือยังนะ kub?"),
+  callGranny("เล่นด้วยกันสนุกที่สุดเลยครับ 🧸")
+ ][Math.floor(Math.random()*3)]);
+ render();save();
+}
+
+function feed(food,full,need){
+ if(state.hunger>=98){
+  say(callGranny("ครับ ไออิ่มมากแล้ว ขอพักท้องก่อนนะ kub"));
+  return;
+ }
+ state.hunger=clamp(state.hunger+full);
+ state.toilet=clamp(state.toilet+need);
+ state.fun=clamp(state.fun+3);
+ state.feed++;state.coins++;task("feed");
+ closePanel();animate("bounce");
+ say(callGranny(`ครับ ${food} อร่อยมากเลย! ขอบคุณที่ป้อนให้ไอนะ kub 🍓`));
+ render();save();
+ if(state.toilet>=55)setTimeout(()=>{
+  toast("🚽 โทกี้อยากเข้าห้องน้ำ",callGranny("ครับ ไอเริ่มปวดห้องน้ำแล้ว พาไปกันไหม?"),[
+   {label:"ไปห้องน้ำ",fn:"goRoom(4);openPanel('bathPanel')"}
+  ]);
+ },400);
+}
+
+function useBathroom(){
+ if(state.toilet<20){
+  say(callGranny("ครับ ตอนนี้ไอยังไม่ปวดเลย"));
+  closePanel();return;
+ }
+ state.toilet=0;state.fun=clamp(state.fun+6);state.bath++;
+ task("bath");closePanel();
+ say(callGranny("เรียบร้อยแล้วครับ! ขอบคุณที่พาไอมานะ kub 🩷"));
+ animate("bounce");render();save();
+}
+
+function sleepToky(){
+ if(sleeping){say(callGranny("ไอหลับอยู่แล้วครับ 😴"));return}
+ sleeping=true;state.sleep++;task("sleep");closePanel();
+ say(callGranny("Good night… ขอบคุณที่ดูแลไอนะครับ 🌙"));
+ $("hint").textContent="🌙 โทกี้กำลังหลับ • พลังงานค่อย ๆ ฟื้น";
+ render();save();
+}
+
+function wakeToky(){
+ if(!sleeping){say(callGranny("ไอยังไม่ได้นอนเลยครับ"));closePanel();return}
+ if(state.energy<45){
+  toast("💤 โทกี้ยังง่วงอยู่",callGranny("พลังงานยังไม่พอ ขอพักอีกหน่อยนะครับ"));
+  return;
+ }
+ sleeping=false;closePanel();
+ say(callGranny("อรุณสวัสดิ์ครับ! ไอพร้อมเล่นแล้ว kub ☀️"));
+ $("hint").textContent="ปัดซ้าย–ขวาเพื่อเปลี่ยนห้อง";
+ animate("bounce");render();save();
+}
+
+function talk(){
+ if(sleeping){say(callGranny("Zzz… พรุ่งนี้เราค่อยคุยกันนะครับ"));return}
+ const lines=[
+  callGranny("วันนี้มีอะไรมาเล่าให้ไอฟังไหมครับ?"),
+  callGranny("เมื่อกี้ไอเห็นสตรอว์เบอร์รีลูกใหญ่มากเลย!"),
+  `Granny ${grannyName} ครับ น้องก้อง🩷 กับพี่โทเป็นยังไงบ้าง? ไอแค่อยากรู้นิดเดียวเอง kub`,
+  callGranny("อยู่เล่นกับไออีกหน่อยได้ไหมครับ?"),
+  callGranny("วันนี้ไอเป็นเด็กดีไหมครับ ต้องชมไอแล้วนะ"),
+  callGranny("วันนี้เราทำภารกิจอะไรกันดี kub?")
+ ];
+ state.fun=clamp(state.fun+2);
+ say(lines[Math.floor(Math.random()*lines.length)]);
+ render();save();
+}
+
+function energyAlert(){
+ if(state.energy===0&&!sleeping&&!lastEnergyAlert){
+  lastEnergyAlert=true;
+  toast("⚡ พลังงานหมดแล้ว!",callGranny("ไอไม่ไหวแล้ว… พาไอเข้านอนหน่อยนะครับ"),[
+   {label:"พาไปห้องนอน",fn:"goRoom(0);openPanel('sleepPanel')"}
+  ]);
+ }
+ if(state.energy>0)lastEnergyAlert=false;
+}
+
+function tick(){
+ if(!gameStarted)return;
+ if(sleeping){
+  state.energy=clamp(state.energy+3);
+  if(state.energy>=100){
+   sleeping=false;
+   say(callGranny("ไอหลับเต็มอิ่มแล้ว! ตื่นแล้ว kub ☀️"));
+   $("hint").textContent="ปัดซ้าย–ขวาเพื่อเปลี่ยนห้อง";
+  }
+ }else{
+  state.energy=clamp(state.energy-.7);
+  state.hunger=clamp(state.hunger-.25);
+  state.fun=clamp(state.fun-.2);
+  state.toilet=clamp(state.toilet+.12);
+ }
+ energyAlert();
+ render();save();
+}
+
+$("playerName").addEventListener("keydown",e=>{if(e.key==="Enter")startGame()});
+
+load();
+render();
+renderQuests();
+
+const savedName=localStorage.getItem("mrTokyPlayerName");
+if(savedName)$("playerName").value=savedName;
+
+// เปิดหน้าเริ่มเกมเสมอ เพื่อให้ผู้เล่นยืนยันชื่อก่อนเข้าเกม
+$("startScreen").style.display="flex";
+
+setInterval(tick,5000);
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Mr. Toky 🍓 My Little Fox</title>
+<style>
+*{box-sizing:border-box}
+:root{--pink:#ff8fb3;--deep:#e65f91;--cream:#fff9f1;--ink:#634b5a}
+body{margin:0;background:#fff0f5;color:var(--ink);font-family:system-ui,-apple-system,sans-serif;overflow:hidden;touch-action:manipulation}
+button,input{font:inherit}
+button{border:0;cursor:pointer;color:inherit}
+button:active{transform:scale(.96)}
+#game{height:100dvh;max-width:600px;margin:auto;display:none;flex-direction:column;background:var(--cream);overflow:hidden;position:relative}
+header{padding:9px 12px;background:#fff9f5;box-shadow:0 2px 9px #b86a8017;z-index:3}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.logo{font-weight:900;font-size:19px;color:#e65f91}
+.level{font-size:10px;color:#9c8190}
+.coins{background:#fff0bd;border-radius:20px;padding:6px 9px;font-weight:800;font-size:13px}
+.smallbtn{background:#ffe1ed;padding:7px 9px;border-radius:12px;font-size:11px;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:8px}
+.stat{background:white;padding:6px;border-radius:11px;font-size:10px;min-width:0}
+.statline{display:flex;justify-content:space-between;gap:2px;font-weight:750;margin-bottom:4px}
+.bar{height:7px;border-radius:10px;background:#f1e5eb;overflow:hidden}
+.fill{height:100%;width:80%;border-radius:10px;transition:width .4s}
+#hungerFill{background:#ffb36c}#energyFill{background:#8bb8ff}
+#funFill{background:#ed8eb5}#toiletFill{background:#8dcba1}
+#scene{position:relative;flex:1;min-height:0;overflow:hidden;touch-action:pan-y}
+.room{position:absolute;inset:0;overflow:hidden;transition:background .35s}
+.room-bedroom{background:linear-gradient(#f8d9ed 0 60%,#eac1d7 60%)}
+.room-dining{background:linear-gradient(#fff0c9 0 60%,#edcf9e 60%)}
+.room-kitchen{background:linear-gradient(#dff2f5 0 60%,#c5dfdf 60%)}
+.room-living{background:linear-gradient(#e2dafa 0 60%,#d0bce5 60%)}
+.room-bathroom{background:linear-gradient(#d9f4f0 0 60%,#b3ded8 60%)}
+.window{position:absolute;top:8%;left:7%;width:26%;height:20%;border:6px solid #fff9f5;border-radius:12px;background:linear-gradient(#a8dcf7 0 65%,#b7e4a7 65%)}
+.window:before,.window:after{content:"";position:absolute;background:#fff9f5}
+.window:before{width:5px;height:100%;left:50%}
+.window:after{height:5px;width:100%;top:50%}
+.shelf{position:absolute;top:12%;right:7%;width:24%;height:7%;border-radius:7px;background:#d7a67c;box-shadow:0 12px #f2d2b2,0 24px #d7a67c}
+.wallpic{position:absolute;right:12%;top:27%;font-size:30px}
+.rug{position:absolute;bottom:3%;left:20%;width:60%;height:17%;background:#f4a9c9;border-radius:50%;opacity:.75}
+.furniture{position:absolute;bottom:14%;font-size:clamp(35px,10vw,58px);filter:drop-shadow(0 5px 2px #8e677522)}
+#furnLeft{left:4%}#furnRight{right:4%}
+#speech{position:absolute;z-index:10;top:4%;left:50%;transform:translateX(-50%);width:85%;max-width:330px;min-height:42px;padding:9px 13px;background:white;border:2px solid #ffd0e0;border-radius:17px;text-align:center;font-size:12px;font-weight:700;box-shadow:0 4px 12px #9d65851c}
+#speech:after{content:"";position:absolute;bottom:-8px;left:50%;width:13px;height:13px;background:white;border-right:2px solid #ffd0e0;border-bottom:2px solid #ffd0e0;transform:translateX(-50%) rotate(45deg)}
+#petStage{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:210px;height:245px;display:flex;justify-content:center;align-items:center;z-index:2}
+#pet{position:relative;width:166px;height:215px;transform-origin:50% 80%;animation:bob 2.8s ease-in-out infinite;touch-action:none;user-select:none}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -5px}}
+.ear{position:absolute;top:3px;width:61px;height:87px;background:#ff91b4;clip-path:polygon(50% 0,100% 100%,0 100%);z-index:1;transform-origin:50% 100%}
+.ear:after{content:"";position:absolute;left:17px;top:20px;width:28px;height:55px;background:#d95d8d;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.ear.left{left:6px;transform:rotate(-13deg)}.ear.right{right:6px;transform:rotate(13deg)}
+.head{position:absolute;top:39px;left:14px;width:138px;height:113px;border-radius:46% 46% 42% 42%;background:#ffabc6;border:2px solid #f786aa;z-index:2}
+.hat{position:absolute;z-index:5;top:17px;left:29px;width:109px;height:34px;border-radius:42px 42px 13px 13px;background:#67b7f5;border:2px solid #439bdc;transform:rotate(-5deg)}
+.hat:after{content:"";position:absolute;bottom:-8px;left:-6px;width:119px;height:12px;background:#4da6ec;border-radius:50%}
+.berry{position:absolute;top:-16px;left:43px;width:27px;height:29px;background:#ff526e;clip-path:polygon(50% 100%,5% 35%,10% 10%,30% 0,50% 12%,72% 0,93% 18%,95% 38%);z-index:2}
+.berry:after{content:"";position:absolute;top:0;left:8px;width:13px;height:7px;background:#64bd79;clip-path:polygon(50% 100%,0 0,100% 0)}
+.brow{position:absolute;top:28px;width:26px;height:6px;border-radius:50%;background:#eee9f0;z-index:3}
+.brow.left{left:28px;transform:rotate(-7deg)}.brow.right{right:28px;transform:rotate(7deg)}
+.eye{position:absolute;top:41px;width:28px;height:35px;border-radius:50%;background:white;border:2px solid #e8a0b7;z-index:3;overflow:hidden}
+.eye.left{left:25px}.eye.right{right:25px}
+.eye:after{content:"";position:absolute;left:7px;top:5px;width:16px;height:22px;background:#58b6ed;border-radius:50%}
+.eye:before{content:"";position:absolute;z-index:1;left:12px;top:7px;width:7px;height:12px;background:#283d61;border-radius:50%}
+.muzzle{position:absolute;left:37px;top:68px;width:64px;height:34px;background:#fff7f4;border-radius:50%;z-index:4}
+.nose{position:absolute;left:61px;top:67px;width:14px;height:10px;background:#e94f6f;border-radius:50% 50% 65% 65%;z-index:5}
+.mouth{position:absolute;top:80px;left:64px;width:10px;height:9px;border-bottom:2px solid #a85170;border-radius:0 0 50% 50%;z-index:5}
+.cheek{position:absolute;top:73px;width:19px;height:10px;border-radius:50%;background:#ff87aa;opacity:.8;z-index:4}
+.cheek.left{left:12px}.cheek.right{right:12px}
+.body{position:absolute;top:137px;left:37px;width:92px;height:69px;background:#ff9cbb;border-radius:42% 42% 36% 36%;z-index:1;border:2px solid #f786aa}
+.belly{position:absolute;left:23px;top:17px;width:43px;height:43px;border-radius:50%;background:#fff7f4}
+.arm{position:absolute;top:151px;width:27px;height:46px;border-radius:18px;background:#ffa4c1;z-index:2}
+.arm.left{left:24px;transform:rotate(20deg)}.arm.right{right:24px;transform:rotate(-20deg)}
+.foot{position:absolute;top:190px;width:39px;height:22px;border-radius:50%;background:#ef709c;z-index:3}
+.foot.left{left:35px}.foot.right{right:35px}
+.strap{position:absolute;z-index:6;left:96px;top:116px;width:12px;height:91px;border:4px solid #67b982;border-radius:12px;transform:rotate(-24deg);pointer-events:none}
+.bag{position:absolute;z-index:7;left:102px;top:159px;width:37px;height:40px;background:#f94d6d;border-radius:46% 46% 42% 42%;transform:rotate(9deg);border:2px solid #e63f60}
+.bag:before{content:"";position:absolute;top:-6px;left:9px;width:16px;height:10px;background:#65bd79;clip-path:polygon(50% 100%,0 0,100% 0)}
+.bag:after{content:"";position:absolute;inset:8px;background:radial-gradient(circle,#ffd6d7 1px,transparent 2px);background-size:9px 9px}
+.hand{position:absolute;z-index:12;font-size:60px;left:50%;top:10%;transform:translate(-50%,-30%) rotate(-30deg);opacity:0;pointer-events:none;filter:drop-shadow(0 3px 2px #8a536333)}
+.hand.active{opacity:1;animation:petHand 1s ease-in-out 2}
+@keyframes petHand{0%{transform:translate(-50%,-60%) rotate(-40deg)}50%{transform:translate(-50%,20%) rotate(-10deg)}100%{transform:translate(-50%,-30%) rotate(-30deg)}}
+#roomLabel{position:absolute;left:10px;bottom:8px;background:#ffffffd9;padding:6px 9px;border-radius:12px;font-size:11px;font-weight:800;z-index:8}
+#hint{position:absolute;right:10px;bottom:8px;font-size:10px;background:#ffffffc9;padding:6px 8px;border-radius:12px;z-index:8}
+#roomArrow{position:absolute;top:48%;width:100%;display:flex;justify-content:space-between;pointer-events:none;z-index:8}
+#roomArrow button{pointer-events:auto;background:#ffffffb8;border-radius:50%;width:33px;height:40px;font-size:22px}
+#toast{position:absolute;z-index:30;left:50%;top:45%;transform:translate(-50%,-50%);background:#fff;border:2px solid #ffd1e1;padding:16px;border-radius:18px;width:85%;max-width:320px;text-align:center;box-shadow:0 10px 40px #77435b33;display:none}
+#toast button{background:var(--pink);color:white;border-radius:12px;padding:9px 12px;margin:5px 3px;font-size:12px;font-weight:800}
+nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:7px;background:white;border-top:1px solid #f5dbe5;z-index:5}
+nav button{background:#fff0f5;border-radius:11px;padding:6px 2px;font-size:10px;font-weight:800}
+nav button span{display:block;font-size:20px;margin-bottom:2px}
+#actions{padding:6px 8px 9px;background:#fff9f5;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.action{background:white;border:1px solid #f3dce6;border-radius:12px;padding:7px 2px;font-size:10px;font-weight:750}
+.action span{display:block;font-size:19px;margin-bottom:3px}
+.panel{position:absolute;inset:0;z-index:20;background:#fff8f4f5;padding:17px;overflow:auto;display:none}
+.panel h2{margin:0 0 7px;font-size:21px;color:#e65f91}
+.close{float:right;background:#ffe2ed;border-radius:50%;width:32px;height:32px;font-size:19px}
+.quest{display:flex;gap:8px;align-items:center;background:white;padding:10px;border-radius:13px;margin:8px 0;border:1px solid #f4d9e5}
+.qicon{font-size:24px}.qbody{flex:1;font-size:11px;min-width:0}.qbody strong{display:block;font-size:12px}
+.qbar{height:6px;background:#f1e5eb;border-radius:10px;margin-top:6px;overflow:hidden}
+.qbar div{height:100%;background:#80c99a}
+.claim{background:#ff8fb3;color:white;border-radius:9px;padding:7px;font-size:10px;font-weight:800}
+.claim:disabled{background:#d9cbd2}
+.foodgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:15px}
+.food{background:white;border-radius:15px;padding:12px 4px;border:1px solid #f2d9e4;font-size:12px}
+.food b{display:block;font-size:28px}
+.sleeping .eye{height:4px;top:56px;background:#8c5a77;border-radius:50%}
+.sleeping .eye:before,.sleeping .eye:after{display:none}
+.sleeping .mouth{border:0;border-top:2px solid #a85170;border-radius:50%}
+#startScreen{position:fixed;inset:0;z-index:999;display:flex;justify-content:center;align-items:center;padding:20px;background:linear-gradient(145deg,#ffc5d9,#ffe9d6 55%,#ffd6e7)}
+.start-card{width:100%;max-width:360px;padding:25px 22px;border-radius:28px;background:#fffaf7;text-align:center;box-shadow:0 15px 45px #b65a802c}
+.start-berry{font-size:38px}.start-card h1{margin:5px 0;color:#e65f91;font-size:34px}
+.start-card p{color:#8c687a;font-size:14px}
+.start-fox{font-size:75px;margin:8px 0 12px;animation:startBounce 2s ease-in-out infinite}
+@keyframes startBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.start-card label{display:block;margin-bottom:8px;font-weight:800;color:#d85888}
+#playerName{width:100%;padding:13px;border:2px solid #ffc3d8;border-radius:14px;outline:none;font-size:16px;text-align:center;background:white}
+#playerName:focus{border-color:#e65f91}
+.start-card button{width:100%;margin-top:12px;padding:13px;border-radius:14px;background:#ff8fb3;color:white;font-weight:850;font-size:15px}
+.start-card small{display:block;margin-top:13px;color:#aa8295}
+#nameError{color:#d74468;min-height:8px;font-size:12px}
+@media(max-height:700px){header{padding:5px 9px}.stats{margin-top:5px}.stat{padding:4px}.statline{font-size:9px}#actions{padding:4px 6px}.action{padding:5px 1px}nav{padding:4px}.panel{padding:12px}#petStage{transform:translate(-50%,-50%) scale(.88)}}
+</style>
+</head>
+<body>
+
+<div id="startScreen">
+ <div class="start-card">
+  <div class="start-berry">🍓</div>
+  <h1>Mr. Toky</h1>
+  <p>ยินดีต้อนรับสู่บ้านของโทกี้!</p>
+  <div class="start-fox">🦊</div>
+  <label for="playerName">Granny ชื่ออะไรครับ?</label>
+  <input id="playerName" type="text" maxlength="20" placeholder="กรอกชื่อของเธอ..." autocomplete="nickname">
+  <p id="nameError"></p>
+  <button onclick="startGame()">🩷 เริ่มเลี้ยงโทกี้</button>
+  <small>โทกี้รอ Granny อยู่นะ kub 🍓</small>
+ </div>
+</div>
+
+<div id="game">
+<header>
+ <div class="topline">
+  <div><div class="logo">🍓 Mr. Toky</div><div class="level" id="levelText">Granny's little fox • Lv. 1</div></div>
+  <div class="coins">🪙 <span id="coins">0</span></div>
+  <button class="smallbtn" onclick="openPanel('quests')">🎯 ภารกิจ <span id="questBadge">!</span></button>
+  <button class="smallbtn" onclick="changeGrannyName()">✏️ ชื่อ</button>
+ </div>
+ <div class="stats">
+  <div class="stat"><div class="statline"><span>🍓 อิ่ม</span><span id="hungerNum">80</span></div><div class="bar"><div class="fill" id="hungerFill"></div></div></div>
+  <div class="stat"><div class="statline"><span>⚡ พลัง</span><span id="energyNum">80</span></div><div class="bar"><div class="fill" id="energyFill"></div></div></div>
+  <div class="stat"><div class="statline"><span>🩷 สุขใจ</span><span id="funNum">80</span></div><div class="bar"><div class="fill" id="funFill"></div></div></div>
+  <div class="stat"><div class="statline"><span>🚽 ห้องน้ำ</span><span id="toiletNum">10</span></div><div class="bar"><div class="fill" id="toiletFill"></div></div></div>
+ </div>
+</header>
+
+<main id="scene">
+ <div class="room room-bedroom" id="room">
+  <div class="window"></div><div class="shelf"></div><div class="wallpic">🍓</div><div class="rug"></div>
+  <div class="furniture" id="furnLeft">🛏️</div><div class="furniture" id="furnRight">🧸</div>
+ </div>
+ <div id="speech">Granny ครับ! วันนี้เรามาเล่นกันนะ kub 🍓</div>
+ <div id="petStage">
+  <div id="pet">
+   <div class="ear left"></div><div class="ear right"></div>
+   <div class="hat"><div class="berry"></div></div>
+   <div class="head">
+    <div class="brow left"></div><div class="brow right"></div>
+    <div class="eye left"></div><div class="eye right"></div>
+    <div class="cheek left"></div><div class="cheek right"></div>
+    <div class="muzzle"></div><div class="nose"></div><div class="mouth"></div>
+   </div>
+   <div class="body"><div class="belly"></div></div>
+   <div class="arm left"></div><div class="arm right"></div>
+   <div class="foot left"></div><div class="foot right"></div>
+   <div class="strap"></div><div class="bag"></div>
+  </div>
+  <div class="hand" id="hand">🖐🏻</div>
+ </div>
+ <div id="roomArrow"><button onclick="changeRoom(-1)">‹</button><button onclick="changeRoom(1)">›</button></div>
+ <div id="roomLabel">🛏️ ห้องนอน</div><div id="hint">ปัดซ้าย–ขวาเพื่อเปลี่ยนห้อง</div>
+ <div id="toast"></div>
+
+ <section class="panel" id="quests">
+  <button class="close" onclick="closePanel()">×</button>
+  <h2>🎯 ภารกิจของ Granny</h2>
+  <div id="questList"></div>
+  <p style="font-size:11px;color:#a4778e">ทำกิจกรรมให้สำเร็จเพื่อรับเหรียญและเพิ่มระดับความผูกพัน 🩷</p>
+ </section>
+
+ <section class="panel" id="foodPanel">
+  <button class="close" onclick="closePanel()">×</button>
+  <h2>🍓 มื้ออร่อยของโทกี้</h2>
+  <p style="font-size:12px">Granny เลือกอาหารให้ไอได้เลยครับ แต่อย่าป้อนเยอะจนปวดท้องนะ!</p>
+  <div class="foodgrid">
+   <button class="food" onclick="feed('🍓',12,8)"><b>🍓</b>สตรอว์เบอร์รี</button>
+   <button class="food" onclick="feed('🍎',15,10)"><b>🍎</b>แอปเปิล</button>
+   <button class="food" onclick="feed('🥕',18,12)"><b>🥕</b>แครอต</button>
+   <button class="food" onclick="feed('🍰',25,20)"><b>🍰</b>เค้ก</button>
+   <button class="food" onclick="feed('🥛',10,4)"><b>🥛</b>นม</button>
+   <button class="food" onclick="feed('🍪',20,15)"><b>🍪</b>คุกกี้</button>
+  </div>
+ </section>
+
+ <section class="panel" id="bathPanel">
+  <button class="close" onclick="closePanel()">×</button>
+  <h2>🚽 ห้องน้ำของโทกี้</h2>
+  <p id="bathText">Granny พาโทกี้เข้าห้องน้ำกันนะครับ</p>
+  <div style="text-align:center;font-size:78px;margin:20px">🚽</div>
+  <button class="action" style="width:100%;padding:14px" onclick="useBathroom()">🧻 ช่วยโทกี้เข้าห้องน้ำ</button>
+ </section>
+
+ <section class="panel" id="sleepPanel">
+  <button class="close" onclick="closePanel()">×</button>
+  <h2>🌙 ห้องนอนแสนอบอุ่น</h2>
+  <p id="sleepText">Granny พร้อมพาโทกี้พักผ่อนหรือยังครับ?</p>
+  <div style="text-align:center;font-size:80px;margin:15px">🛏️🌙</div>
+  <button class="action" style="width:100%;padding:14px" onclick="sleepToky()">💤 พาโทกี้เข้านอน</button>
+  <button class="action" style="width:100%;padding:14px;margin-top:8px" onclick="wakeToky()">☀️ ปลุกโทกี้</button>
+ </section>
+</main>
+
+<nav>
+ <button onclick="goRoom(0)"><span>🛏️</span>ห้องนอน</button>
+ <button onclick="goRoom(1)"><span>🍽️</span>ห้องกินข้าว</button>
+ <button onclick="goRoom(2)"><span>🥣</span>ห้องครัว</button>
+ <button onclick="goRoom(3)"><span>🧸</span>ห้องนั่งเล่น</button>
+ <button onclick="goRoom(4)"><span>🚽</span>ห้องน้ำ</button>
+</nav>
+
+<div id="actions">
+ <button class="action" onclick="petHead()"><span>🖐🏻</span>ลูบหัว</button>
+ <button class="action" onclick="pinch()"><span>🤏🏻</span>บีบแก้ม</button>
+ <button class="action" onclick="hug()"><span>🫂</span>กอดโทกี้</button>
+ <button class="action" onclick="play()"><span>🧸</span>เล่นด้วยกัน</button>
+ <button class="action" onclick="openPanel('foodPanel')"><span>🍓</span>ป้อนอาหาร</button>
+ <button class="action" onclick="goRoom(4);openPanel('bathPanel')"><span>🚽</span>เข้าห้องน้ำ</button>
+ <button class="action" onclick="goRoom(0);openPanel('sleepPanel')"><span>💤</span>เข้านอน</button>
+ <button class="action" onclick="talk()"><span>💬</span>พูดคุย</button>
+</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const rooms=[
+ {name:"🛏️ ห้องนอน",cls:"room-bedroom",left:"🛏️",right:"🧸"},
+ {name:"🍽️ ห้องกินข้าว",cls:"room-dining",left:"🪑",right:"🍽️"},
+ {name:"🥣 ห้องครัว",cls:"room-kitchen",left:"🧊",right:"🥣"},
+ {name:"🧸 ห้องนั่งเล่น",cls:"room-living",left:"🛋️",right:"🧸"},
+ {name:"🚽 ห้องน้ำ",cls:"room-bathroom",left:"🧻",right:"🧼"}
+];
+
+let grannyName="";
+let roomIndex=0;
+let sleeping=false;
+let lastEnergyAlert=false;
+let typingTimer=null;
+let gameStarted=false;
+
+let state={
+ hunger:80,energy:80,fun:80,toilet:10,
+ coins:0,care:0,feed:0,pet:0,play:0,bath:0,sleep:0,
+ level:1,exp:0
 };
 
-document.getElementById("clear").onclick = resetCanvas;
+const quests=[
+ {id:"feed",icon:"🍓",title:"มื้ออร่อยของโทกี้",desc:"ป้อนอาหารให้โทกี้ 3 ครั้ง",goal:3,reward:20,progress:0,done:false,claimed:false},
+ {id:"pet",icon:"🖐🏻",title:"เพื่อนรักของโทกี้",desc:"ลูบหัวโทกี้ 3 ครั้ง",goal:3,reward:20,progress:0,done:false,claimed:false},
+ {id:"play",icon:"🧸",title:"เวลาเล่นด้วยกัน",desc:"เล่นกับโทกี้ 2 ครั้ง",goal:2,reward:25,progress:0,done:false,claimed:false},
+ {id:"bath",icon:"🚽",title:"ดูแลให้เรียบร้อย",desc:"พาโทกี้เข้าห้องน้ำ 1 ครั้ง",goal:1,reward:15,progress:0,done:false,claimed:false},
+ {id:"sleep",icon:"💤",title:"ฝันดีนะโทกี้",desc:"พาโทกี้เข้านอน 1 ครั้ง",goal:1,reward:20,progress:0,done:false,claimed:false}
+];
 
-document.getElementById("eraser").onclick = () => {
-  erase = !erase;
-
-  document.getElementById("eraser").textContent =
-    erase ? "ใช้ยางลบอยู่" : "ยางลบ";
-};
-
-document.getElementById("color").oninput = () => {
-  if (!erase) {
-    ctx.strokeStyle = document.getElementById("color").value;
+function say(text){
+ clearTimeout(typingTimer);
+ const box=$("speech");
+ box.textContent="";
+ let i=0;
+ function step(){
+  if(i<text.length){
+   box.textContent+=text[i++];
+   typingTimer=setTimeout(step,25);
   }
-};
-
-document.getElementById("save").onclick = () => {
-  const link = document.createElement("a");
-
-  link.download = "toky-drawing.png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
-
-  say("แกรนนี่ครับ เราบันทึกรูปของเราไว้แล้วนะครับ ไอจะจำวันนี้ไว้เลย 🍓");
-
-  modal.classList.remove("open");
-};
-
-function getPoint(event) {
-  const rect = canvas.getBoundingClientRect();
-
-  return {
-    x: (event.clientX - rect.left) * canvas.width / rect.width,
-    y: (event.clientY - rect.top) * canvas.height / rect.height
-  };
+ }
+ step();
 }
 
-canvas.addEventListener("pointerdown", event => {
-  drawing = true;
-  last = getPoint(event);
-  canvas.setPointerCapture(event.pointerId);
-});
+function callGranny(text){
+ return `Granny ${grannyName||"คนเก่ง"} ${text}`;
+}
 
-canvas.addEventListener("pointermove", event => {
-  if (!drawing) return;
+function save(){
+ try{
+  localStorage.setItem("mrTokySave",JSON.stringify({state,quests,sleeping}));
+  localStorage.setItem("mrTokyPlayerName",grannyName);
+ }catch(e){}
+}
 
-  const point = getPoint(event);
+function load(){
+ try{
+  const name=localStorage.getItem("mrTokyPlayerName");
+  if(name)grannyName=name;
+  const d=JSON.parse(localStorage.getItem("mrTokySave"));
+  if(d){
+   state={...state,...d.state};
+   if(d.quests)quests.forEach(q=>Object.assign(q,d.quests.find(x=>x.id===q.id)||{}));
+   sleeping=!!d.sleeping;
+  }
+ }catch(e){}
+}
 
-  ctx.beginPath();
-  ctx.moveTo(last.x, last.y);
-  ctx.lineTo(point.x, point.y);
+function clamp(n){return Math.max(0,Math.min(100,n))}
 
-  ctx.strokeStyle = erase
-    ? "#ffffff"
-    : document.getElementById("color").value;
+function startGame(){
+ const input=$("playerName");
+ const name=input.value.trim();
+ if(!name){
+  $("nameError").textContent="Granny ครับ กรอกชื่อให้ไอหน่อยนะ 🥺";
+  input.focus();
+  return;
+ }
+ grannyName=name.slice(0,20);
+ gameStarted=true;
+ try{localStorage.setItem("mrTokyPlayerName",grannyName)}catch(e){}
+ $("startScreen").style.display="none";
+ $("game").style.display="flex";
+ render();
+ renderQuests();
+ say(callGranny("มาแล้วเหรอครับ! ไอรอตั้งนานเลย kub 🍓"));
+ save();
+}
 
-  ctx.lineWidth = erase ? 28 : 8;
-  ctx.stroke();
+function changeGrannyName(){
+ const newName=prompt("Granny อยากเปลี่ยนชื่อเป็นอะไรครับ?",grannyName);
+ if(newName===null)return;
+ const cleaned=newName.trim().slice(0,20);
+ if(!cleaned){alert("กรุณากรอกชื่อก่อนนะครับ");return}
+ grannyName=cleaned;
+ save();
+ say(callGranny("เปลี่ยนชื่อเรียบร้อยแล้วครับ! 🩷"));
+}
 
-  last = point;
-});
+function animate(type,duration=800){
+ const p=$("pet");
+ if(type==="bounce")p.animate(
+  [{transform:"translateY(0) scale(1)"},{transform:"translateY(-20px) scale(.95,1.08)"},{transform:"translateY(0) scale(1)"}],
+  {duration,easing:"ease-out"}
+ );
+ if(type==="squish")p.animate(
+  [{transform:"scale(1)"},{transform:"scale(1.12,.84)"},{transform:"scale(1)"}],
+  {duration}
+ );
+ if(type==="hug")p.animate(
+  [{transform:"scale(1)"},{transform:"scale(.88,1.08) rotate(-5deg)"},{transform:"scale(1)"}],
+  {duration}
+ );
+}
 
-canvas.addEventListener("pointerup", () => {
-  drawing = false;
-});
+function hand(){
+ const h=$("hand");
+ h.classList.remove("active");
+ void h.offsetHeight;
+ h.classList.add("active");
+ setTimeout(()=>h.classList.remove("active"),2100);
+}
 
-canvas.addEventListener("pointercancel", () => {
-  drawing = false;
-});
+function task(id,n=1){
+ const q=quests.find(x=>x.id===id);
+ if(!q||q.claimed)return;
+ q.progress=Math.min(q.goal,(q.progress||0)+n);
+ if(q.progress>=q.goal)q.done=true;
+ renderQuests();
+ save();
+}
+
+function reward(id){
+ const q=quests.find(x=>x.id===id);
+ if(!q||!q.done||q.claimed)return;
+ q.claimed=true;
+ state.coins+=q.reward;
+ state.exp+=10;
+ if(state.exp>=50){
+  state.exp-=50;
+  state.level++;
+  say(callGranny("ครับ! เราเลเวลอัปแล้วนะ kub 🍓"));
+ }else{
+  say(callGranny("เย้! ภารกิจสำเร็จแล้วครับ ขอบคุณนะ 🩷"));
+ }
+ render();
+ renderQuests();
+ save();
+}
+
+function renderQuests(){
+ $("questList").innerHTML=quests.map(q=>{
+  const p=Math.min(q.goal,q.progress||0);
+  return `<div class="quest">
+   <div class="qicon">${q.icon}</div>
+   <div class="qbody"><strong>${q.title}</strong>${q.desc}
+   <div class="qbar"><div style="width:${p/q.goal*100}%"></div></div>
+   <small>${p}/${q.goal} • รางวัล 🪙 ${q.reward}</small></div>
+   <button class="claim" ${!q.done||q.claimed?"disabled":""} onclick="reward('${q.id}')">${q.claimed?"รับแล้ว":q.done?"รับรางวัล":"ทำต่อ"}</button>
+  </div>`;
+ }).join("");
+ $("questBadge").textContent=quests.filter(q=>q.done&&!q.claimed).length||"";
+}
+
+function render(){
+ ["hunger","energy","fun","toilet"].forEach(k=>{
+  $(k+"Num").textContent=Math.round(state[k]);
+  $(k+"Fill").style.width=state[k]+"%";
+ });
+ $("coins").textContent=state.coins;
+ $("levelText").textContent=`Granny ${grannyName||""} • Lv. ${state.level}`;
+ $("pet").classList.toggle("sleeping",sleeping);
+}
+
+function toast(title,body,buttons=[]){
+ const t=$("toast");
+ t.style.display="block";
+ t.innerHTML=`<h3 style="margin:0 0 8px;color:#e65f91">${title}</h3>
+ <div style="font-size:13px">${body}</div><div style="margin-top:10px">
+ ${buttons.map(b=>`<button onclick="${b.fn}">${b.label}</button>`).join("")}
+ <button onclick="hideToast()">ปิด</button></div>`;
+}
+function hideToast(){$("toast").style.display="none"}
+function closePanel(){document.querySelectorAll(".panel").forEach(p=>p.style.display="none")}
+function openPanel(id){closePanel();$(id).style.display="block";if(id==="quests")renderQuests()}
+
+function goRoom(i){
+ roomIndex=(i+rooms.length)%rooms.length;
+ const r=rooms[roomIndex];
+ $("room").className="room "+r.cls;
+ $("roomLabel").textContent=r.name;
+ $("furnLeft").textContent=r.left;
+ $("furnRight").textContent=r.right;
+ closePanel();
+ $("hint").textContent=roomIndex===0?"ห้องนอน • พักผ่อน":roomIndex===4?"ห้องน้ำ • ดูแลโทกี้":"ปัดซ้าย–ขวาเพื่อเปลี่ยนห้อง";
+ if(roomIndex===1)say(callGranny("ครับ ไอเริ่มหิวแล้ว เราไปหาอะไรอร่อย ๆ กันไหม 🍓"));
+ if(roomIndex===2)say(callGranny("ครับ มาเลือกอาหารให้ไอกันเถอะ kub"));
+ if(roomIndex===3)say(callGranny("ครับ ห้องนี้มีของเล่นเยอะเลย มาเล่นกับไอหน่อยนะ 🧸"));
+ if(roomIndex===4&&state.toilet>45)say(callGranny("ครับ ไอปวดห้องน้ำแล้ว ช่วยพาไอหน่อย kub 🚽"));
+}
+function changeRoom(d){goRoom(roomIndex+d)}
+
+let touchX=null;
+$("scene").addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX},{passive:true});
+$("scene").addEventListener("touchend",e=>{
+ if(touchX===null)return;
+ const dx=e.changedTouches[0].clientX-touchX;
+ if(Math.abs(dx)>65)changeRoom(dx<0?1:-1);
+ touchX=null;
+},{passive:true});
+
+function petHead(){
+ if(sleeping){say(callGranny("ครับ ไอกำลังนอนอยู่เลย 😴"));return}
+ hand();animate("bounce");
+ state.fun=clamp(state.fun+7);state.care++;state.pet++;
+ task("pet");
+ say([
+  callGranny("ครับ ลูบเบา ๆ ก็ได้ ไอชอบนะ kub 🩷"),
+  callGranny("My head feels so fluffy now! ขอบคุณครับ"),
+  callGranny("ลูบหัวเก่งจังเลย ไอเคลิ้มแล้วครับ"),
+  `อีกนิดได้ไหมครับ Granny ${grannyName} แค่แป๊บเดียวเอง`
+ ][Math.floor(Math.random()*4)]);
+ render();save();
+}
+
+function pinch(){
+ if(sleeping)return;
+ hand();animate("squish");state.fun=clamp(state.fun+5);
+ say(callGranny("ครับ! แก้มไอไม่ใช่โมจินะ… แต่ก็ได้ครับ แป๊บเดียว kub"));
+ render();save();
+}
+
+function hug(){
+ if(sleeping){say(callGranny("ขอกอดตอนตื่นนะครับ 😴"));return}
+ hand();animate("hug");state.fun=clamp(state.fun+12);state.care++;
+ say(callGranny("ครับ ไอขอกอดแบบนี้อีกแป๊บนึงนะ 🩷"));
+ render();save();
+}
+
+function play(){
+ if(sleeping){say(callGranny("ไอง่วงแล้วครับ พรุ่งนี้ค่อยเล่นกันนะ"));return}
+ if(state.energy<12){
+  say(callGranny("ไอเหนื่อยแล้ว พาไปนอนหน่อยได้ไหมครับ"));
+  toast("⚡ พลังงานน้อยแล้ว",callGranny("พาไอไปห้องนอนหน่อยนะครับ"),[{label:"พาไปนอน",fn:"goRoom(0);openPanel('sleepPanel')"}]);
+  return;
+ }
+ state.fun=clamp(state.fun+15);
+ state.energy=clamp(state.energy-8);
+ state.play++;state.coins+=2;task("play");animate("bounce");
+ say([
+  callGranny("โยนบอลมาเลยครับ!"),
+  callGranny("เย้! ไอชนะแล้วหรือยังนะ kub?"),
+  callGranny("เล่นด้วยกันสนุกที่สุดเลยครับ 🧸")
+ ][Math.floor(Math.random()*3)]);
+ render();save();
+}
+
+function feed(food,full,need){
+ if(state.hunger>=98){
+  say(callGranny("ครับ ไออิ่มมากแล้ว ขอพักท้องก่อนนะ kub"));
+  return;
+ }
+ state.hunger=clamp(state.hunger+full);
+ state.toilet=clamp(state.toilet+need);
+ state.fun=clamp(state.fun+3);
+ state.feed++;state.coins++;task("feed");
+ closePanel();animate("bounce");
+ say(callGranny(`ครับ ${food} อร่อยมากเลย! ขอบคุณที่ป้อนให้ไอนะ kub 🍓`));
+ render();save();
+ if(state.toilet>=55)setTimeout(()=>{
+  toast("🚽 โทกี้อยากเข้าห้องน้ำ",callGranny("ครับ ไอเริ่มปวดห้องน้ำแล้ว พาไปกันไหม?"),[
+   {label:"ไปห้องน้ำ",fn:"goRoom(4);openPanel('bathPanel')"}
+  ]);
+ },400);
+}
+
+function useBathroom(){
+ if(state.toilet<20){
+  say(callGranny("ครับ ตอนนี้ไอยังไม่ปวดเลย"));
+  closePanel();return;
+ }
+ state.toilet=0;state.fun=clamp(state.fun+6);state.bath++;
+ task("bath");closePanel();
+ say(callGranny("เรียบร้อยแล้วครับ! ขอบคุณที่พาไอมานะ kub 🩷"));
+ animate("bounce");render();save();
+}
+
+function sleepToky(){
+ if(sleeping){say(callGranny("ไอหลับอยู่แล้วครับ 😴"));return}
+ sleeping=true;state.sleep++;task("sleep");closePanel();
+ say(callGranny("Good night… ขอบคุณที่ดูแลไอนะครับ 🌙"));
+ $("hint").textContent="🌙 โทกี้กำลังหลับ • พลังงานค่อย ๆ ฟื้น";
+ render();save();
+}
+
+function wakeToky(){
+ if(!sleeping){say(callGranny("ไอยังไม่ได้นอนเลยครับ"));closePanel();return}
+ if(state.energy<45){
+  toast("💤 โทกี้ยังง่วงอยู่",callGranny("พลังงานยังไม่พอ ขอพักอีกหน่อยนะครับ"));
+  return;
+ }
+ sleeping=false;closePanel();
+ say(callGranny("อรุณสวัสดิ์ครับ! ไอพร้อมเล่นแล้ว kub ☀️"));
+ $("hint").textContent="ปัดซ้าย–ขวาเพื่อเปลี่ยนห้อง";
+ animate("bounce");render();save();
+}
+
+function talk(){
+ if(sleeping){say(callGranny("Zzz… พรุ่งนี้เราค่อยคุยกันนะครับ"));return}
+ const lines=[
+  callGranny("วันนี้มีอะไรมาเล่าให้ไอฟังไหมครับ?"),
+  callGranny("เมื่อกี้ไอเห็นสตรอว์เบอร์รีลูกใหญ่มากเลย!"),
+  `Granny ${grannyName} ครับ น้องก้อง🩷 กับพี่โทเป็นยังไงบ้าง? ไอแค่อยากรู้นิดเดียวเอง kub`,
+  callGranny("อยู่เล่นกับไออีกหน่อยได้ไหมครับ?"),
+  callGranny("วันนี้ไอเป็นเด็กดีไหมครับ ต้องชมไอแล้วนะ"),
+  callGranny("วันนี้เราทำภารกิจอะไรกันดี kub?")
+ ];
+ state.fun=clamp(state.fun+2);
+ say(lines[Math.floor(Math.random()*lines.length)]);
+ render();save();
+}
+
+function energyAlert(){
+ if(state.energy===0&&!sleeping&&!lastEnergyAlert){
+  lastEnergyAlert=true;
+  toast("⚡ พลังงานหมดแล้ว!",callGranny("ไอไม่ไหวแล้ว… พาไอเข้านอนหน่อยนะครับ"),[
+   {label:"พาไปห้องนอน",fn:"goRoom(0);openPanel('sleepPanel')"}
+  ]);
+ }
+ if(state.energy>0)lastEnergyAlert=false;
+}
+
+function tick(){
+ if(!gameStarted)return;
+ if(sleeping){
+  state.energy=clamp(state.energy+3);
+  if(state.energy>=100){
+   sleeping=false;
+   say(callGranny("ไอหลับเต็มอิ่มแล้ว! ตื่นแล้ว kub ☀️"));
+   $("hint").textContent="ปัดซ้าย–ขวาเพื่อเปลี่ยนห้อง";
+  }
+ }else{
+  state.energy=clamp(state.energy-.7);
+  state.hunger=clamp(state.hunger-.25);
+  state.fun=clamp(state.fun-.2);
+  state.toilet=clamp(state.toilet+.12);
+ }
+ energyAlert();
+ render();save();
+}
+
+$("playerName").addEventListener("keydown",e=>{if(e.key==="Enter")startGame()});
+
+load();
+render();
+renderQuests();
+
+const savedName=localStorage.getItem("mrTokyPlayerName");
+if(savedName)$("playerName").value=savedName;
+
+// เปิดหน้าเริ่มเกมเสมอ เพื่อให้ผู้เล่นยืนยันชื่อก่อนเข้าเกม
+$("startScreen").style.display="flex";
+
+setInterval(tick,5000);
 </script>
 </body>
 </html>
