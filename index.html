@@ -1,5 +1,42 @@
 <!DOCTYPE html>
 <html lang="th">
+  <style>
+.reaction-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.reaction-buttons button {
+  padding: 12px 8px;
+  border: 0;
+  border-radius: 14px;
+  background: #ffe5f0;
+  color: #733b55;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#reaction-text {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #fff4f8;
+  color: #733b55;
+  line-height: 1.6;
+}
+
+#toky.reacting {
+  animation: tokyReact 0.55s ease;
+}
+
+@keyframes tokyReact {
+  0%   { transform: scale(1) rotate(0); }
+  30%  { transform: scale(1.08) rotate(-5deg); }
+  60%  { transform: scale(0.96) rotate(4deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
